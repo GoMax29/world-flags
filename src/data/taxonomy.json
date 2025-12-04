@@ -565,6 +565,16 @@
               "id": "leopard",
               "label_en": "Leopard/Jaguar",
               "label_fr": "Léopard/Jaguar"
+            },
+            {
+              "id": "llama",
+              "label_en": "Llama/Alpaca",
+              "label_fr": "Lama/Alpaga"
+            },
+            {
+              "id": "vicuna",
+              "label_en": "Vicuña",
+              "label_fr": "Vigogne"
             }
           ]
         },
@@ -666,6 +676,11 @@
               "id": "laurel",
               "label_en": "Laurel Wreath",
               "label_fr": "Couronne de Laurier"
+            },
+            {
+              "id": "oak",
+              "label_en": "Oak Branch/Wreath",
+              "label_fr": "Branche de Chêne"
             },
             {
               "id": "olive_branch",
@@ -821,6 +836,29 @@
       ]
     },
     {
+      "id": "musical_instruments",
+      "label_en": "Musical Instruments",
+      "label_fr": "Instruments de Musique",
+      "icon": "🎺",
+      "subcategories": [
+        {
+          "id": "instruments",
+          "label_en": "Instruments",
+          "label_fr": "Instruments",
+          "elements": [
+            { "id": "drum", "label_en": "Drum", "label_fr": "Tambour" },
+            {
+              "id": "trumpet",
+              "label_en": "Trumpet/Bugle",
+              "label_fr": "Trompette/Clairon"
+            },
+            { "id": "horn", "label_en": "Horn", "label_fr": "Cor" },
+            { "id": "harp", "label_en": "Harp", "label_fr": "Harpe" }
+          ]
+        }
+      ]
+    },
+    {
       "id": "maritime",
       "label_en": "Maritime Elements",
       "label_fr": "Éléments Maritimes",
@@ -861,6 +899,34 @@
       ]
     },
     {
+      "id": "landscape",
+      "label_en": "Landscape & Geography",
+      "label_fr": "Paysage & Géographie",
+      "icon": "🏔️",
+      "subcategories": [
+        {
+          "id": "terrain",
+          "label_en": "Terrain Features",
+          "label_fr": "Éléments de Terrain",
+          "elements": [
+            {
+              "id": "mountain",
+              "label_en": "Mountain/Volcano",
+              "label_fr": "Montagne/Volcan"
+            },
+            {
+              "id": "river",
+              "label_en": "River",
+              "label_fr": "Rivière/Fleuve"
+            },
+            { "id": "lake", "label_en": "Lake", "label_fr": "Lac" },
+            { "id": "island", "label_en": "Island", "label_fr": "Île" },
+            { "id": "hill", "label_en": "Hill", "label_fr": "Colline" }
+          ]
+        }
+      ]
+    },
+    {
       "id": "architecture",
       "label_en": "Architecture",
       "label_fr": "Architecture",
@@ -883,7 +949,12 @@
               "label_fr": "Angkor Wat"
             },
             { "id": "mosque", "label_en": "Mosque", "label_fr": "Mosquée" },
-            { "id": "tower", "label_en": "Tower", "label_fr": "Tour" }
+            { "id": "tower", "label_en": "Tower", "label_fr": "Tour" },
+            {
+              "id": "chapel",
+              "label_en": "Chapel/Church",
+              "label_fr": "Chapelle/Église"
+            }
           ]
         },
         {
@@ -1031,6 +1102,11 @@
               "id": "banner_text",
               "label_en": "Banner with Text",
               "label_fr": "Bandeau avec Texte"
+            },
+            {
+              "id": "scroll",
+              "label_en": "Scroll/Parchment",
+              "label_fr": "Parchemin/Rouleau"
             }
           ]
         }
@@ -1158,6 +1234,26 @@
               "id": "pillars",
               "label_en": "Pillars/Columns",
               "label_fr": "Piliers/Colonnes"
+            },
+            {
+              "id": "rainbow",
+              "label_en": "Rainbow",
+              "label_fr": "Arc-en-ciel"
+            },
+            {
+              "id": "fasces",
+              "label_en": "Fasces (Lictor's Bundle)",
+              "label_fr": "Faisceau de Licteur"
+            },
+            {
+              "id": "caduceus",
+              "label_en": "Caduceus (Mercury's Staff)",
+              "label_fr": "Caducée"
+            },
+            {
+              "id": "cornucopia",
+              "label_en": "Cornucopia (Horn of Plenty)",
+              "label_fr": "Corne d'Abondance"
             }
           ]
         }

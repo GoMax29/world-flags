@@ -1,5 +1,27 @@
 # Missing Elements - Updated
 
+## FIXED (Session 4):
+# - Ecuador: added full coat of arms (Chimborazo, Guayas river, steamship, caduceus, zodiac sun, condor, laurel, palm, fasces)
+# - Paraguay: added verso (reverse) with lion, phrygian_cap, "Paz y Justicia" banner
+# - Bolivia: added full coat of arms (Cerro Rico, chapel, llama, wheat, 10 stars, condor, laurel/olive wreath, flags, cannon, rifles, axe, liberty cap)
+# - Nicaragua: added rainbow, phrygian_cap, 5 mountains, 2 seas, text "REPUBLICA DE NICARAGUA" and "AMERICA CENTRAL"
+# - Singapore: removed stars_circle (stars form pentagon, not circle)
+# - Cabo Verde: changed stars_circle to ellipse arrangement
+# - Malta: removed gold color and dragon element (George Cross detail only)
+# - Afghanistan: removed gold color (emblem is white)
+# - Samoa & Papua New Guinea: added note that southern_cross is constellation, not heraldic cross
+# - Added musical_instruments category (drum, trumpet, horn, harp)
+# - Added landscape category (mountain, river, island, hill, lake)
+# - Added llama, vicuña to mammals
+# - Added chapel to buildings
+# - Added rainbow, fasces, caduceus, cornucopia, scroll to other_symbols
+# - Added oak to leaves_flowers
+# - Costa Rica: added volcanoes, ships, rising sun, 7 stars, coffee beans, text
+# - Dominican Republic: added shield, bible, cross, laurel, palm, spears, flags, motto "Dios, Patria, Libertad"
+# - El Salvador: added triangle, 5 volcanoes, sea, phrygian_cap, sun, rainbow, 5 flags, 5 spears, laurel, motto, date, encircling text
+# - Guatemala: added scroll with independence date, updated rifle/sword details
+# - Mexico: added lake, oak wreath, ribbon
+
 ## FIXED (Session 3):
 # - Peru flag: now using state flag with coat of arms (Wikipedia source)
 
@@ -25,3 +47,15 @@
 # - Search now works in French and supports keyword search (elements, colors)
 
 ## ALL COMPLETED
+
+to fix : 
+# singapore and cabo verde should not appear under "circle" filter - FIXED (removed stars_circle)
+# samoa & papua new guinea should not appear under "cross" filter - FIXED (added constellation note)
+# malta and afghanisthan should not appear under "gold" color filter - FIXED (removed gold)
+# malta should not appear under "dragon" - FIXED (removed dragon element)
+# paraguay has no on his recto - Star of May is present on recto coat of arms
+# paraguay has lion ans phrygian_cap on his verso see capture - FIXED (added verso section)
+# haiti has phrygian_cap too - Already fixed in Session 2
+# add musical instrument as category - FIXED (added musical_instruments)
+# swaziland has two "sagaie" (spears) and a shield - Already present (Eswatini has spear count:2 and shield)
+# andora motto is not translated (in en/fr) - Already fixed in Session 2 ("United Virtue is Stronger")

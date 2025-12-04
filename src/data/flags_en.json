@@ -2,12 +2,12 @@
   "Afghanistan": {
     "code": "AF",
     "continent": "Asia",
-    "colors": ["black", "red", "green", "white", "gold"],
-    "color_count": 5,
+    "colors": ["black", "red", "green", "white"],
+    "color_count": 4,
     "layout": "vertical_triband",
     "attributes": [
       { "element": "vertical_triband" },
-      { "element": "coat_of_arms", "position": "center" },
+      { "element": "coat_of_arms", "position": "center", "color": "white" },
       { "element": "mosque" },
       { "element": "arabic_script" },
       { "element": "wheat" }
@@ -247,13 +247,78 @@
   "Bolivia": {
     "code": "BO",
     "continent": "South America",
-    "colors": ["red", "yellow", "green"],
-    "color_count": 3,
+    "colors": [
+      "red",
+      "yellow",
+      "green",
+      "blue",
+      "white",
+      "brown",
+      "gold",
+      "pearl_blue"
+    ],
+    "color_count": 8,
     "layout": "horizontal_triband",
     "attributes": [
       { "element": "horizontal_triband" },
-      { "element": "coat_of_arms", "position": "center", "optional": true }
-    ]
+      {
+        "element": "coat_of_arms",
+        "position": "center",
+        "shape": "elliptical"
+      },
+      { "element": "rising_sun", "position": "behind mountain" },
+      { "element": "mountain", "type": "cerro_rico", "location": "Potosí" },
+      { "element": "mountain", "type": "cerro_menor" },
+      {
+        "element": "chapel",
+        "name": "Chapel of the Sacred Heart of Jesus",
+        "position": "on cerro menor"
+      },
+      { "element": "llama", "position": "lower left" },
+      { "element": "wheat", "type": "sheaf", "position": "lower right" },
+      { "element": "palm", "position": "lower right" },
+      {
+        "element": "oval_border",
+        "colors": ["blue", "gold"],
+        "inner_edge": "golden"
+      },
+      {
+        "element": "latin_script",
+        "text": "BOLIVIA",
+        "color": "gold",
+        "position": "upper oval"
+      },
+      {
+        "element": "multiple_stars",
+        "count": 10,
+        "points": 5,
+        "color": "gold",
+        "position": "lower oval"
+      },
+      {
+        "element": "flag",
+        "count": 6,
+        "position": "flanking",
+        "note": "3 on each side"
+      },
+      { "element": "cannon", "position": "flanking" },
+      { "element": "rifle", "count": 2, "position": "flanking" },
+      { "element": "axe", "position": "right flank" },
+      {
+        "element": "phrygian_cap",
+        "position": "left flank",
+        "symbolism": "liberty"
+      },
+      {
+        "element": "condor",
+        "type": "andean",
+        "position": "surmounting",
+        "attitude": "rising"
+      },
+      { "element": "laurel", "position": "left wreath" },
+      { "element": "olive_branch", "position": "right wreath" }
+    ],
+    "notes": "State flag includes coat of arms; field outside shield is pearl blue when displayed"
   },
   "Bosnia and Herzegovina": {
     "code": "BA",
@@ -357,8 +422,12 @@
     "layout": "multiple_horizontal_stripes",
     "attributes": [
       { "element": "multiple_horizontal_stripes", "count": 5 },
-      { "element": "stars_circle", "count": 10, "color": "yellow" },
-      { "element": "multiple_stars", "count": 10 }
+      {
+        "element": "multiple_stars",
+        "count": 10,
+        "color": "yellow",
+        "arrangement": "ellipse"
+      }
     ]
   },
   "Cambodia": {
@@ -498,12 +567,51 @@
   "Costa Rica": {
     "code": "CR",
     "continent": "North America",
-    "colors": ["blue", "white", "red"],
-    "color_count": 3,
+    "colors": ["blue", "white", "red", "green", "gold", "brown"],
+    "color_count": 6,
     "layout": "multiple_horizontal_stripes",
     "attributes": [
-      { "element": "multiple_horizontal_stripes", "count": 5 },
-      { "element": "coat_of_arms", "position": "center_hoist" }
+      {
+        "element": "multiple_horizontal_stripes",
+        "count": 5,
+        "proportions": "1:1:2:1:1"
+      },
+      { "element": "coat_of_arms", "position": "center_hoist" },
+      {
+        "element": "mountain",
+        "type": "volcanoes",
+        "count": 3,
+        "symbolism": "three major mountain ranges"
+      },
+      {
+        "element": "sea",
+        "count": 2,
+        "symbolism": "Pacific and Atlantic Oceans"
+      },
+      {
+        "element": "ship",
+        "count": 2,
+        "type": "merchant",
+        "symbolism": "maritime trade"
+      },
+      { "element": "rising_sun", "symbolism": "prosperity" },
+      {
+        "element": "multiple_stars",
+        "count": 7,
+        "color": "white",
+        "symbolism": "seven provinces"
+      },
+      { "element": "border", "type": "coffee_beans", "color": "gold" },
+      {
+        "element": "latin_script",
+        "text": "AMERICA CENTRAL",
+        "position": "top ribbon"
+      },
+      {
+        "element": "latin_script",
+        "text": "REPUBLICA DE COSTA RICA",
+        "position": "bottom ribbon"
+      }
     ]
   },
   "Côte d'Ivoire": {
@@ -601,26 +709,81 @@
   "Dominican Republic": {
     "code": "DO",
     "continent": "North America",
-    "colors": ["blue", "red", "white"],
-    "color_count": 3,
+    "colors": ["blue", "red", "white", "green", "gold"],
+    "color_count": 5,
     "layout": "quartered",
     "attributes": [
       { "element": "quartered" },
       { "element": "cross", "color": "white" },
-      { "element": "coat_of_arms", "position": "center" }
+      { "element": "coat_of_arms", "position": "center" },
+      { "element": "shield" },
+      { "element": "book", "type": "bible", "text": "Gospel of John 8:32" },
+      {
+        "element": "christian_cross",
+        "color": "gold",
+        "position": "above bible"
+      },
+      { "element": "laurel", "position": "left" },
+      { "element": "palm", "position": "right" },
+      { "element": "spear", "count": 6, "position": "flanking" },
+      { "element": "flag", "count": 4, "position": "on spears" },
+      {
+        "element": "motto",
+        "text": "Dios, Patria, Libertad",
+        "translation": "God, Fatherland, Liberty",
+        "position": "top ribbon"
+      },
+      {
+        "element": "latin_script",
+        "text": "REPÚBLICA DOMINICANA",
+        "position": "bottom ribbon"
+      }
     ]
   },
   "Ecuador": {
     "code": "EC",
     "continent": "South America",
-    "colors": ["yellow", "blue", "red"],
-    "color_count": 3,
+    "colors": ["yellow", "blue", "red", "white", "green", "brown", "gold"],
+    "color_count": 7,
     "layout": "horizontal_triband",
     "attributes": [
       { "element": "horizontal_triband", "proportions": "2:1:1" },
       { "element": "coat_of_arms", "position": "center" },
-      { "element": "condor" }
-    ]
+      {
+        "element": "condor",
+        "type": "andean",
+        "symbolism": "power, grandeur, strength"
+      },
+      { "element": "shield", "type": "oval" },
+      { "element": "mountain", "type": "chimborazo" },
+      { "element": "river", "type": "guayas" },
+      {
+        "element": "ship",
+        "type": "steamship",
+        "name": "Guayas",
+        "note": "first steamship in Ecuador/South America, 1841"
+      },
+      { "element": "caduceus", "symbolism": "commerce and economy" },
+      { "element": "sun", "color": "gold", "type": "zodiac_sun" },
+      {
+        "element": "zodiac_signs",
+        "signs": ["aries", "taurus", "gemini", "cancer"],
+        "symbolism": "March 1845 revolution"
+      },
+      { "element": "flag", "count": 4, "position": "flanking" },
+      { "element": "laurel", "position": "left", "symbolism": "victories" },
+      {
+        "element": "palm",
+        "position": "right",
+        "symbolism": "martyrs of independence"
+      },
+      {
+        "element": "fasces",
+        "position": "below",
+        "symbolism": "republican dignity"
+      }
+    ],
+    "notes": "Final design completed in 1900"
   },
   "Egypt": {
     "code": "EG",
@@ -636,13 +799,55 @@
   "El Salvador": {
     "code": "SV",
     "continent": "North America",
-    "colors": ["blue", "white"],
-    "color_count": 2,
+    "colors": ["blue", "white", "green", "gold", "red"],
+    "color_count": 5,
     "layout": "horizontal_triband",
     "attributes": [
       { "element": "horizontal_triband" },
       { "element": "coat_of_arms", "position": "center" },
-      { "element": "motto" }
+      {
+        "element": "triangle",
+        "color": "gold",
+        "symbolism": "equality, fraternity, liberty"
+      },
+      {
+        "element": "mountain",
+        "type": "volcanoes",
+        "count": 5,
+        "symbolism": "five Central American nations"
+      },
+      { "element": "sea", "type": "ocean" },
+      {
+        "element": "phrygian_cap",
+        "color": "red",
+        "position": "on staff",
+        "symbolism": "liberty"
+      },
+      { "element": "sun", "color": "gold", "position": "behind cap" },
+      { "element": "rainbow", "symbolism": "peace" },
+      { "element": "flag", "count": 5, "position": "behind triangle" },
+      {
+        "element": "spear",
+        "count": 5,
+        "type": "golden",
+        "symbolism": "indigenous heritage"
+      },
+      { "element": "laurel", "count": 14, "symbolism": "14 departments" },
+      {
+        "element": "motto",
+        "text": "Dios, Unión, Libertad",
+        "translation": "God, Union, Liberty"
+      },
+      {
+        "element": "latin_script",
+        "text": "15 DE SEPTIEMBRE DE 1821",
+        "type": "date"
+      },
+      {
+        "element": "latin_script",
+        "text": "REPÚBLICA DE EL SALVADOR EN LA AMÉRICA CENTRAL",
+        "position": "encircling"
+      }
     ]
   },
   "Equatorial Guinea": {
@@ -820,17 +1025,28 @@
   "Guatemala": {
     "code": "GT",
     "continent": "North America",
-    "colors": ["blue", "white"],
-    "color_count": 2,
+    "colors": ["blue", "white", "green", "gold", "brown"],
+    "color_count": 5,
     "layout": "vertical_triband",
     "attributes": [
       { "element": "vertical_triband" },
       { "element": "coat_of_arms", "position": "center" },
-      { "element": "quetzal" },
-      { "element": "laurel" },
-      { "element": "rifle", "count": 2 },
-      { "element": "sword", "count": 2 }
-    ]
+      { "element": "quetzal", "symbolism": "liberty and independence" },
+      {
+        "element": "scroll",
+        "text": "LIBERTAD 15 DE SEPTIEMBRE DE 1821",
+        "symbolism": "independence date"
+      },
+      {
+        "element": "rifle",
+        "count": 2,
+        "type": "remington_with_bayonet",
+        "symbolism": "defense of sovereignty"
+      },
+      { "element": "sword", "count": 2, "symbolism": "honor" },
+      { "element": "laurel", "type": "wreath", "symbolism": "victory" }
+    ],
+    "notes": "Coat of arms adopted November 18, 1871"
   },
   "Guinea": {
     "code": "GN",
@@ -1260,23 +1476,27 @@
   "Malta": {
     "code": "MT",
     "continent": "Europe",
-    "colors": ["white", "red", "blue", "gold"],
-    "color_count": 4,
+    "colors": ["white", "red", "gray"],
+    "color_count": 3,
     "layout": "vertical_biband",
     "attributes": [
       { "element": "vertical_biband" },
-      { "element": "george_cross", "position": "canton" },
+      { "element": "george_cross", "position": "canton", "color": "gray" },
       { "element": "christian_cross" },
       {
         "element": "motto",
         "text": "FOR GALLANTRY",
         "translation": "For Gallantry"
       },
-      { "element": "human_figure", "type": "saint_george" },
-      { "element": "horse" },
-      { "element": "sword" },
-      { "element": "dragon" }
-    ]
+      {
+        "element": "human_figure",
+        "type": "saint_george",
+        "context": "george_cross_detail"
+      },
+      { "element": "horse", "context": "george_cross_detail" },
+      { "element": "sword", "context": "george_cross_detail" }
+    ],
+    "notes": "George Cross awarded in 1942 for WWII bravery; details (St. George, horse, sword) are miniature elements within the cross"
   },
   "Marshall Islands": {
     "code": "MH",
@@ -1319,16 +1539,34 @@
   "Mexico": {
     "code": "MX",
     "continent": "North America",
-    "colors": ["green", "white", "red", "brown"],
-    "color_count": 4,
+    "colors": ["green", "white", "red", "brown", "gold"],
+    "color_count": 5,
     "layout": "vertical_triband",
     "attributes": [
       { "element": "vertical_triband" },
       { "element": "coat_of_arms", "position": "center" },
-      { "element": "eagle" },
-      { "element": "serpent" },
-      { "element": "cactus" }
-    ]
+      {
+        "element": "eagle",
+        "type": "golden_eagle",
+        "position": "perched on cactus",
+        "symbolism": "Aztec legend of Tenochtitlan"
+      },
+      {
+        "element": "serpent",
+        "type": "rattlesnake",
+        "position": "in eagle's beak and talons"
+      },
+      { "element": "cactus", "type": "nopal", "position": "on island in lake" },
+      { "element": "lake", "type": "texcoco", "position": "beneath cactus" },
+      { "element": "oak", "position": "left wreath" },
+      { "element": "laurel", "position": "right wreath" },
+      {
+        "element": "ribbon",
+        "color": "green_white_red",
+        "position": "tying wreath"
+      }
+    ],
+    "notes": "Coat of arms depicts Aztec legend of founding Mexico City"
   },
   "Micronesia": {
     "code": "FM",
@@ -1495,13 +1733,42 @@
   "Nicaragua": {
     "code": "NI",
     "continent": "North America",
-    "colors": ["blue", "white"],
-    "color_count": 2,
+    "colors": ["blue", "white", "green", "yellow", "red", "gold"],
+    "color_count": 6,
     "layout": "horizontal_triband",
     "attributes": [
       { "element": "horizontal_triband" },
       { "element": "coat_of_arms", "position": "center" },
-      { "element": "triangle" }
+      { "element": "triangle", "color": "gold", "border": "gold" },
+      { "element": "rainbow", "symbolism": "peace and hope" },
+      {
+        "element": "phrygian_cap",
+        "color": "red",
+        "position": "center triangle",
+        "symbolism": "liberty"
+      },
+      {
+        "element": "mountain",
+        "count": 5,
+        "type": "volcanoes",
+        "symbolism": "five Central American nations"
+      },
+      {
+        "element": "sea",
+        "count": 2,
+        "type": "oceans",
+        "symbolism": "Pacific and Atlantic"
+      },
+      {
+        "element": "latin_script",
+        "text": "REPUBLICA DE NICARAGUA",
+        "position": "upper arc"
+      },
+      {
+        "element": "latin_script",
+        "text": "AMERICA CENTRAL",
+        "position": "lower arc"
+      }
     ]
   },
   "Niger": {
@@ -1616,7 +1883,12 @@
     "layout": "diagonal_division",
     "attributes": [
       { "element": "diagonal_division" },
-      { "element": "constellation", "type": "southern_cross", "count": 5 },
+      {
+        "element": "constellation",
+        "type": "southern_cross",
+        "count": 5,
+        "note": "celestial constellation, not a heraldic cross"
+      },
       { "element": "multiple_stars", "count": 5 },
       { "element": "bird_of_paradise", "color": "yellow" }
     ]
@@ -1624,16 +1896,47 @@
   "Paraguay": {
     "code": "PY",
     "continent": "South America",
-    "colors": ["red", "white", "blue"],
-    "color_count": 3,
+    "colors": ["red", "white", "blue", "yellow", "green", "brown"],
+    "color_count": 6,
     "layout": "horizontal_triband",
+    "has_distinct_sides": true,
     "attributes": [
       { "element": "horizontal_triband" },
-      { "element": "coat_of_arms", "position": "center" },
-      { "element": "single_star" },
-      { "element": "lion" },
-      { "element": "olive_branch" }
-    ]
+      { "element": "coat_of_arms", "position": "center", "side": "recto" },
+      {
+        "element": "single_star",
+        "color": "yellow",
+        "side": "recto",
+        "name": "Star of May"
+      },
+      { "element": "palm", "side": "recto" },
+      { "element": "olive_branch", "side": "recto" }
+    ],
+    "verso": {
+      "description": "Treasury Seal (Sello del Tesoro)",
+      "attributes": [
+        {
+          "element": "lion",
+          "color": "yellow",
+          "position": "center",
+          "symbolism": "courage and strength"
+        },
+        {
+          "element": "phrygian_cap",
+          "color": "red",
+          "position": "on pike",
+          "symbolism": "liberty"
+        },
+        {
+          "element": "banner_text",
+          "text": "Paz y Justicia",
+          "color": "red",
+          "translation": "Peace and Justice"
+        },
+        { "element": "laurel", "position": "wreath" }
+      ]
+    },
+    "notes": "Only national flag with different emblems on obverse (recto) and reverse (verso)"
   },
   "Peru": {
     "code": "PE",
@@ -1767,7 +2070,12 @@
     "attributes": [
       { "element": "plain_field", "color": "red" },
       { "element": "canton", "color": "blue" },
-      { "element": "constellation", "type": "southern_cross", "count": 5 },
+      {
+        "element": "constellation",
+        "type": "southern_cross",
+        "count": 5,
+        "note": "celestial constellation, not a heraldic cross"
+      },
       { "element": "multiple_stars", "count": 5 }
     ]
   },
@@ -1859,8 +2167,12 @@
     "attributes": [
       { "element": "horizontal_biband" },
       { "element": "crescent", "color": "white" },
-      { "element": "multiple_stars", "count": 5, "color": "white" },
-      { "element": "stars_circle" }
+      {
+        "element": "multiple_stars",
+        "count": 5,
+        "color": "white",
+        "arrangement": "pentagon"
+      }
     ]
   },
   "Slovakia": {
