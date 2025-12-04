@@ -48,7 +48,7 @@
       { "element": "coat_of_arms", "position": "center" },
       { "element": "cow_bull", "type": "cattle", "count": 2 },
       { "element": "crown" },
-      { "element": "motto", "text": "VIRTUS UNITA FORTIOR" }
+      { "element": "motto", "text": "VIRTUS UNITA FORTIOR", "translation": "United Virtue is Stronger" }
     ]
   },
   "Angola": {
@@ -211,7 +211,7 @@
       { "element": "hammer" },
       { "element": "oar" },
       { "element": "laurel" },
-      { "element": "motto", "text": "SUB UMBRA FLOREO" }
+      { "element": "motto", "text": "SUB UMBRA FLOREO", "translation": "Under the Shade I Flourish" }
     ]
   },
   "Benin": {
@@ -279,8 +279,7 @@
       { "element": "disk", "color": "blue" },
       { "element": "constellation", "count": 27 },
       { "element": "multiple_stars", "count": 27 },
-      { "element": "banner_text", "text": "ORDEM E PROGRESSO" },
-      { "element": "motto" }
+      { "element": "motto", "text": "ORDEM E PROGRESSO", "translation": "Order and Progress" }
     ]
   },
   "Brunei": {
@@ -870,7 +869,8 @@
       { "element": "drum" },
       { "element": "trumpet" },
       { "element": "anchor" },
-      { "element": "motto", "text": "L'UNION FAIT LA FORCE" }
+      { "element": "phrygian_cap", "type": "liberty_cap" },
+      { "element": "motto", "text": "L'UNION FAIT LA FORCE", "translation": "Unity Makes Strength" }
     ]
   },
   "Honduras": {
@@ -1614,12 +1614,19 @@
   "Peru": {
     "code": "PE",
     "continent": "South America",
-    "colors": ["red", "white"],
-    "color_count": 2,
+    "colors": ["red", "white", "green", "gold", "blue"],
+    "color_count": 5,
     "layout": "vertical_triband",
     "attributes": [
       { "element": "vertical_triband" },
-      { "element": "coat_of_arms", "position": "center", "optional": true }
+      { "element": "coat_of_arms", "position": "center" },
+      { "element": "shield" },
+      { "element": "vicuna", "type": "camelid" },
+      { "element": "cinchona_tree", "type": "tree" },
+      { "element": "cornucopia", "type": "horn_of_plenty" },
+      { "element": "laurel", "type": "wreath" },
+      { "element": "palm", "type": "branch" },
+      { "element": "coins", "type": "gold_silver" }
     ]
   },
   "Philippines": {
@@ -2223,7 +2230,6 @@
     "layout": "horizontal_triband",
     "attributes": [
       { "element": "horizontal_triband" },
-      { "element": "fimbriation", "color": "red" },
       { "element": "crescent", "color": "white" },
       { "element": "multiple_stars", "count": 12, "color": "white" }
     ]

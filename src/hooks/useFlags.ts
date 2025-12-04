@@ -208,6 +208,16 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
     return false;
   }
   
+  // ===== OTHER BANDS FILTER (non-triband layouts) =====
+  if (categoryId === 'band_layouts' && elementId === 'other_bands') {
+    const otherBandLayouts = [
+      'horizontal_biband', 'vertical_biband', 'multiple_horizontal_stripes',
+      'diagonal_division', 'diagonal_band'
+    ];
+    return otherBandLayouts.some(l => layout.toLowerCase().includes(l.toLowerCase())) ||
+           elements.some(e => otherBandLayouts.some(l => e.toLowerCase().includes(l.toLowerCase())));
+  }
+  
   // ===== STAR COUNT FILTER =====
   if (categoryId === 'star_count') {
     const starCount = countStars(attributes);
@@ -463,7 +473,9 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
       'human_figure': ['human_figure', 'human', 'figure'],
       'worker': ['worker', 'laborer'],
       'warrior': ['warrior', 'soldier'],
-      'supporters': ['supporters', 'human_figure']
+      'supporters': ['supporters', 'human_figure'],
+      'hands': ['hands', 'hand'],
+      'phrygian_cap': ['phrygian_cap', 'liberty_cap', 'bonnet']
     };
     
     const mappedHuman = humanMappings[elementId] || [elementId];

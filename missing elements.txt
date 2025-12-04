@@ -1,6 +1,17 @@
 # Missing Elements - Updated
 
-## FIXED:
+## FIXED (Session 2):
+# - Peru: added full coat of arms (vicuña, cinchona tree, cornucopia, laurel, palm, coins)
+# - Uzbekistan: removed incorrect fimbriation
+# - Haiti: added phrygian_cap (bonnet phrygien), added motto translation
+# - Added phrygian_cap to taxonomy under People
+# - Brazil: fixed motto with translation "Order and Progress"
+# - Andorra: added motto translation "United Virtue is Stronger"
+# - Belize: added motto translation "Under the Shade I Flourish"
+# - Mobile filters: new quick filters (3 vertical, 3 horizontal, other bands, colors, animals, weapons, flora, motto)
+# - Mobile filters: greyed out components hidden, filters apply instantly
+
+## FIXED (Session 1):
 # - Malta: added horse, human_figure (saint_george), sword, motto "FOR GALLANTRY", dragon
 # - Brunei: added hand, people (supporters), wings, umbrella, motto
 # - Mongolia: added circle, triangle, rectangle, yin-yang (taijitu), crescent, flame
@@ -11,4 +22,5 @@
 # - Search now works in French and supports keyword search (elements, colors)
 
 ## REMAINING TO CHECK:
-# (none currently - all items addressed)
+# - Cyprus is in olive_branch (correct - not tree category)
+# - All mottos now have translations

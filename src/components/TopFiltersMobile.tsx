@@ -8,19 +8,26 @@ import type { Taxonomy, ActiveFilter } from "../types";
 
 const taxonomyData = taxonomy as Taxonomy;
 
-// Quick access filters for mobile
-const quickFilters = {
-  colors:
-    taxonomyData.categories
-      .find((c) => c.id === "colors")
-      ?.subcategories[0]?.elements.slice(0, 8) || [],
-  continents: [
-    { id: "africa", label_en: "Africa", label_fr: "Afrique" },
-    { id: "asia", label_en: "Asia", label_fr: "Asie" },
-    { id: "europe", label_en: "Europe", label_fr: "Europe" },
-    { id: "north_america", label_en: "N. America", label_fr: "Am. Nord" },
-    { id: "south_america", label_en: "S. America", label_fr: "Am. Sud" },
-    { id: "oceania", label_en: "Oceania", label_fr: "Océanie" },
+// Quick filter definitions - shown directly without toggle panel
+const quickFilterConfig = {
+  layouts: [
+    { id: "vertical_triband", label_en: "3 Vertical", label_fr: "3 Verticales", category: "band_layouts" },
+    { id: "horizontal_triband", label_en: "3 Horizontal", label_fr: "3 Horizontales", category: "band_layouts" },
+    { id: "other_bands", label_en: "Other Bands", label_fr: "Autres Bandes", category: "band_layouts" },
+  ],
+  colors: [
+    { id: "blue", label_en: "Blue", label_fr: "Bleu", hex: "#2563EB" },
+    { id: "white", label_en: "White", label_fr: "Blanc", hex: "#FFFFFF" },
+    { id: "red", label_en: "Red", label_fr: "Rouge", hex: "#DC2626" },
+    { id: "yellow", label_en: "Yellow", label_fr: "Jaune", hex: "#FCD34D" },
+    { id: "black", label_en: "Black", label_fr: "Noir", hex: "#1F2937" },
+  ],
+  elements: [
+    { id: "animals", label_en: "Animals", label_fr: "Animaux", category: "main_category" },
+    { id: "rifle", label_en: "Firearms", label_fr: "Armes à feu", category: "ranged" },
+    { id: "weapons", label_en: "Weapons", label_fr: "Armes", category: "main_category" },
+    { id: "flora", label_en: "Flora", label_fr: "Flore", category: "main_category" },
+    { id: "motto", label_en: "Motto/Text", label_fr: "Devise/Texte", category: "inscriptions" },
   ],
 };
 
@@ -52,6 +59,16 @@ export function TopFiltersMobile() {
     }
   };
 
+  // Handle "other bands" filter - matches flags with band layouts that aren't triband
+  const handleOtherBandsClick = () => {
+    const filter: ActiveFilter = { categoryId: "band_layouts", elementId: "other_bands" };
+    if (isFilterActive("band_layouts", "other_bands")) {
+      removeFilter(filter);
+    } else {
+      addFilter(filter);
+    }
+  };
+
   return (
     <div className="lg:hidden sticky top-16 z-20 bg-[var(--color-bg)] border-b border-[var(--color-border)]">
       {/* Filter Toggle & Active Filters Count */}
@@ -63,13 +80,8 @@ export function TopFiltersMobile() {
         >
           <Filter className="w-4 h-4" />
           <span className="text-sm font-medium">
-            {language === "fr" ? "Filtres" : "Filters"}
+            {language === "fr" ? "Plus de filtres" : "More Filters"}
           </span>
-          {activeFilters.length > 0 && (
-            <span className="px-1.5 py-0.5 text-xs font-medium bg-primary-500 text-white rounded-full">
-              {activeFilters.length}
-            </span>
-          )}
           <ChevronRight className="w-4 h-4" />
         </button>
 
@@ -84,25 +96,34 @@ export function TopFiltersMobile() {
       </div>
 
       {/* Quick Filters - Horizontal Scroll */}
-      <div className="px-4 py-3 overflow-x-auto scrollbar-hide">
-        {/* Continents Row */}
-        <div className="mb-3">
+      <div className="px-4 py-3 overflow-x-auto scrollbar-hide space-y-3">
+        {/* Layout Row */}
+        <div>
           <p className="text-xs font-medium text-[var(--color-text-secondary)] mb-2">
-            {language === "fr" ? "Continents" : "Continents"}
+            {language === "fr" ? "Disposition" : "Layout"}
           </p>
           <div className="flex gap-2">
-            {quickFilters.continents.map((continent) => {
-              const isActive = isFilterActive("continents", continent.id);
-              const isDisabled =
-                !isActive && !getAvailableFilters("continents", continent.id);
-
+            {quickFilterConfig.layouts.map((layout) => {
+              if (layout.id === "other_bands") {
+                const isActive = isFilterActive("band_layouts", "other_bands");
+                return (
+                  <FilterButton
+                    key={layout.id}
+                    label={layout[lang]}
+                    isActive={isActive}
+                    isDisabled={false}
+                    onClick={handleOtherBandsClick}
+                  />
+                );
+              }
+              const isActive = isFilterActive(layout.category, layout.id);
               return (
                 <FilterButton
-                  key={continent.id}
-                  label={continent[lang]}
+                  key={layout.id}
+                  label={layout[lang]}
                   isActive={isActive}
-                  isDisabled={isDisabled}
-                  onClick={() => handleFilterClick("continents", continent.id)}
+                  isDisabled={false}
+                  onClick={() => handleFilterClick(layout.category, layout.id)}
                 />
               );
             })}
@@ -115,19 +136,37 @@ export function TopFiltersMobile() {
             {language === "fr" ? "Couleurs" : "Colors"}
           </p>
           <div className="flex gap-2">
-            {quickFilters.colors.map((color) => {
-              const isActive = isFilterActive("basic_colors", color.id);
-              const isDisabled =
-                !isActive && !getAvailableFilters("basic_colors", color.id);
-
+            {quickFilterConfig.colors.map((color) => {
+              const isActive = isFilterActive("primary_colors", color.id);
               return (
                 <ColorFilterButton
                   key={color.id}
                   label={color[lang]}
-                  colorValue={color.id}
+                  colorValue={color.hex}
                   isActive={isActive}
-                  isDisabled={isDisabled}
-                  onClick={() => handleFilterClick("basic_colors", color.id)}
+                  isDisabled={false}
+                  onClick={() => handleFilterClick("primary_colors", color.id)}
+                />
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Elements Row */}
+        <div>
+          <p className="text-xs font-medium text-[var(--color-text-secondary)] mb-2">
+            {language === "fr" ? "Éléments" : "Elements"}
+          </p>
+          <div className="flex gap-2">
+            {quickFilterConfig.elements.map((element) => {
+              const isActive = isFilterActive(element.category, element.id);
+              return (
+                <FilterButton
+                  key={element.id}
+                  label={element[lang]}
+                  isActive={isActive}
+                  isDisabled={false}
+                  onClick={() => handleFilterClick(element.category, element.id)}
                 />
               );
             })}
@@ -200,20 +239,12 @@ function MobileFiltersPanel() {
   };
 
   const continents = [
-    { id: "africa", label_en: "Africa", label_fr: "Afrique" },
-    { id: "asia", label_en: "Asia", label_fr: "Asie" },
-    { id: "europe", label_en: "Europe", label_fr: "Europe" },
-    {
-      id: "north_america",
-      label_en: "North America",
-      label_fr: "Amérique du Nord",
-    },
-    {
-      id: "south_america",
-      label_en: "South America",
-      label_fr: "Amérique du Sud",
-    },
-    { id: "oceania", label_en: "Oceania", label_fr: "Océanie" },
+    { id: "Africa", label_en: "Africa", label_fr: "Afrique" },
+    { id: "Asia", label_en: "Asia", label_fr: "Asie" },
+    { id: "Europe", label_en: "Europe", label_fr: "Europe" },
+    { id: "North America", label_en: "North America", label_fr: "Amérique du Nord" },
+    { id: "South America", label_en: "South America", label_fr: "Amérique du Sud" },
+    { id: "Oceania", label_en: "Oceania", label_fr: "Océanie" },
   ];
 
   return (
@@ -260,20 +291,16 @@ function MobileFiltersPanel() {
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {continents.map((continent) => {
-                    const isActive = isFilterActive("continents", continent.id);
-                    const isDisabled =
-                      !isActive &&
-                      !getAvailableFilters("continents", continent.id);
+                    const isActive = isFilterActive("regions", continent.id);
+                    const isAvailable = getAvailableFilters("regions", continent.id);
 
                     return (
                       <FilterButton
                         key={continent.id}
                         label={continent[lang]}
                         isActive={isActive}
-                        isDisabled={isDisabled}
-                        onClick={() =>
-                          handleFilterClick("continents", continent.id)
-                        }
+                        isDisabled={!isActive && !isAvailable}
+                        onClick={() => handleFilterClick("regions", continent.id)}
                       />
                     );
                   })}
@@ -281,58 +308,54 @@ function MobileFiltersPanel() {
               </div>
 
               {/* Taxonomy Categories */}
-              {taxonomyData.categories.map((category) => (
-                <div key={category.id}>
-                  <h3 className="text-sm font-semibold text-[var(--color-text)] mb-3">
-                    {category[lang]}
-                  </h3>
-                  {category.subcategories.map((subcategory) => (
-                    <div key={subcategory.id} className="mb-4">
-                      <p className="text-xs text-[var(--color-text-secondary)] mb-2">
-                        {subcategory[lang]}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {subcategory.elements.map((element) => {
-                          const isActive = isFilterActive(
-                            subcategory.id,
-                            element.id
-                          );
-                          const isDisabled =
-                            !isActive &&
-                            !getAvailableFilters(subcategory.id, element.id);
+              {taxonomyData.categories.map((category) => {
+                // Skip categories already shown in quick filters
+                if (["colors", "flag_shape"].includes(category.id)) return null;
+                
+                return (
+                  <div key={category.id}>
+                    <h3 className="text-sm font-semibold text-[var(--color-text)] mb-3">
+                      {category[lang]}
+                    </h3>
+                    {category.subcategories.map((subcategory) => {
+                      const visibleElements = subcategory.elements.filter(
+                        (element) => getAvailableFilters(subcategory.id, element.id) || 
+                          isFilterActive(subcategory.id, element.id)
+                      );
+                      
+                      if (visibleElements.length === 0) return null;
+                      
+                      return (
+                        <div key={subcategory.id} className="mb-4">
+                          <p className="text-xs text-[var(--color-text-secondary)] mb-2">
+                            {subcategory[lang]}
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {visibleElements.map((element) => {
+                              const isActive = isFilterActive(
+                                subcategory.id,
+                                element.id
+                              );
 
-                          if (category.id === "colors") {
-                            return (
-                              <ColorFilterButton
-                                key={element.id}
-                                label={element[lang]}
-                                colorValue={element.id}
-                                isActive={isActive}
-                                isDisabled={isDisabled}
-                                onClick={() =>
-                                  handleFilterClick(subcategory.id, element.id)
-                                }
-                              />
-                            );
-                          }
-
-                          return (
-                            <FilterButton
-                              key={element.id}
-                              label={element[lang]}
-                              isActive={isActive}
-                              isDisabled={isDisabled}
-                              onClick={() =>
-                                handleFilterClick(subcategory.id, element.id)
-                              }
-                            />
-                          );
-                        })}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ))}
+                              return (
+                                <FilterButton
+                                  key={element.id}
+                                  label={element[lang]}
+                                  isActive={isActive}
+                                  isDisabled={false}
+                                  onClick={() =>
+                                    handleFilterClick(subcategory.id, element.id)
+                                  }
+                                />
+                              );
+                            })}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
             </div>
 
             {/* Footer */}
@@ -344,7 +367,7 @@ function MobileFiltersPanel() {
                 onClick={() => setFiltersPanelOpen(false)}
                 className="flex-1 btn-primary"
               >
-                {language === "fr" ? "Appliquer" : "Apply"}
+                {language === "fr" ? "Fermer" : "Close"}
               </button>
             </div>
           </motion.div>

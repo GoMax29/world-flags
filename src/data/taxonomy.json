@@ -386,7 +386,8 @@
             {"id": "worker", "label_en": "Worker/Laborer", "label_fr": "Travailleur/Ouvrier"},
             {"id": "warrior", "label_en": "Warrior/Soldier", "label_fr": "Guerrier/Soldat"},
             {"id": "supporters", "label_en": "Heraldic Supporters", "label_fr": "Supports Héraldiques"},
-            {"id": "hands", "label_en": "Hands", "label_fr": "Mains"}
+            {"id": "hands", "label_en": "Hands", "label_fr": "Mains"},
+            {"id": "phrygian_cap", "label_en": "Phrygian Cap/Liberty Cap", "label_fr": "Bonnet Phrygien"}
           ]
         }
       ]
