@@ -25,7 +25,7 @@ export function getFlagUrlHQ(countryCode: string): string {
 // Alternative: use REST Countries API flags (SVG)
 // Some countries use state flags with emblems instead of civil flags
 const stateFlags: Record<string, string> = {
-  'pe': 'https://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Peru.svg', // Peru with coat of arms
+  'pe': 'https://upload.wikimedia.org/wikipedia/commons/d/df/Flag_of_Peru_%28state%29.svg', // Peru state flag with coat of arms
 };
 
 export function getFlagSvgUrl(countryCode: string): string {

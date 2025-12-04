@@ -1,5 +1,8 @@
 # Missing Elements - Updated
 
+## FIXED (Session 3):
+# - Peru flag: now using state flag with coat of arms (Wikipedia source)
+
 ## FIXED (Session 2):
 # - Peru: added full coat of arms (vicuña, cinchona tree, cornucopia, laurel, palm, coins)
 # - Uzbekistan: removed incorrect fimbriation
@@ -21,6 +24,4 @@
 # - Added leaves category to taxonomy (maple, namale)
 # - Search now works in French and supports keyword search (elements, colors)
 
-## REMAINING TO CHECK:
-# - Cyprus is in olive_branch (correct - not tree category)
-# - All mottos now have translations
+## ALL COMPLETED
