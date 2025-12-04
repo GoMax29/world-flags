@@ -1,0 +1,2317 @@
+{
+  "Afghanistan": {
+    "code": "AF",
+    "continent": "Asia",
+    "colors": ["black", "red", "green", "white", "gold"],
+    "color_count": 5,
+    "layout": "vertical_triband",
+    "attributes": [
+      { "element": "vertical_triband" },
+      { "element": "coat_of_arms", "position": "center" },
+      { "element": "mosque" },
+      { "element": "arabic_script" },
+      { "element": "wheat" }
+    ]
+  },
+  "Albania": {
+    "code": "AL",
+    "continent": "Europe",
+    "colors": ["red", "black"],
+    "color_count": 2,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "red" },
+      { "element": "eagle", "type": "double_headed" }
+    ]
+  },
+  "Algeria": {
+    "code": "DZ",
+    "continent": "Africa",
+    "colors": ["green", "white", "red"],
+    "color_count": 3,
+    "layout": "vertical_biband",
+    "attributes": [
+      { "element": "vertical_biband" },
+      { "element": "crescent", "color": "red" },
+      { "element": "single_star", "points": 5, "color": "red" },
+      { "element": "crescent_star" }
+    ]
+  },
+  "Andorra": {
+    "code": "AD",
+    "continent": "Europe",
+    "colors": ["blue", "yellow", "red", "brown"],
+    "color_count": 4,
+    "layout": "vertical_triband",
+    "attributes": [
+      { "element": "vertical_triband" },
+      { "element": "coat_of_arms", "position": "center" },
+      { "element": "cow_bull", "type": "cattle", "count": 2 },
+      { "element": "crown" },
+      { "element": "motto", "text": "VIRTUS UNITA FORTIOR" }
+    ]
+  },
+  "Angola": {
+    "code": "AO",
+    "continent": "Africa",
+    "colors": ["red", "black", "yellow"],
+    "color_count": 3,
+    "layout": "horizontal_biband",
+    "attributes": [
+      { "element": "horizontal_biband" },
+      { "element": "gear" },
+      { "element": "machete" },
+      { "element": "single_star", "points": 5, "color": "yellow" }
+    ]
+  },
+  "Antigua and Barbuda": {
+    "code": "AG",
+    "continent": "North America",
+    "colors": ["red", "black", "blue", "white", "yellow"],
+    "color_count": 5,
+    "layout": "triangle_hoist",
+    "attributes": [
+      { "element": "triangle_hoist" },
+      { "element": "rising_sun", "color": "yellow" },
+      { "element": "sea" }
+    ]
+  },
+  "Argentina": {
+    "code": "AR",
+    "continent": "South America",
+    "colors": ["light_blue", "white", "gold"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "sun_of_may", "color": "gold" }
+    ]
+  },
+  "Armenia": {
+    "code": "AM",
+    "continent": "Asia",
+    "colors": ["red", "blue", "orange"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [{ "element": "horizontal_triband" }]
+  },
+  "Australia": {
+    "code": "AU",
+    "continent": "Oceania",
+    "colors": ["blue", "red", "white"],
+    "color_count": 3,
+    "layout": "canton",
+    "attributes": [
+      { "element": "canton" },
+      { "element": "union_jack" },
+      { "element": "constellation", "type": "southern_cross", "count": 5 },
+      { "element": "single_star", "points": 7, "type": "commonwealth_star" },
+      { "element": "multiple_stars", "count": 6 }
+    ]
+  },
+  "Austria": {
+    "code": "AT",
+    "continent": "Europe",
+    "colors": ["red", "white"],
+    "color_count": 2,
+    "layout": "horizontal_triband",
+    "attributes": [{ "element": "horizontal_triband" }]
+  },
+  "Azerbaijan": {
+    "code": "AZ",
+    "continent": "Asia",
+    "colors": ["blue", "red", "green", "white"],
+    "color_count": 4,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "crescent", "color": "white" },
+      { "element": "single_star", "points": 8, "color": "white" },
+      { "element": "crescent_star" }
+    ]
+  },
+  "Bahamas": {
+    "code": "BS",
+    "continent": "North America",
+    "colors": ["aquamarine", "yellow", "black"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "triangle_hoist", "color": "black" }
+    ]
+  },
+  "Bahrain": {
+    "code": "BH",
+    "continent": "Asia",
+    "colors": ["white", "red"],
+    "color_count": 2,
+    "layout": "vertical_biband",
+    "attributes": [
+      { "element": "vertical_biband" },
+      { "element": "serrated", "points": 5 }
+    ]
+  },
+  "Bangladesh": {
+    "code": "BD",
+    "continent": "Asia",
+    "colors": ["green", "red"],
+    "color_count": 2,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "green" },
+      { "element": "disk", "color": "red" }
+    ]
+  },
+  "Barbados": {
+    "code": "BB",
+    "continent": "North America",
+    "colors": ["blue", "gold", "black"],
+    "color_count": 3,
+    "layout": "vertical_triband",
+    "attributes": [
+      { "element": "vertical_triband" },
+      { "element": "trident", "color": "black" }
+    ]
+  },
+  "Belarus": {
+    "code": "BY",
+    "continent": "Europe",
+    "colors": ["red", "green", "white"],
+    "color_count": 3,
+    "layout": "horizontal_biband",
+    "attributes": [
+      { "element": "horizontal_biband" },
+      { "element": "folk_pattern", "position": "hoist" }
+    ]
+  },
+  "Belgium": {
+    "code": "BE",
+    "continent": "Europe",
+    "colors": ["black", "yellow", "red"],
+    "color_count": 3,
+    "layout": "vertical_triband",
+    "attributes": [{ "element": "vertical_triband" }]
+  },
+  "Belize": {
+    "code": "BZ",
+    "continent": "North America",
+    "colors": ["blue", "red", "white", "green", "brown", "yellow"],
+    "color_count": 6,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "blue" },
+      { "element": "disk", "color": "white" },
+      { "element": "coat_of_arms" },
+      { "element": "human_figure", "count": 2 },
+      { "element": "mahogany" },
+      { "element": "ship" },
+      { "element": "axe" },
+      { "element": "saw" },
+      { "element": "hammer" },
+      { "element": "oar" },
+      { "element": "laurel" },
+      { "element": "motto", "text": "SUB UMBRA FLOREO" }
+    ]
+  },
+  "Benin": {
+    "code": "BJ",
+    "continent": "Africa",
+    "colors": ["green", "yellow", "red"],
+    "color_count": 3,
+    "layout": "vertical_biband",
+    "attributes": [
+      { "element": "horizontal_biband", "position": "fly" },
+      { "element": "vertical_band", "position": "hoist", "color": "green" }
+    ]
+  },
+  "Bhutan": {
+    "code": "BT",
+    "continent": "Asia",
+    "colors": ["yellow", "orange", "white"],
+    "color_count": 3,
+    "layout": "diagonal_division",
+    "attributes": [
+      { "element": "diagonal_division" },
+      { "element": "dragon", "color": "white" }
+    ]
+  },
+  "Bolivia": {
+    "code": "BO",
+    "continent": "South America",
+    "colors": ["red", "yellow", "green"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "coat_of_arms", "position": "center", "optional": true }
+    ]
+  },
+  "Bosnia and Herzegovina": {
+    "code": "BA",
+    "continent": "Europe",
+    "colors": ["blue", "yellow", "white"],
+    "color_count": 3,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "blue" },
+      { "element": "triangle", "color": "yellow" },
+      { "element": "multiple_stars", "count": 9, "color": "white" }
+    ]
+  },
+  "Botswana": {
+    "code": "BW",
+    "continent": "Africa",
+    "colors": ["light_blue", "white", "black"],
+    "color_count": 3,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [{ "element": "multiple_horizontal_stripes", "count": 5 }]
+  },
+  "Brazil": {
+    "code": "BR",
+    "continent": "South America",
+    "colors": ["green", "yellow", "blue", "white"],
+    "color_count": 4,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "green" },
+      { "element": "diamond", "color": "yellow" },
+      { "element": "disk", "color": "blue" },
+      { "element": "constellation", "count": 27 },
+      { "element": "multiple_stars", "count": 27 },
+      { "element": "banner_text", "text": "ORDEM E PROGRESSO" },
+      { "element": "motto" }
+    ]
+  },
+  "Brunei": {
+    "code": "BN",
+    "continent": "Asia",
+    "colors": ["yellow", "white", "black", "red"],
+    "color_count": 4,
+    "layout": "diagonal_band",
+    "attributes": [
+      { "element": "plain_field", "color": "yellow" },
+      { "element": "diagonal_band", "colors": ["white", "black"] },
+      { "element": "coat_of_arms", "position": "center" },
+      { "element": "arabic_script" },
+      { "element": "crescent" },
+      { "element": "wings" },
+      { "element": "hands", "count": 2 },
+      { "element": "human_figure", "type": "supporters" },
+      { "element": "umbrella", "type": "royal_umbrella" },
+      { "element": "banner_text" },
+      { "element": "motto", "text": "الدائمون المحسنون بالهدى", "translation": "Always in service with guidance" }
+    ]
+  },
+  "Bulgaria": {
+    "code": "BG",
+    "continent": "Europe",
+    "colors": ["white", "green", "red"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [{ "element": "horizontal_triband" }]
+  },
+  "Burkina Faso": {
+    "code": "BF",
+    "continent": "Africa",
+    "colors": ["red", "green", "yellow"],
+    "color_count": 3,
+    "layout": "horizontal_biband",
+    "attributes": [
+      { "element": "horizontal_biband" },
+      { "element": "single_star", "points": 5, "color": "yellow" }
+    ]
+  },
+  "Burundi": {
+    "code": "BI",
+    "continent": "Africa",
+    "colors": ["red", "green", "white"],
+    "color_count": 3,
+    "layout": "saltire",
+    "attributes": [
+      { "element": "saltire", "color": "white" },
+      { "element": "disk", "color": "white" },
+      { "element": "multiple_stars", "count": 3, "color": "red" }
+    ]
+  },
+  "Cabo Verde": {
+    "code": "CV",
+    "continent": "Africa",
+    "colors": ["blue", "white", "red", "yellow"],
+    "color_count": 4,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [
+      { "element": "multiple_horizontal_stripes", "count": 5 },
+      { "element": "stars_circle", "count": 10, "color": "yellow" },
+      { "element": "multiple_stars", "count": 10 }
+    ]
+  },
+  "Cambodia": {
+    "code": "KH",
+    "continent": "Asia",
+    "colors": ["blue", "red", "white"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "angkor_wat", "color": "white" },
+      { "element": "temple" }
+    ]
+  },
+  "Cameroon": {
+    "code": "CM",
+    "continent": "Africa",
+    "colors": ["green", "red", "yellow"],
+    "color_count": 3,
+    "layout": "vertical_triband",
+    "attributes": [
+      { "element": "vertical_triband" },
+      { "element": "single_star", "points": 5, "color": "yellow" }
+    ]
+  },
+  "Canada": {
+    "code": "CA",
+    "continent": "North America",
+    "colors": ["red", "white"],
+    "color_count": 2,
+    "layout": "vertical_triband",
+    "attributes": [
+      { "element": "vertical_triband", "proportions": "1:2:1" },
+      { "element": "maple_leaf", "color": "red" }
+    ]
+  },
+  "Central African Republic": {
+    "code": "CF",
+    "continent": "Africa",
+    "colors": ["blue", "white", "green", "yellow", "red"],
+    "color_count": 5,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [
+      { "element": "multiple_horizontal_stripes", "count": 4 },
+      { "element": "vertical_band", "color": "red", "position": "center" },
+      { "element": "single_star", "color": "yellow", "position": "canton" }
+    ]
+  },
+  "Chad": {
+    "code": "TD",
+    "continent": "Africa",
+    "colors": ["blue", "yellow", "red"],
+    "color_count": 3,
+    "layout": "vertical_triband",
+    "attributes": [{ "element": "vertical_triband" }]
+  },
+  "Chile": {
+    "code": "CL",
+    "continent": "South America",
+    "colors": ["white", "red", "blue"],
+    "color_count": 3,
+    "layout": "horizontal_biband",
+    "attributes": [
+      { "element": "horizontal_biband" },
+      { "element": "canton", "color": "blue" },
+      { "element": "single_star", "points": 5, "color": "white" }
+    ]
+  },
+  "China": {
+    "code": "CN",
+    "continent": "Asia",
+    "colors": ["red", "yellow"],
+    "color_count": 2,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "red" },
+      {
+        "element": "single_star",
+        "points": 5,
+        "color": "yellow",
+        "size": "large"
+      },
+      {
+        "element": "multiple_stars",
+        "count": 4,
+        "color": "yellow",
+        "position": "arc"
+      },
+      { "element": "stars_arc" }
+    ]
+  },
+  "Colombia": {
+    "code": "CO",
+    "continent": "South America",
+    "colors": ["yellow", "blue", "red"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [{ "element": "horizontal_triband", "proportions": "2:1:1" }]
+  },
+  "Comoros": {
+    "code": "KM",
+    "continent": "Africa",
+    "colors": ["yellow", "white", "red", "blue", "green"],
+    "color_count": 5,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [
+      { "element": "multiple_horizontal_stripes", "count": 4 },
+      { "element": "triangle_hoist", "color": "green" },
+      { "element": "crescent", "color": "white" },
+      { "element": "multiple_stars", "count": 4, "color": "white" },
+      { "element": "crescent_star" }
+    ]
+  },
+  "Congo (Democratic Republic)": {
+    "code": "CD",
+    "continent": "Africa",
+    "colors": ["blue", "red", "yellow"],
+    "color_count": 3,
+    "layout": "diagonal_band",
+    "attributes": [
+      { "element": "plain_field", "color": "blue" },
+      { "element": "diagonal_band", "color": "red", "border": "yellow" },
+      { "element": "single_star", "color": "yellow", "position": "canton" }
+    ]
+  },
+  "Congo (Republic)": {
+    "code": "CG",
+    "continent": "Africa",
+    "colors": ["green", "yellow", "red"],
+    "color_count": 3,
+    "layout": "diagonal_division",
+    "attributes": [
+      { "element": "diagonal_division" },
+      { "element": "diagonal_band", "color": "yellow" }
+    ]
+  },
+  "Costa Rica": {
+    "code": "CR",
+    "continent": "North America",
+    "colors": ["blue", "white", "red"],
+    "color_count": 3,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [
+      { "element": "multiple_horizontal_stripes", "count": 5 },
+      { "element": "coat_of_arms", "position": "center_hoist" }
+    ]
+  },
+  "Côte d'Ivoire": {
+    "code": "CI",
+    "continent": "Africa",
+    "colors": ["orange", "white", "green"],
+    "color_count": 3,
+    "layout": "vertical_triband",
+    "attributes": [{ "element": "vertical_triband" }]
+  },
+  "Croatia": {
+    "code": "HR",
+    "continent": "Europe",
+    "colors": ["red", "white", "blue"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "coat_of_arms", "position": "center" }
+    ]
+  },
+  "Cuba": {
+    "code": "CU",
+    "continent": "North America",
+    "colors": ["blue", "white", "red"],
+    "color_count": 3,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [
+      { "element": "multiple_horizontal_stripes", "count": 5 },
+      { "element": "triangle_hoist", "color": "red" },
+      { "element": "single_star", "points": 5, "color": "white" }
+    ]
+  },
+  "Cyprus": {
+    "code": "CY",
+    "continent": "Europe",
+    "colors": ["white", "copper", "green"],
+    "color_count": 3,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "white" },
+      { "element": "map_silhouette", "color": "copper" },
+      { "element": "olive_branch" }
+    ]
+  },
+  "Czech Republic": {
+    "code": "CZ",
+    "continent": "Europe",
+    "colors": ["white", "red", "blue"],
+    "color_count": 3,
+    "layout": "horizontal_biband",
+    "attributes": [
+      { "element": "horizontal_biband" },
+      { "element": "triangle_hoist", "color": "blue" }
+    ]
+  },
+  "Denmark": {
+    "code": "DK",
+    "continent": "Europe",
+    "colors": ["red", "white"],
+    "color_count": 2,
+    "layout": "nordic_cross",
+    "attributes": [
+      { "element": "nordic_cross", "color": "white" },
+      { "element": "plain_field", "color": "red" }
+    ]
+  },
+  "Djibouti": {
+    "code": "DJ",
+    "continent": "Africa",
+    "colors": ["light_blue", "green", "white", "red"],
+    "color_count": 4,
+    "layout": "horizontal_biband",
+    "attributes": [
+      { "element": "horizontal_biband" },
+      { "element": "triangle_hoist", "color": "white" },
+      { "element": "single_star", "points": 5, "color": "red" }
+    ]
+  },
+  "Dominica": {
+    "code": "DM",
+    "continent": "North America",
+    "colors": ["green", "yellow", "black", "white", "red", "purple"],
+    "color_count": 6,
+    "layout": "cross",
+    "attributes": [
+      { "element": "plain_field", "color": "green" },
+      { "element": "cross", "colors": ["yellow", "black", "white"] },
+      { "element": "disk", "color": "red" },
+      { "element": "parrot", "type": "sisserou" },
+      { "element": "multiple_stars", "count": 10, "color": "green" },
+      { "element": "stars_circle" }
+    ]
+  },
+  "Dominican Republic": {
+    "code": "DO",
+    "continent": "North America",
+    "colors": ["blue", "red", "white"],
+    "color_count": 3,
+    "layout": "quartered",
+    "attributes": [
+      { "element": "quartered" },
+      { "element": "cross", "color": "white" },
+      { "element": "coat_of_arms", "position": "center" }
+    ]
+  },
+  "Ecuador": {
+    "code": "EC",
+    "continent": "South America",
+    "colors": ["yellow", "blue", "red"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband", "proportions": "2:1:1" },
+      { "element": "coat_of_arms", "position": "center" },
+      { "element": "condor" }
+    ]
+  },
+  "Egypt": {
+    "code": "EG",
+    "continent": "Africa",
+    "colors": ["red", "white", "black", "gold"],
+    "color_count": 4,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "eagle", "type": "saladin", "color": "gold" }
+    ]
+  },
+  "El Salvador": {
+    "code": "SV",
+    "continent": "North America",
+    "colors": ["blue", "white"],
+    "color_count": 2,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "coat_of_arms", "position": "center" },
+      { "element": "motto" }
+    ]
+  },
+  "Equatorial Guinea": {
+    "code": "GQ",
+    "continent": "Africa",
+    "colors": ["green", "white", "red", "blue"],
+    "color_count": 4,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "triangle_hoist", "color": "blue" },
+      { "element": "coat_of_arms", "position": "center" },
+      { "element": "multiple_stars", "count": 6, "color": "yellow" }
+    ]
+  },
+  "Eritrea": {
+    "code": "ER",
+    "continent": "Africa",
+    "colors": ["green", "red", "blue", "yellow"],
+    "color_count": 4,
+    "layout": "triangle_hoist",
+    "attributes": [
+      { "element": "triangle_hoist", "color": "red", "size": "large" },
+      { "element": "olive_branch", "color": "yellow" },
+      { "element": "laurel" }
+    ]
+  },
+  "Estonia": {
+    "code": "EE",
+    "continent": "Europe",
+    "colors": ["blue", "black", "white"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [{ "element": "horizontal_triband" }]
+  },
+  "Eswatini": {
+    "code": "SZ",
+    "continent": "Africa",
+    "colors": ["blue", "yellow", "red", "black", "white"],
+    "color_count": 5,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [
+      { "element": "multiple_horizontal_stripes", "count": 5 },
+      { "element": "shield", "position": "center" },
+      { "element": "spear", "count": 2 }
+    ]
+  },
+  "Ethiopia": {
+    "code": "ET",
+    "continent": "Africa",
+    "colors": ["green", "yellow", "red", "blue"],
+    "color_count": 4,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "disk", "color": "blue" },
+      { "element": "single_star", "points": 5, "color": "yellow" },
+      { "element": "sun" }
+    ]
+  },
+  "Fiji": {
+    "code": "FJ",
+    "continent": "Oceania",
+    "colors": ["light_blue", "white", "red", "yellow", "green"],
+    "color_count": 5,
+    "layout": "canton",
+    "attributes": [
+      { "element": "plain_field", "color": "light_blue" },
+      { "element": "canton" },
+      { "element": "union_jack" },
+      { "element": "coat_of_arms" },
+      { "element": "lion" },
+      { "element": "palm" },
+      { "element": "banana_tree" },
+      { "element": "dove" },
+      { "element": "sugar_cane" },
+      { "element": "cocoa" },
+      { "element": "christian_cross", "type": "saint_george" }
+    ]
+  },
+  "Finland": {
+    "code": "FI",
+    "continent": "Europe",
+    "colors": ["white", "blue"],
+    "color_count": 2,
+    "layout": "nordic_cross",
+    "attributes": [
+      { "element": "nordic_cross", "color": "blue" },
+      { "element": "plain_field", "color": "white" }
+    ]
+  },
+  "France": {
+    "code": "FR",
+    "continent": "Europe",
+    "colors": ["blue", "white", "red"],
+    "color_count": 3,
+    "layout": "vertical_triband",
+    "attributes": [{ "element": "vertical_triband" }]
+  },
+  "Gabon": {
+    "code": "GA",
+    "continent": "Africa",
+    "colors": ["green", "yellow", "blue"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [{ "element": "horizontal_triband" }]
+  },
+  "Gambia": {
+    "code": "GM",
+    "continent": "Africa",
+    "colors": ["red", "white", "blue", "green"],
+    "color_count": 4,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [{ "element": "multiple_horizontal_stripes", "count": 5 }]
+  },
+  "Georgia": {
+    "code": "GE",
+    "continent": "Asia",
+    "colors": ["white", "red"],
+    "color_count": 2,
+    "layout": "cross",
+    "attributes": [
+      { "element": "plain_field", "color": "white" },
+      { "element": "cross", "color": "red", "type": "georgian" },
+      { "element": "georgian_crosses", "count": 4 },
+      { "element": "bolnisi_cross" }
+    ]
+  },
+  "Germany": {
+    "code": "DE",
+    "continent": "Europe",
+    "colors": ["black", "red", "gold"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [{ "element": "horizontal_triband" }]
+  },
+  "Ghana": {
+    "code": "GH",
+    "continent": "Africa",
+    "colors": ["red", "yellow", "green", "black"],
+    "color_count": 4,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "single_star", "points": 5, "color": "black" }
+    ]
+  },
+  "Greece": {
+    "code": "GR",
+    "continent": "Europe",
+    "colors": ["blue", "white"],
+    "color_count": 2,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [
+      { "element": "multiple_horizontal_stripes", "count": 9 },
+      { "element": "canton", "color": "blue" },
+      { "element": "cross", "color": "white" }
+    ]
+  },
+  "Grenada": {
+    "code": "GD",
+    "continent": "North America",
+    "colors": ["red", "yellow", "green"],
+    "color_count": 3,
+    "layout": "border",
+    "attributes": [
+      { "element": "border", "color": "red" },
+      { "element": "diagonal_division", "colors": ["yellow", "green"] },
+      { "element": "disk", "color": "red" },
+      { "element": "single_star", "points": 6, "color": "yellow" },
+      { "element": "multiple_stars", "count": 6, "color": "yellow" },
+      { "element": "nutmeg" }
+    ]
+  },
+  "Guatemala": {
+    "code": "GT",
+    "continent": "North America",
+    "colors": ["blue", "white"],
+    "color_count": 2,
+    "layout": "vertical_triband",
+    "attributes": [
+      { "element": "vertical_triband" },
+      { "element": "coat_of_arms", "position": "center" },
+      { "element": "quetzal" },
+      { "element": "laurel" },
+      { "element": "rifle", "count": 2 },
+      { "element": "sword", "count": 2 }
+    ]
+  },
+  "Guinea": {
+    "code": "GN",
+    "continent": "Africa",
+    "colors": ["red", "yellow", "green"],
+    "color_count": 3,
+    "layout": "vertical_triband",
+    "attributes": [{ "element": "vertical_triband" }]
+  },
+  "Guinea-Bissau": {
+    "code": "GW",
+    "continent": "Africa",
+    "colors": ["yellow", "green", "red", "black"],
+    "color_count": 4,
+    "layout": "horizontal_biband",
+    "attributes": [
+      { "element": "horizontal_biband" },
+      { "element": "vertical_band", "color": "red", "position": "hoist" },
+      { "element": "single_star", "points": 5, "color": "black" }
+    ]
+  },
+  "Guyana": {
+    "code": "GY",
+    "continent": "South America",
+    "colors": ["green", "yellow", "white", "red", "black"],
+    "color_count": 5,
+    "layout": "triangle_hoist",
+    "attributes": [
+      { "element": "plain_field", "color": "green" },
+      { "element": "triangle", "color": "yellow", "border": "white" },
+      {
+        "element": "triangle",
+        "color": "red",
+        "border": "black",
+        "size": "small"
+      }
+    ]
+  },
+  "Haiti": {
+    "code": "HT",
+    "continent": "North America",
+    "colors": ["blue", "red", "white"],
+    "color_count": 3,
+    "layout": "horizontal_biband",
+    "attributes": [
+      { "element": "horizontal_biband" },
+      { "element": "coat_of_arms", "position": "center" },
+      { "element": "palm" },
+      { "element": "cannon", "count": 6 },
+      { "element": "rifle", "count": 6 },
+      { "element": "axe", "count": 2 },
+      { "element": "drum" },
+      { "element": "trumpet" },
+      { "element": "anchor" },
+      { "element": "motto", "text": "L'UNION FAIT LA FORCE" }
+    ]
+  },
+  "Honduras": {
+    "code": "HN",
+    "continent": "North America",
+    "colors": ["blue", "white"],
+    "color_count": 2,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "multiple_stars", "count": 5, "color": "blue" }
+    ]
+  },
+  "Hungary": {
+    "code": "HU",
+    "continent": "Europe",
+    "colors": ["red", "white", "green"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [{ "element": "horizontal_triband" }]
+  },
+  "Iceland": {
+    "code": "IS",
+    "continent": "Europe",
+    "colors": ["blue", "white", "red"],
+    "color_count": 3,
+    "layout": "nordic_cross",
+    "attributes": [
+      { "element": "plain_field", "color": "blue" },
+      { "element": "nordic_cross", "color": "red", "border": "white" },
+      { "element": "fimbriation" }
+    ]
+  },
+  "India": {
+    "code": "IN",
+    "continent": "Asia",
+    "colors": ["orange", "white", "green", "blue"],
+    "color_count": 4,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "chakra", "type": "ashoka", "color": "blue" },
+      { "element": "dharma_wheel" }
+    ]
+  },
+  "Indonesia": {
+    "code": "ID",
+    "continent": "Asia",
+    "colors": ["red", "white"],
+    "color_count": 2,
+    "layout": "horizontal_biband",
+    "attributes": [{ "element": "horizontal_biband" }]
+  },
+  "Iran": {
+    "code": "IR",
+    "continent": "Asia",
+    "colors": ["green", "white", "red"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "coat_of_arms", "position": "center" },
+      { "element": "arabic_script", "type": "allah_akbar" },
+      { "element": "motto" }
+    ]
+  },
+  "Iraq": {
+    "code": "IQ",
+    "continent": "Asia",
+    "colors": ["red", "white", "black", "green"],
+    "color_count": 4,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "arabic_script", "type": "takbir", "color": "green" }
+    ]
+  },
+  "Ireland": {
+    "code": "IE",
+    "continent": "Europe",
+    "colors": ["green", "white", "orange"],
+    "color_count": 3,
+    "layout": "vertical_triband",
+    "attributes": [{ "element": "vertical_triband" }]
+  },
+  "Israel": {
+    "code": "IL",
+    "continent": "Asia",
+    "colors": ["white", "blue"],
+    "color_count": 2,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "white" },
+      {
+        "element": "horizontal_bands",
+        "color": "blue",
+        "position": "top_bottom"
+      },
+      { "element": "star_of_david", "color": "blue" }
+    ]
+  },
+  "Italy": {
+    "code": "IT",
+    "continent": "Europe",
+    "colors": ["green", "white", "red"],
+    "color_count": 3,
+    "layout": "vertical_triband",
+    "attributes": [{ "element": "vertical_triband" }]
+  },
+  "Jamaica": {
+    "code": "JM",
+    "continent": "North America",
+    "colors": ["gold", "green", "black"],
+    "color_count": 3,
+    "layout": "saltire",
+    "attributes": [{ "element": "saltire", "color": "gold" }]
+  },
+  "Japan": {
+    "code": "JP",
+    "continent": "Asia",
+    "colors": ["white", "red"],
+    "color_count": 2,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "white" },
+      { "element": "disk", "color": "red" },
+      { "element": "sun" }
+    ]
+  },
+  "Jordan": {
+    "code": "JO",
+    "continent": "Asia",
+    "colors": ["black", "white", "green", "red"],
+    "color_count": 4,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "triangle_hoist", "color": "red" },
+      { "element": "single_star", "points": 7, "color": "white" }
+    ]
+  },
+  "Kazakhstan": {
+    "code": "KZ",
+    "continent": "Asia",
+    "colors": ["light_blue", "yellow"],
+    "color_count": 2,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "light_blue" },
+      { "element": "sun", "color": "yellow", "rays": 32 },
+      { "element": "eagle", "color": "yellow" },
+      { "element": "folk_pattern", "position": "hoist" }
+    ]
+  },
+  "Kenya": {
+    "code": "KE",
+    "continent": "Africa",
+    "colors": ["black", "white", "red", "green"],
+    "color_count": 4,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [
+      { "element": "multiple_horizontal_stripes", "count": 5 },
+      { "element": "shield", "type": "maasai" },
+      { "element": "spear", "count": 2 }
+    ]
+  },
+  "Kiribati": {
+    "code": "KI",
+    "continent": "Oceania",
+    "colors": ["red", "blue", "white", "yellow"],
+    "color_count": 4,
+    "layout": "horizontal_biband",
+    "attributes": [
+      { "element": "horizontal_biband" },
+      { "element": "rising_sun", "color": "yellow" },
+      { "element": "frigatebird", "color": "yellow" },
+      { "element": "waves", "color": "white" },
+      { "element": "sea" }
+    ]
+  },
+  "Kosovo": {
+    "code": "XK",
+    "continent": "Europe",
+    "colors": ["blue", "gold", "white"],
+    "color_count": 3,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "blue" },
+      { "element": "map_silhouette", "color": "gold" },
+      { "element": "multiple_stars", "count": 6, "color": "white" },
+      { "element": "stars_arc" }
+    ]
+  },
+  "Kuwait": {
+    "code": "KW",
+    "continent": "Asia",
+    "colors": ["green", "white", "red", "black"],
+    "color_count": 4,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "trapezoid", "color": "black", "position": "hoist" }
+    ]
+  },
+  "Kyrgyzstan": {
+    "code": "KG",
+    "continent": "Asia",
+    "colors": ["red", "yellow"],
+    "color_count": 2,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "red" },
+      { "element": "sun", "color": "yellow", "rays": 40 },
+      { "element": "tunduk", "color": "red" }
+    ]
+  },
+  "Laos": {
+    "code": "LA",
+    "continent": "Asia",
+    "colors": ["red", "blue", "white"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "disk", "color": "white" },
+      { "element": "moon" }
+    ]
+  },
+  "Latvia": {
+    "code": "LV",
+    "continent": "Europe",
+    "colors": ["maroon", "white"],
+    "color_count": 2,
+    "layout": "horizontal_triband",
+    "attributes": [{ "element": "horizontal_triband", "proportions": "2:1:2" }]
+  },
+  "Lebanon": {
+    "code": "LB",
+    "continent": "Asia",
+    "colors": ["red", "white", "green"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband", "proportions": "1:2:1" },
+      { "element": "cedar", "color": "green" }
+    ]
+  },
+  "Lesotho": {
+    "code": "LS",
+    "continent": "Africa",
+    "colors": ["blue", "white", "green", "black"],
+    "color_count": 4,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "mokorotlo", "color": "black" }
+    ]
+  },
+  "Liberia": {
+    "code": "LR",
+    "continent": "Africa",
+    "colors": ["red", "white", "blue"],
+    "color_count": 3,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [
+      { "element": "multiple_horizontal_stripes", "count": 11 },
+      { "element": "canton", "color": "blue" },
+      { "element": "single_star", "points": 5, "color": "white" }
+    ]
+  },
+  "Libya": {
+    "code": "LY",
+    "continent": "Africa",
+    "colors": ["red", "black", "green", "white"],
+    "color_count": 4,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband", "proportions": "1:2:1" },
+      { "element": "crescent", "color": "white" },
+      { "element": "single_star", "points": 5, "color": "white" },
+      { "element": "crescent_star" }
+    ]
+  },
+  "Liechtenstein": {
+    "code": "LI",
+    "continent": "Europe",
+    "colors": ["blue", "red", "gold"],
+    "color_count": 3,
+    "layout": "horizontal_biband",
+    "attributes": [
+      { "element": "horizontal_biband" },
+      { "element": "crown", "color": "gold" }
+    ]
+  },
+  "Lithuania": {
+    "code": "LT",
+    "continent": "Europe",
+    "colors": ["yellow", "green", "red"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [{ "element": "horizontal_triband" }]
+  },
+  "Luxembourg": {
+    "code": "LU",
+    "continent": "Europe",
+    "colors": ["red", "white", "light_blue"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [{ "element": "horizontal_triband" }]
+  },
+  "Madagascar": {
+    "code": "MG",
+    "continent": "Africa",
+    "colors": ["white", "red", "green"],
+    "color_count": 3,
+    "layout": "vertical_biband",
+    "attributes": [
+      { "element": "vertical_band", "color": "white", "position": "hoist" },
+      { "element": "horizontal_biband", "position": "fly" }
+    ]
+  },
+  "Malawi": {
+    "code": "MW",
+    "continent": "Africa",
+    "colors": ["black", "red", "green"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "rising_sun", "color": "red", "rays": 31 }
+    ]
+  },
+  "Malaysia": {
+    "code": "MY",
+    "continent": "Asia",
+    "colors": ["red", "white", "blue", "yellow"],
+    "color_count": 4,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [
+      { "element": "multiple_horizontal_stripes", "count": 14 },
+      { "element": "canton", "color": "blue" },
+      { "element": "crescent", "color": "yellow" },
+      { "element": "single_star", "points": 14, "color": "yellow" },
+      { "element": "crescent_star" }
+    ]
+  },
+  "Maldives": {
+    "code": "MV",
+    "continent": "Asia",
+    "colors": ["red", "green", "white"],
+    "color_count": 3,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "red" },
+      { "element": "rectangle", "color": "green" },
+      { "element": "crescent", "color": "white" }
+    ]
+  },
+  "Mali": {
+    "code": "ML",
+    "continent": "Africa",
+    "colors": ["green", "yellow", "red"],
+    "color_count": 3,
+    "layout": "vertical_triband",
+    "attributes": [{ "element": "vertical_triband" }]
+  },
+  "Malta": {
+    "code": "MT",
+    "continent": "Europe",
+    "colors": ["white", "red", "blue", "gold"],
+    "color_count": 4,
+    "layout": "vertical_biband",
+    "attributes": [
+      { "element": "vertical_biband" },
+      { "element": "george_cross", "position": "canton" },
+      { "element": "christian_cross" },
+      { "element": "motto", "text": "FOR GALLANTRY", "translation": "For Gallantry" },
+      { "element": "human_figure", "type": "saint_george" },
+      { "element": "horse" },
+      { "element": "sword" },
+      { "element": "dragon" }
+    ]
+  },
+  "Marshall Islands": {
+    "code": "MH",
+    "continent": "Oceania",
+    "colors": ["blue", "orange", "white"],
+    "color_count": 3,
+    "layout": "diagonal_band",
+    "attributes": [
+      { "element": "plain_field", "color": "blue" },
+      { "element": "diagonal_band", "colors": ["orange", "white"] },
+      { "element": "single_star", "points": 24, "color": "white" }
+    ]
+  },
+  "Mauritania": {
+    "code": "MR",
+    "continent": "Africa",
+    "colors": ["green", "yellow", "red"],
+    "color_count": 3,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "green" },
+      {
+        "element": "horizontal_bands",
+        "color": "red",
+        "position": "top_bottom"
+      },
+      { "element": "crescent", "color": "yellow" },
+      { "element": "single_star", "points": 5, "color": "yellow" },
+      { "element": "crescent_star" }
+    ]
+  },
+  "Mauritius": {
+    "code": "MU",
+    "continent": "Africa",
+    "colors": ["red", "blue", "yellow", "green"],
+    "color_count": 4,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [{ "element": "multiple_horizontal_stripes", "count": 4 }]
+  },
+  "Mexico": {
+    "code": "MX",
+    "continent": "North America",
+    "colors": ["green", "white", "red", "brown"],
+    "color_count": 4,
+    "layout": "vertical_triband",
+    "attributes": [
+      { "element": "vertical_triband" },
+      { "element": "coat_of_arms", "position": "center" },
+      { "element": "eagle" },
+      { "element": "serpent" },
+      { "element": "cactus" }
+    ]
+  },
+  "Micronesia": {
+    "code": "FM",
+    "continent": "Oceania",
+    "colors": ["light_blue", "white"],
+    "color_count": 2,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "light_blue" },
+      { "element": "multiple_stars", "count": 4, "color": "white" }
+    ]
+  },
+  "Moldova": {
+    "code": "MD",
+    "continent": "Europe",
+    "colors": ["blue", "yellow", "red"],
+    "color_count": 3,
+    "layout": "vertical_triband",
+    "attributes": [
+      { "element": "vertical_triband" },
+      { "element": "coat_of_arms", "position": "center" },
+      { "element": "eagle" },
+      { "element": "cow_bull", "type": "aurochs" }
+    ]
+  },
+  "Monaco": {
+    "code": "MC",
+    "continent": "Europe",
+    "colors": ["red", "white"],
+    "color_count": 2,
+    "layout": "horizontal_biband",
+    "attributes": [{ "element": "horizontal_biband" }]
+  },
+  "Mongolia": {
+    "code": "MN",
+    "continent": "Asia",
+    "colors": ["red", "blue", "yellow"],
+    "color_count": 3,
+    "layout": "vertical_triband",
+    "attributes": [
+      { "element": "vertical_triband" },
+      { "element": "soyombo", "color": "yellow" },
+      { "element": "flame", "type": "eternal_flame" },
+      { "element": "sun" },
+      { "element": "crescent" },
+      { "element": "taijitu", "type": "yin_yang" },
+      { "element": "rectangle", "count": 2 },
+      { "element": "triangle", "count": 2 },
+      { "element": "disk" }
+    ]
+  },
+  "Montenegro": {
+    "code": "ME",
+    "continent": "Europe",
+    "colors": ["red", "gold"],
+    "color_count": 2,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "red" },
+      { "element": "border", "color": "gold" },
+      { "element": "coat_of_arms", "position": "center" },
+      { "element": "eagle", "type": "double_headed" },
+      { "element": "lion" },
+      { "element": "crown" }
+    ]
+  },
+  "Morocco": {
+    "code": "MA",
+    "continent": "Africa",
+    "colors": ["red", "green"],
+    "color_count": 2,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "red" },
+      { "element": "pentagram", "color": "green" },
+      { "element": "single_star", "points": 5 }
+    ]
+  },
+  "Mozambique": {
+    "code": "MZ",
+    "continent": "Africa",
+    "colors": ["green", "white", "black", "yellow", "red"],
+    "color_count": 5,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [
+      { "element": "multiple_horizontal_stripes", "count": 5 },
+      { "element": "triangle_hoist", "color": "red" },
+      { "element": "single_star", "color": "yellow" },
+      { "element": "book" },
+      { "element": "hoe" },
+      { "element": "rifle" }
+    ]
+  },
+  "Myanmar": {
+    "code": "MM",
+    "continent": "Asia",
+    "colors": ["yellow", "green", "red", "white"],
+    "color_count": 4,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "single_star", "points": 5, "color": "white" }
+    ]
+  },
+  "Namibia": {
+    "code": "NA",
+    "continent": "Africa",
+    "colors": ["blue", "green", "red", "white", "yellow"],
+    "color_count": 5,
+    "layout": "diagonal_division",
+    "attributes": [
+      { "element": "diagonal_division" },
+      { "element": "diagonal_band", "color": "red", "border": "white" },
+      { "element": "sun", "color": "yellow", "rays": 12 }
+    ]
+  },
+  "Nauru": {
+    "code": "NR",
+    "continent": "Oceania",
+    "colors": ["blue", "yellow", "white"],
+    "color_count": 3,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "blue" },
+      { "element": "horizontal_band", "color": "yellow", "position": "center" },
+      { "element": "single_star", "points": 12, "color": "white" }
+    ]
+  },
+  "Nepal": {
+    "code": "NP",
+    "continent": "Asia",
+    "colors": ["red", "blue", "white"],
+    "color_count": 3,
+    "layout": "non_rectangular",
+    "attributes": [
+      { "element": "non_rectangular", "type": "double_pennon" },
+      { "element": "border", "color": "blue" },
+      { "element": "moon", "color": "white" },
+      { "element": "sun", "color": "white" }
+    ]
+  },
+  "Netherlands": {
+    "code": "NL",
+    "continent": "Europe",
+    "colors": ["red", "white", "blue"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [{ "element": "horizontal_triband" }]
+  },
+  "New Zealand": {
+    "code": "NZ",
+    "continent": "Oceania",
+    "colors": ["blue", "red", "white"],
+    "color_count": 3,
+    "layout": "canton",
+    "attributes": [
+      { "element": "plain_field", "color": "blue" },
+      { "element": "canton" },
+      { "element": "union_jack" },
+      { "element": "constellation", "type": "southern_cross", "count": 4 },
+      { "element": "multiple_stars", "count": 4 }
+    ]
+  },
+  "Nicaragua": {
+    "code": "NI",
+    "continent": "North America",
+    "colors": ["blue", "white"],
+    "color_count": 2,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "coat_of_arms", "position": "center" },
+      { "element": "triangle" }
+    ]
+  },
+  "Niger": {
+    "code": "NE",
+    "continent": "Africa",
+    "colors": ["orange", "white", "green"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "disk", "color": "orange" }
+    ]
+  },
+  "Nigeria": {
+    "code": "NG",
+    "continent": "Africa",
+    "colors": ["green", "white"],
+    "color_count": 2,
+    "layout": "vertical_triband",
+    "attributes": [{ "element": "vertical_triband" }]
+  },
+  "North Korea": {
+    "code": "KP",
+    "continent": "Asia",
+    "colors": ["blue", "white", "red"],
+    "color_count": 3,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [
+      { "element": "multiple_horizontal_stripes", "count": 5 },
+      { "element": "disk", "color": "white" },
+      { "element": "single_star", "points": 5, "color": "red" }
+    ]
+  },
+  "North Macedonia": {
+    "code": "MK",
+    "continent": "Europe",
+    "colors": ["red", "yellow"],
+    "color_count": 2,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "red" },
+      { "element": "sun", "color": "yellow", "rays": 8 }
+    ]
+  },
+  "Norway": {
+    "code": "NO",
+    "continent": "Europe",
+    "colors": ["red", "white", "blue"],
+    "color_count": 3,
+    "layout": "nordic_cross",
+    "attributes": [
+      { "element": "plain_field", "color": "red" },
+      { "element": "nordic_cross", "color": "blue", "border": "white" },
+      { "element": "fimbriation" }
+    ]
+  },
+  "Oman": {
+    "code": "OM",
+    "continent": "Asia",
+    "colors": ["white", "red", "green"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "vertical_band", "color": "red", "position": "hoist" },
+      { "element": "khanjar" },
+      { "element": "sword", "count": 2 }
+    ]
+  },
+  "Pakistan": {
+    "code": "PK",
+    "continent": "Asia",
+    "colors": ["green", "white"],
+    "color_count": 2,
+    "layout": "vertical_biband",
+    "attributes": [
+      { "element": "plain_field", "color": "green" },
+      { "element": "vertical_band", "color": "white", "position": "hoist" },
+      { "element": "crescent", "color": "white" },
+      { "element": "single_star", "points": 5, "color": "white" },
+      { "element": "crescent_star" }
+    ]
+  },
+  "Palau": {
+    "code": "PW",
+    "continent": "Oceania",
+    "colors": ["light_blue", "yellow"],
+    "color_count": 2,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "light_blue" },
+      { "element": "disk", "color": "yellow" },
+      { "element": "moon" }
+    ]
+  },
+  "Panama": {
+    "code": "PA",
+    "continent": "North America",
+    "colors": ["white", "red", "blue"],
+    "color_count": 3,
+    "layout": "quartered",
+    "attributes": [
+      { "element": "quartered" },
+      { "element": "multiple_stars", "count": 2 }
+    ]
+  },
+  "Papua New Guinea": {
+    "code": "PG",
+    "continent": "Oceania",
+    "colors": ["black", "red", "yellow", "white"],
+    "color_count": 4,
+    "layout": "diagonal_division",
+    "attributes": [
+      { "element": "diagonal_division" },
+      { "element": "constellation", "type": "southern_cross", "count": 5 },
+      { "element": "multiple_stars", "count": 5 },
+      { "element": "bird_of_paradise", "color": "yellow" }
+    ]
+  },
+  "Paraguay": {
+    "code": "PY",
+    "continent": "South America",
+    "colors": ["red", "white", "blue"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "coat_of_arms", "position": "center" },
+      { "element": "single_star" },
+      { "element": "lion" },
+      { "element": "olive_branch" }
+    ]
+  },
+  "Peru": {
+    "code": "PE",
+    "continent": "South America",
+    "colors": ["red", "white"],
+    "color_count": 2,
+    "layout": "vertical_triband",
+    "attributes": [
+      { "element": "vertical_triband" },
+      { "element": "coat_of_arms", "position": "center", "optional": true }
+    ]
+  },
+  "Philippines": {
+    "code": "PH",
+    "continent": "Asia",
+    "colors": ["blue", "red", "white", "yellow"],
+    "color_count": 4,
+    "layout": "horizontal_biband",
+    "attributes": [
+      { "element": "horizontal_biband" },
+      { "element": "triangle_hoist", "color": "white" },
+      { "element": "sun", "color": "yellow", "rays": 8 },
+      { "element": "multiple_stars", "count": 3, "color": "yellow" }
+    ]
+  },
+  "Poland": {
+    "code": "PL",
+    "continent": "Europe",
+    "colors": ["white", "red"],
+    "color_count": 2,
+    "layout": "horizontal_biband",
+    "attributes": [{ "element": "horizontal_biband" }]
+  },
+  "Portugal": {
+    "code": "PT",
+    "continent": "Europe",
+    "colors": ["green", "red", "yellow", "blue", "white"],
+    "color_count": 5,
+    "layout": "vertical_biband",
+    "attributes": [
+      { "element": "vertical_biband", "proportions": "2:3" },
+      { "element": "coat_of_arms", "position": "center" },
+      { "element": "armillary_sphere" }
+    ]
+  },
+  "Qatar": {
+    "code": "QA",
+    "continent": "Asia",
+    "colors": ["white", "maroon"],
+    "color_count": 2,
+    "layout": "vertical_biband",
+    "attributes": [
+      { "element": "vertical_biband" },
+      { "element": "serrated", "points": 9 }
+    ]
+  },
+  "Romania": {
+    "code": "RO",
+    "continent": "Europe",
+    "colors": ["blue", "yellow", "red"],
+    "color_count": 3,
+    "layout": "vertical_triband",
+    "attributes": [{ "element": "vertical_triband" }]
+  },
+  "Russia": {
+    "code": "RU",
+    "continent": "Europe",
+    "colors": ["white", "blue", "red"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [{ "element": "horizontal_triband" }]
+  },
+  "Rwanda": {
+    "code": "RW",
+    "continent": "Africa",
+    "colors": ["blue", "yellow", "green"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband", "proportions": "2:1:1" },
+      { "element": "sun", "color": "yellow" }
+    ]
+  },
+  "Saint Kitts and Nevis": {
+    "code": "KN",
+    "continent": "North America",
+    "colors": ["green", "red", "black", "yellow", "white"],
+    "color_count": 5,
+    "layout": "diagonal_band",
+    "attributes": [
+      { "element": "diagonal_band", "color": "black", "border": "yellow" },
+      { "element": "multiple_stars", "count": 2, "color": "white" }
+    ]
+  },
+  "Saint Lucia": {
+    "code": "LC",
+    "continent": "North America",
+    "colors": ["light_blue", "black", "yellow", "white"],
+    "color_count": 4,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "light_blue" },
+      { "element": "triangle", "color": "black" },
+      { "element": "triangle", "color": "yellow" }
+    ]
+  },
+  "Saint Vincent and the Grenadines": {
+    "code": "VC",
+    "continent": "North America",
+    "colors": ["blue", "yellow", "green"],
+    "color_count": 3,
+    "layout": "vertical_triband",
+    "attributes": [
+      { "element": "vertical_triband" },
+      { "element": "diamond", "count": 3, "color": "green" }
+    ]
+  },
+  "Samoa": {
+    "code": "WS",
+    "continent": "Oceania",
+    "colors": ["red", "blue", "white"],
+    "color_count": 3,
+    "layout": "canton",
+    "attributes": [
+      { "element": "plain_field", "color": "red" },
+      { "element": "canton", "color": "blue" },
+      { "element": "constellation", "type": "southern_cross", "count": 5 },
+      { "element": "multiple_stars", "count": 5 }
+    ]
+  },
+  "San Marino": {
+    "code": "SM",
+    "continent": "Europe",
+    "colors": ["white", "light_blue"],
+    "color_count": 2,
+    "layout": "horizontal_biband",
+    "attributes": [
+      { "element": "horizontal_biband" },
+      { "element": "coat_of_arms", "position": "center" },
+      { "element": "tower", "count": 3 },
+      { "element": "laurel" },
+      { "element": "crown" }
+    ]
+  },
+  "Sao Tome and Principe": {
+    "code": "ST",
+    "continent": "Africa",
+    "colors": ["green", "yellow", "red", "black"],
+    "color_count": 4,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "triangle_hoist", "color": "red" },
+      { "element": "multiple_stars", "count": 2, "color": "black" }
+    ]
+  },
+  "Saudi Arabia": {
+    "code": "SA",
+    "continent": "Asia",
+    "colors": ["green", "white"],
+    "color_count": 2,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "green" },
+      { "element": "arabic_script", "type": "shahada" },
+      { "element": "shahada" },
+      { "element": "sword", "color": "white" }
+    ]
+  },
+  "Senegal": {
+    "code": "SN",
+    "continent": "Africa",
+    "colors": ["green", "yellow", "red"],
+    "color_count": 3,
+    "layout": "vertical_triband",
+    "attributes": [
+      { "element": "vertical_triband" },
+      { "element": "single_star", "points": 5, "color": "green" }
+    ]
+  },
+  "Serbia": {
+    "code": "RS",
+    "continent": "Europe",
+    "colors": ["red", "blue", "white"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "coat_of_arms" },
+      { "element": "eagle", "type": "double_headed" },
+      { "element": "crown" }
+    ]
+  },
+  "Seychelles": {
+    "code": "SC",
+    "continent": "Africa",
+    "colors": ["blue", "yellow", "red", "white", "green"],
+    "color_count": 5,
+    "layout": "seychelles_rays",
+    "attributes": [{ "element": "seychelles_rays", "count": 5 }]
+  },
+  "Sierra Leone": {
+    "code": "SL",
+    "continent": "Africa",
+    "colors": ["green", "white", "blue"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [{ "element": "horizontal_triband" }]
+  },
+  "Singapore": {
+    "code": "SG",
+    "continent": "Asia",
+    "colors": ["red", "white"],
+    "color_count": 2,
+    "layout": "horizontal_biband",
+    "attributes": [
+      { "element": "horizontal_biband" },
+      { "element": "crescent", "color": "white" },
+      { "element": "multiple_stars", "count": 5, "color": "white" },
+      { "element": "stars_circle" }
+    ]
+  },
+  "Slovakia": {
+    "code": "SK",
+    "continent": "Europe",
+    "colors": ["white", "blue", "red"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "coat_of_arms" },
+      { "element": "christian_cross" }
+    ]
+  },
+  "Slovenia": {
+    "code": "SI",
+    "continent": "Europe",
+    "colors": ["white", "blue", "red"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "coat_of_arms" },
+      { "element": "mountain" },
+      { "element": "multiple_stars", "count": 3, "color": "yellow" }
+    ]
+  },
+  "Solomon Islands": {
+    "code": "SB",
+    "continent": "Oceania",
+    "colors": ["blue", "green", "yellow", "white"],
+    "color_count": 4,
+    "layout": "diagonal_division",
+    "attributes": [
+      { "element": "diagonal_division" },
+      { "element": "diagonal_band", "color": "yellow" },
+      { "element": "multiple_stars", "count": 5, "color": "white" }
+    ]
+  },
+  "Somalia": {
+    "code": "SO",
+    "continent": "Africa",
+    "colors": ["light_blue", "white"],
+    "color_count": 2,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "light_blue" },
+      { "element": "single_star", "points": 5, "color": "white" }
+    ]
+  },
+  "South Africa": {
+    "code": "ZA",
+    "continent": "Africa",
+    "colors": ["red", "blue", "green", "black", "white", "yellow"],
+    "color_count": 6,
+    "layout": "y_shape",
+    "attributes": [
+      { "element": "y_shape", "color": "green" },
+      { "element": "triangle_hoist", "color": "black" },
+      { "element": "fimbriation" }
+    ]
+  },
+  "South Korea": {
+    "code": "KR",
+    "continent": "Asia",
+    "colors": ["white", "red", "blue", "black"],
+    "color_count": 4,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "white" },
+      { "element": "taeguk" },
+      { "element": "trigrams", "count": 4 }
+    ]
+  },
+  "South Sudan": {
+    "code": "SS",
+    "continent": "Africa",
+    "colors": ["black", "white", "red", "green", "blue", "yellow"],
+    "color_count": 6,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [
+      { "element": "multiple_horizontal_stripes", "count": 5 },
+      { "element": "triangle_hoist", "color": "blue" },
+      { "element": "single_star", "color": "yellow" }
+    ]
+  },
+  "Spain": {
+    "code": "ES",
+    "continent": "Europe",
+    "colors": ["red", "yellow", "blue", "white", "purple"],
+    "color_count": 5,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband", "proportions": "1:2:1" },
+      { "element": "coat_of_arms" },
+      { "element": "crown" },
+      { "element": "lion", "type": "rampant" },
+      { "element": "tower", "type": "castle" },
+      { "element": "motto", "text": "PLVS VLTRA", "translation": "Further Beyond" },
+      { "element": "pomegranate", "type": "granada" },
+      { "element": "fleur_de_lys" },
+      { "element": "pillars", "type": "pillars_of_hercules" },
+      { "element": "shield" }
+    ]
+  },
+  "Sri Lanka": {
+    "code": "LK",
+    "continent": "Asia",
+    "colors": ["maroon", "green", "orange", "yellow"],
+    "color_count": 4,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "maroon" },
+      {
+        "element": "vertical_bands",
+        "position": "hoist",
+        "colors": ["green", "orange"]
+      },
+      { "element": "border", "color": "yellow" },
+      { "element": "lion", "color": "yellow" },
+      { "element": "sword" }
+    ]
+  },
+  "Sudan": {
+    "code": "SD",
+    "continent": "Africa",
+    "colors": ["red", "white", "black", "green"],
+    "color_count": 4,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "triangle_hoist", "color": "green" }
+    ]
+  },
+  "Suriname": {
+    "code": "SR",
+    "continent": "South America",
+    "colors": ["green", "white", "red", "yellow"],
+    "color_count": 4,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [
+      { "element": "multiple_horizontal_stripes", "count": 5 },
+      { "element": "single_star", "points": 5, "color": "yellow" }
+    ]
+  },
+  "Sweden": {
+    "code": "SE",
+    "continent": "Europe",
+    "colors": ["blue", "yellow"],
+    "color_count": 2,
+    "layout": "nordic_cross",
+    "attributes": [
+      { "element": "plain_field", "color": "blue" },
+      { "element": "nordic_cross", "color": "yellow" }
+    ]
+  },
+  "Switzerland": {
+    "code": "CH",
+    "continent": "Europe",
+    "colors": ["red", "white"],
+    "color_count": 2,
+    "layout": "greek_cross",
+    "attributes": [
+      { "element": "plain_field", "color": "red" },
+      { "element": "cross", "color": "white", "type": "greek" }
+    ]
+  },
+  "Syria": {
+    "code": "SY",
+    "continent": "Asia",
+    "colors": ["red", "white", "black", "green"],
+    "color_count": 4,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "multiple_stars", "count": 2, "color": "green" }
+    ]
+  },
+  "Tajikistan": {
+    "code": "TJ",
+    "continent": "Asia",
+    "colors": ["red", "white", "green", "yellow"],
+    "color_count": 4,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "crown", "color": "yellow" },
+      { "element": "stars_arc", "count": 7, "color": "yellow" },
+      { "element": "multiple_stars", "count": 7 }
+    ]
+  },
+  "Tanzania": {
+    "code": "TZ",
+    "continent": "Africa",
+    "colors": ["green", "blue", "black", "yellow"],
+    "color_count": 4,
+    "layout": "diagonal_band",
+    "attributes": [
+      { "element": "diagonal_division" },
+      { "element": "diagonal_band", "color": "black", "border": "yellow" }
+    ]
+  },
+  "Thailand": {
+    "code": "TH",
+    "continent": "Asia",
+    "colors": ["red", "white", "blue"],
+    "color_count": 3,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [{ "element": "multiple_horizontal_stripes", "count": 5 }]
+  },
+  "Timor-Leste": {
+    "code": "TL",
+    "continent": "Asia",
+    "colors": ["red", "black", "yellow", "white"],
+    "color_count": 4,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "red" },
+      { "element": "triangle_hoist", "color": "black" },
+      { "element": "triangle_hoist", "color": "yellow", "size": "smaller" },
+      { "element": "single_star", "points": 5, "color": "white" }
+    ]
+  },
+  "Togo": {
+    "code": "TG",
+    "continent": "Africa",
+    "colors": ["green", "yellow", "red", "white"],
+    "color_count": 4,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [
+      { "element": "multiple_horizontal_stripes", "count": 5 },
+      { "element": "canton", "color": "red" },
+      { "element": "single_star", "points": 5, "color": "white" }
+    ]
+  },
+  "Tonga": {
+    "code": "TO",
+    "continent": "Oceania",
+    "colors": ["red", "white"],
+    "color_count": 2,
+    "layout": "canton",
+    "attributes": [
+      { "element": "plain_field", "color": "red" },
+      { "element": "canton", "color": "white" },
+      { "element": "christian_cross", "color": "red" }
+    ]
+  },
+  "Trinidad and Tobago": {
+    "code": "TT",
+    "continent": "North America",
+    "colors": ["red", "black", "white"],
+    "color_count": 3,
+    "layout": "diagonal_band",
+    "attributes": [
+      { "element": "plain_field", "color": "red" },
+      { "element": "diagonal_band", "color": "black", "border": "white" }
+    ]
+  },
+  "Tunisia": {
+    "code": "TN",
+    "continent": "Africa",
+    "colors": ["red", "white"],
+    "color_count": 2,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "red" },
+      { "element": "disk", "color": "white" },
+      { "element": "crescent", "color": "red" },
+      { "element": "single_star", "points": 5, "color": "red" },
+      { "element": "crescent_star" }
+    ]
+  },
+  "Turkey": {
+    "code": "TR",
+    "continent": "Asia",
+    "colors": ["red", "white"],
+    "color_count": 2,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "red" },
+      { "element": "crescent", "color": "white" },
+      { "element": "single_star", "points": 5, "color": "white" },
+      { "element": "crescent_star" }
+    ]
+  },
+  "Turkmenistan": {
+    "code": "TM",
+    "continent": "Asia",
+    "colors": ["green", "white", "red"],
+    "color_count": 3,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "green" },
+      {
+        "element": "vertical_band",
+        "type": "carpet_pattern",
+        "position": "hoist"
+      },
+      { "element": "folk_pattern" },
+      { "element": "crescent", "color": "white" },
+      { "element": "multiple_stars", "count": 5, "color": "white" }
+    ]
+  },
+  "Tuvalu": {
+    "code": "TV",
+    "continent": "Oceania",
+    "colors": ["light_blue", "yellow", "red", "white"],
+    "color_count": 4,
+    "layout": "canton",
+    "attributes": [
+      { "element": "plain_field", "color": "light_blue" },
+      { "element": "canton" },
+      { "element": "union_jack" },
+      { "element": "multiple_stars", "count": 9, "color": "yellow" }
+    ]
+  },
+  "Uganda": {
+    "code": "UG",
+    "continent": "Africa",
+    "colors": ["black", "yellow", "red", "white"],
+    "color_count": 4,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [
+      { "element": "multiple_horizontal_stripes", "count": 6 },
+      { "element": "disk", "color": "white" },
+      { "element": "crane", "type": "grey_crowned_crane" },
+      { "element": "other_bird" }
+    ]
+  },
+  "Ukraine": {
+    "code": "UA",
+    "continent": "Europe",
+    "colors": ["blue", "yellow"],
+    "color_count": 2,
+    "layout": "horizontal_biband",
+    "attributes": [{ "element": "horizontal_biband" }]
+  },
+  "United Arab Emirates": {
+    "code": "AE",
+    "continent": "Asia",
+    "colors": ["green", "white", "black", "red"],
+    "color_count": 4,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "vertical_band", "color": "red", "position": "hoist" }
+    ]
+  },
+  "United Kingdom": {
+    "code": "GB",
+    "continent": "Europe",
+    "colors": ["red", "white", "blue"],
+    "color_count": 3,
+    "layout": "union_jack",
+    "attributes": [
+      { "element": "union_jack" },
+      { "element": "cross", "type": "saint_george", "color": "red" },
+      { "element": "saltire", "type": "saint_andrew", "color": "white" },
+      { "element": "saltire", "type": "saint_patrick", "color": "red" }
+    ]
+  },
+  "United States": {
+    "code": "US",
+    "continent": "North America",
+    "colors": ["red", "white", "blue"],
+    "color_count": 3,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [
+      { "element": "multiple_horizontal_stripes", "count": 13 },
+      { "element": "canton", "color": "blue" },
+      { "element": "multiple_stars", "count": 50, "color": "white" }
+    ]
+  },
+  "Uruguay": {
+    "code": "UY",
+    "continent": "South America",
+    "colors": ["white", "blue", "yellow"],
+    "color_count": 3,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [
+      { "element": "multiple_horizontal_stripes", "count": 9 },
+      { "element": "canton", "color": "white" },
+      { "element": "sun_of_may", "color": "yellow" }
+    ]
+  },
+  "Uzbekistan": {
+    "code": "UZ",
+    "continent": "Asia",
+    "colors": ["blue", "white", "green", "red"],
+    "color_count": 4,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "fimbriation", "color": "red" },
+      { "element": "crescent", "color": "white" },
+      { "element": "multiple_stars", "count": 12, "color": "white" }
+    ]
+  },
+  "Vanuatu": {
+    "code": "VU",
+    "continent": "Oceania",
+    "colors": ["red", "green", "black", "yellow"],
+    "color_count": 4,
+    "layout": "y_shape",
+    "attributes": [
+      { "element": "horizontal_biband", "colors": ["red", "green"] },
+      { "element": "y_shape", "color": "black", "border": "yellow" },
+      { "element": "boars_tusk", "color": "yellow" },
+      { "element": "namale_leaves", "type": "fern" }
+    ]
+  },
+  "Vatican City": {
+    "code": "VA",
+    "continent": "Europe",
+    "colors": ["yellow", "white"],
+    "color_count": 2,
+    "layout": "vertical_biband",
+    "attributes": [
+      { "element": "vertical_biband" },
+      { "element": "papal_keys", "colors": ["gold", "silver"] },
+      { "element": "crown", "type": "tiara" }
+    ]
+  },
+  "Venezuela": {
+    "code": "VE",
+    "continent": "South America",
+    "colors": ["yellow", "blue", "red", "white"],
+    "color_count": 4,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "stars_arc", "count": 8, "color": "white" },
+      { "element": "multiple_stars", "count": 8 }
+    ]
+  },
+  "Vietnam": {
+    "code": "VN",
+    "continent": "Asia",
+    "colors": ["red", "yellow"],
+    "color_count": 2,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "red" },
+      { "element": "single_star", "points": 5, "color": "yellow" }
+    ]
+  },
+  "Yemen": {
+    "code": "YE",
+    "continent": "Asia",
+    "colors": ["red", "white", "black"],
+    "color_count": 3,
+    "layout": "horizontal_triband",
+    "attributes": [{ "element": "horizontal_triband" }]
+  },
+  "Zambia": {
+    "code": "ZM",
+    "continent": "Africa",
+    "colors": ["green", "red", "black", "orange"],
+    "color_count": 4,
+    "layout": "plain_field",
+    "attributes": [
+      { "element": "plain_field", "color": "green" },
+      {
+        "element": "vertical_bands",
+        "position": "lower_fly",
+        "colors": ["red", "black", "orange"]
+      },
+      { "element": "eagle", "color": "orange" }
+    ]
+  },
+  "Zimbabwe": {
+    "code": "ZW",
+    "continent": "Africa",
+    "colors": ["green", "yellow", "red", "black", "white"],
+    "color_count": 5,
+    "layout": "multiple_horizontal_stripes",
+    "attributes": [
+      { "element": "multiple_horizontal_stripes", "count": 7 },
+      { "element": "triangle_hoist", "color": "white" },
+      { "element": "single_star", "points": 5, "color": "red" },
+      { "element": "zimbabwe_bird", "color": "yellow" },
+      { "element": "other_bird" }
+    ]
+  }
+}

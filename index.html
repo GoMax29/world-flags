@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/flag-icon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#0ea5e9" />
+    <meta name="description" content="Découvrez et apprenez les drapeaux du monde entier avec des filtres avancés" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    
+    <!-- Preconnect to APIs -->
+    <link rel="preconnect" href="https://flagcdn.com" />
+    <link rel="preconnect" href="https://restcountries.com" />
+    <link rel="dns-prefetch" href="https://flagcdn.com" />
+    <link rel="dns-prefetch" href="https://restcountries.com" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="World Flags - Apprenez les drapeaux du monde" />
+    <meta property="og:description" content="Une application interactive pour découvrir tous les drapeaux du monde" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/og-image.png" />
+    
+    <title>World Flags - Découvrez les drapeaux du monde</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

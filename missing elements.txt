@@ -1,0 +1,14 @@
+# Missing Elements - Updated
+
+## FIXED:
+# - Malta: added horse, human_figure (saint_george), sword, motto "FOR GALLANTRY", dragon
+# - Brunei: added hand, people (supporters), wings, umbrella, motto
+# - Mongolia: added circle, triangle, rectangle, yin-yang (taijitu), crescent, flame
+# - Vanuatu: added namale_leaves
+# - Kosovo: added as new country with blue, 6 white stars in arc, golden map
+# - Spain: added lion, tower (castle), motto "PLVS VLTRA", pomegranate (granada), fleur_de_lys
+# - Added leaves category to taxonomy (maple, namale)
+# - Search now works in French and supports keyword search (elements, colors)
+
+## REMAINING TO CHECK:
+# (none currently - all items addressed)
