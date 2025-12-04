@@ -11,12 +11,42 @@
           "label_en": "Regions",
           "label_fr": "Régions",
           "elements": [
-            {"id": "Africa", "label_en": "Africa", "label_fr": "Afrique", "icon": "🌍"},
-            {"id": "Asia", "label_en": "Asia", "label_fr": "Asie", "icon": "🌏"},
-            {"id": "Europe", "label_en": "Europe", "label_fr": "Europe", "icon": "🇪🇺"},
-            {"id": "North America", "label_en": "North America", "label_fr": "Amérique du Nord", "icon": "🌎"},
-            {"id": "South America", "label_en": "South America", "label_fr": "Amérique du Sud", "icon": "🌎"},
-            {"id": "Oceania", "label_en": "Oceania", "label_fr": "Océanie", "icon": "🏝️"}
+            {
+              "id": "Africa",
+              "label_en": "Africa",
+              "label_fr": "Afrique",
+              "icon": "🌍"
+            },
+            {
+              "id": "Asia",
+              "label_en": "Asia",
+              "label_fr": "Asie",
+              "icon": "🌏"
+            },
+            {
+              "id": "Europe",
+              "label_en": "Europe",
+              "label_fr": "Europe",
+              "icon": "🇪🇺"
+            },
+            {
+              "id": "North America",
+              "label_en": "North America",
+              "label_fr": "Amérique du Nord",
+              "icon": "🌎"
+            },
+            {
+              "id": "South America",
+              "label_en": "South America",
+              "label_fr": "Amérique du Sud",
+              "icon": "🌎"
+            },
+            {
+              "id": "Oceania",
+              "label_en": "Oceania",
+              "label_fr": "Océanie",
+              "icon": "🏝️"
+            }
           ]
         }
       ]
@@ -32,15 +62,31 @@
           "label_en": "Star Count",
           "label_fr": "Nombre d'étoiles",
           "elements": [
-            {"id": "0_stars", "label_en": "No Stars", "label_fr": "Aucune étoile"},
-            {"id": "1_star", "label_en": "1 Star", "label_fr": "1 étoile"},
-            {"id": "2_stars", "label_en": "2 Stars", "label_fr": "2 étoiles"},
-            {"id": "3_stars", "label_en": "3 Stars", "label_fr": "3 étoiles"},
-            {"id": "4_stars", "label_en": "4 Stars", "label_fr": "4 étoiles"},
-            {"id": "5_stars", "label_en": "5 Stars", "label_fr": "5 étoiles"},
-            {"id": "6plus_stars", "label_en": "6+ Stars", "label_fr": "6+ étoiles"},
-            {"id": "10plus_stars", "label_en": "10+ Stars", "label_fr": "10+ étoiles"},
-            {"id": "50plus_stars", "label_en": "50 Stars (USA)", "label_fr": "50 étoiles (USA)"}
+            {
+              "id": "0_stars",
+              "label_en": "No Stars",
+              "label_fr": "Aucune étoile"
+            },
+            { "id": "1_star", "label_en": "1 Star", "label_fr": "1 étoile" },
+            { "id": "2_stars", "label_en": "2 Stars", "label_fr": "2 étoiles" },
+            { "id": "3_stars", "label_en": "3 Stars", "label_fr": "3 étoiles" },
+            { "id": "4_stars", "label_en": "4 Stars", "label_fr": "4 étoiles" },
+            { "id": "5_stars", "label_en": "5 Stars", "label_fr": "5 étoiles" },
+            {
+              "id": "6plus_stars",
+              "label_en": "6+ Stars",
+              "label_fr": "6+ étoiles"
+            },
+            {
+              "id": "10plus_stars",
+              "label_en": "10+ Stars",
+              "label_fr": "10+ étoiles"
+            },
+            {
+              "id": "50plus_stars",
+              "label_en": "50 Stars (USA)",
+              "label_fr": "50 étoiles (USA)"
+            }
           ]
         }
       ]
@@ -56,12 +102,42 @@
           "label_en": "Primary Colors",
           "label_fr": "Couleurs Primaires",
           "elements": [
-            {"id": "red", "label_en": "Red", "label_fr": "Rouge", "hex": "#DC2626"},
-            {"id": "blue", "label_en": "Blue", "label_fr": "Bleu", "hex": "#2563EB"},
-            {"id": "yellow", "label_en": "Yellow", "label_fr": "Jaune", "hex": "#FCD34D"},
-            {"id": "green", "label_en": "Green", "label_fr": "Vert", "hex": "#16A34A"},
-            {"id": "white", "label_en": "White", "label_fr": "Blanc", "hex": "#FFFFFF"},
-            {"id": "black", "label_en": "Black", "label_fr": "Noir", "hex": "#1F2937"}
+            {
+              "id": "red",
+              "label_en": "Red",
+              "label_fr": "Rouge",
+              "hex": "#DC2626"
+            },
+            {
+              "id": "blue",
+              "label_en": "Blue",
+              "label_fr": "Bleu",
+              "hex": "#2563EB"
+            },
+            {
+              "id": "yellow",
+              "label_en": "Yellow",
+              "label_fr": "Jaune",
+              "hex": "#FCD34D"
+            },
+            {
+              "id": "green",
+              "label_en": "Green",
+              "label_fr": "Vert",
+              "hex": "#16A34A"
+            },
+            {
+              "id": "white",
+              "label_en": "White",
+              "label_fr": "Blanc",
+              "hex": "#FFFFFF"
+            },
+            {
+              "id": "black",
+              "label_en": "Black",
+              "label_fr": "Noir",
+              "hex": "#1F2937"
+            }
           ]
         },
         {
@@ -69,14 +145,54 @@
           "label_en": "Secondary Colors",
           "label_fr": "Couleurs Secondaires",
           "elements": [
-            {"id": "orange", "label_en": "Orange", "label_fr": "Orange", "hex": "#F97316"},
-            {"id": "gold", "label_en": "Gold", "label_fr": "Or", "hex": "#D97706"},
-            {"id": "maroon", "label_en": "Maroon", "label_fr": "Bordeaux", "hex": "#7F1D1D"},
-            {"id": "brown", "label_en": "Brown", "label_fr": "Marron", "hex": "#78350F"},
-            {"id": "purple", "label_en": "Purple", "label_fr": "Violet", "hex": "#7C3AED"},
-            {"id": "light_blue", "label_en": "Light Blue", "label_fr": "Bleu Clair", "hex": "#38BDF8"},
-            {"id": "aquamarine", "label_en": "Aquamarine/Turquoise", "label_fr": "Turquoise", "hex": "#2DD4BF"},
-            {"id": "copper", "label_en": "Copper", "label_fr": "Cuivre", "hex": "#B87333"}
+            {
+              "id": "orange",
+              "label_en": "Orange",
+              "label_fr": "Orange",
+              "hex": "#F97316"
+            },
+            {
+              "id": "gold",
+              "label_en": "Gold",
+              "label_fr": "Or",
+              "hex": "#D97706"
+            },
+            {
+              "id": "maroon",
+              "label_en": "Maroon",
+              "label_fr": "Bordeaux",
+              "hex": "#7F1D1D"
+            },
+            {
+              "id": "brown",
+              "label_en": "Brown",
+              "label_fr": "Marron",
+              "hex": "#78350F"
+            },
+            {
+              "id": "purple",
+              "label_en": "Purple",
+              "label_fr": "Violet",
+              "hex": "#7C3AED"
+            },
+            {
+              "id": "light_blue",
+              "label_en": "Light Blue",
+              "label_fr": "Bleu Clair",
+              "hex": "#38BDF8"
+            },
+            {
+              "id": "aquamarine",
+              "label_en": "Aquamarine/Turquoise",
+              "label_fr": "Turquoise",
+              "hex": "#2DD4BF"
+            },
+            {
+              "id": "copper",
+              "label_en": "Copper",
+              "label_fr": "Cuivre",
+              "hex": "#B87333"
+            }
           ]
         }
       ]
@@ -92,11 +208,31 @@
           "label_en": "Color Count",
           "label_fr": "Quantité de couleurs",
           "elements": [
-            {"id": "2_colors", "label_en": "2 Colors", "label_fr": "2 couleurs"},
-            {"id": "3_colors", "label_en": "3 Colors", "label_fr": "3 couleurs"},
-            {"id": "4_colors", "label_en": "4 Colors", "label_fr": "4 couleurs"},
-            {"id": "5_colors", "label_en": "5 Colors", "label_fr": "5 couleurs"},
-            {"id": "6plus_colors", "label_en": "6+ Colors", "label_fr": "6+ couleurs"}
+            {
+              "id": "2_colors",
+              "label_en": "2 Colors",
+              "label_fr": "2 couleurs"
+            },
+            {
+              "id": "3_colors",
+              "label_en": "3 Colors",
+              "label_fr": "3 couleurs"
+            },
+            {
+              "id": "4_colors",
+              "label_en": "4 Colors",
+              "label_fr": "4 couleurs"
+            },
+            {
+              "id": "5_colors",
+              "label_en": "5 Colors",
+              "label_fr": "5 couleurs"
+            },
+            {
+              "id": "6plus_colors",
+              "label_en": "6+ Colors",
+              "label_fr": "6+ couleurs"
+            }
           ]
         }
       ]
@@ -112,13 +248,41 @@
           "label_en": "Band Layouts",
           "label_fr": "Disposition des Bandes",
           "elements": [
-            {"id": "horizontal_triband", "label_en": "Horizontal Triband", "label_fr": "Tricolore Horizontal"},
-            {"id": "vertical_triband", "label_en": "Vertical Triband", "label_fr": "Tricolore Vertical"},
-            {"id": "horizontal_biband", "label_en": "Horizontal Biband", "label_fr": "Bicolore Horizontal"},
-            {"id": "vertical_biband", "label_en": "Vertical Biband", "label_fr": "Bicolore Vertical"},
-            {"id": "multiple_horizontal_stripes", "label_en": "Multiple Horizontal Stripes", "label_fr": "Rayures Horizontales Multiples"},
-            {"id": "diagonal_division", "label_en": "Diagonal Division", "label_fr": "Division Diagonale"},
-            {"id": "diagonal_band", "label_en": "Diagonal Band", "label_fr": "Bande Diagonale"}
+            {
+              "id": "horizontal_triband",
+              "label_en": "Horizontal Triband",
+              "label_fr": "Tricolore Horizontal"
+            },
+            {
+              "id": "vertical_triband",
+              "label_en": "Vertical Triband",
+              "label_fr": "Tricolore Vertical"
+            },
+            {
+              "id": "horizontal_biband",
+              "label_en": "Horizontal Biband",
+              "label_fr": "Bicolore Horizontal"
+            },
+            {
+              "id": "vertical_biband",
+              "label_en": "Vertical Biband",
+              "label_fr": "Bicolore Vertical"
+            },
+            {
+              "id": "multiple_horizontal_stripes",
+              "label_en": "Multiple Horizontal Stripes",
+              "label_fr": "Rayures Horizontales Multiples"
+            },
+            {
+              "id": "diagonal_division",
+              "label_en": "Diagonal Division",
+              "label_fr": "Division Diagonale"
+            },
+            {
+              "id": "diagonal_band",
+              "label_en": "Diagonal Band",
+              "label_fr": "Bande Diagonale"
+            }
           ]
         },
         {
@@ -126,10 +290,22 @@
           "label_en": "Cross Layouts",
           "label_fr": "Dispositions en Croix",
           "elements": [
-            {"id": "cross", "label_en": "Cross", "label_fr": "Croix"},
-            {"id": "nordic_cross", "label_en": "Nordic Cross", "label_fr": "Croix Nordique"},
-            {"id": "saltire", "label_en": "Saltire (X-Cross)", "label_fr": "Sautoir (Croix en X)"},
-            {"id": "greek_cross", "label_en": "Greek Cross", "label_fr": "Croix Grecque"}
+            { "id": "cross", "label_en": "Cross", "label_fr": "Croix" },
+            {
+              "id": "nordic_cross",
+              "label_en": "Nordic Cross",
+              "label_fr": "Croix Nordique"
+            },
+            {
+              "id": "saltire",
+              "label_en": "Saltire (X-Cross)",
+              "label_fr": "Sautoir (Croix en X)"
+            },
+            {
+              "id": "greek_cross",
+              "label_en": "Greek Cross",
+              "label_fr": "Croix Grecque"
+            }
           ]
         },
         {
@@ -137,13 +313,41 @@
           "label_en": "Special Layouts",
           "label_fr": "Dispositions Spéciales",
           "elements": [
-            {"id": "canton", "label_en": "Canton (Upper Hoist)", "label_fr": "Canton (Coin Supérieur)"},
-            {"id": "union_jack", "label_en": "Union Jack Canton", "label_fr": "Canton Union Jack"},
-            {"id": "quartered", "label_en": "Quartered", "label_fr": "Écartelé"},
-            {"id": "y_shape", "label_en": "Y-Shape / Pall", "label_fr": "Forme en Y / Pairle"},
-            {"id": "triangle_hoist", "label_en": "Triangle at Hoist", "label_fr": "Triangle au Guindant"},
-            {"id": "plain_field", "label_en": "Plain Field", "label_fr": "Champ Uni"},
-            {"id": "seychelles_rays", "label_en": "Radiating Bands", "label_fr": "Bandes Rayonnantes"}
+            {
+              "id": "canton",
+              "label_en": "Canton (Upper Hoist)",
+              "label_fr": "Canton (Coin Supérieur)"
+            },
+            {
+              "id": "union_jack",
+              "label_en": "Union Jack Canton",
+              "label_fr": "Canton Union Jack"
+            },
+            {
+              "id": "quartered",
+              "label_en": "Quartered",
+              "label_fr": "Écartelé"
+            },
+            {
+              "id": "y_shape",
+              "label_en": "Y-Shape / Pall",
+              "label_fr": "Forme en Y / Pairle"
+            },
+            {
+              "id": "triangle_hoist",
+              "label_en": "Triangle at Hoist",
+              "label_fr": "Triangle au Guindant"
+            },
+            {
+              "id": "plain_field",
+              "label_en": "Plain Field",
+              "label_fr": "Champ Uni"
+            },
+            {
+              "id": "seychelles_rays",
+              "label_en": "Radiating Bands",
+              "label_fr": "Bandes Rayonnantes"
+            }
           ]
         },
         {
@@ -151,8 +355,16 @@
           "label_en": "Unique Flag Shapes",
           "label_fr": "Formes Uniques",
           "elements": [
-            {"id": "non_rectangular", "label_en": "Non-Rectangular (Nepal)", "label_fr": "Non-Rectangulaire (Népal)"},
-            {"id": "serrated", "label_en": "Serrated Edge (Bahrain/Qatar)", "label_fr": "Bord Dentelé (Bahreïn/Qatar)"}
+            {
+              "id": "non_rectangular",
+              "label_en": "Non-Rectangular (Nepal)",
+              "label_fr": "Non-Rectangulaire (Népal)"
+            },
+            {
+              "id": "serrated",
+              "label_en": "Serrated Edge (Bahrain/Qatar)",
+              "label_fr": "Bord Dentelé (Bahreïn/Qatar)"
+            }
           ]
         }
       ]
@@ -168,12 +380,36 @@
           "label_en": "Shapes",
           "label_fr": "Formes",
           "elements": [
-            {"id": "disk", "label_en": "Circle/Disk", "label_fr": "Disque/Cercle"},
-            {"id": "triangle", "label_en": "Triangle", "label_fr": "Triangle"},
-            {"id": "diamond", "label_en": "Diamond/Lozenge", "label_fr": "Losange"},
-            {"id": "rectangle", "label_en": "Rectangle/Square", "label_fr": "Rectangle/Carré"},
-            {"id": "border", "label_en": "Border/Frame", "label_fr": "Bordure/Encadrement"},
-            {"id": "fimbriation", "label_en": "Fimbriation (thin borders)", "label_fr": "Fimbriation (liserés)"}
+            {
+              "id": "disk",
+              "label_en": "Circle/Disk",
+              "label_fr": "Disque/Cercle"
+            },
+            {
+              "id": "triangle",
+              "label_en": "Triangle",
+              "label_fr": "Triangle"
+            },
+            {
+              "id": "diamond",
+              "label_en": "Diamond/Lozenge",
+              "label_fr": "Losange"
+            },
+            {
+              "id": "rectangle",
+              "label_en": "Rectangle/Square",
+              "label_fr": "Rectangle/Carré"
+            },
+            {
+              "id": "border",
+              "label_en": "Border/Frame",
+              "label_fr": "Bordure/Encadrement"
+            },
+            {
+              "id": "fimbriation",
+              "label_en": "Fimbriation (thin borders)",
+              "label_fr": "Fimbriation (liserés)"
+            }
           ]
         }
       ]
@@ -189,13 +425,41 @@
           "label_en": "Stars",
           "label_fr": "Étoiles",
           "elements": [
-            {"id": "single_star", "label_en": "Single Star", "label_fr": "Étoile Unique"},
-            {"id": "multiple_stars", "label_en": "Multiple Stars", "label_fr": "Plusieurs Étoiles"},
-            {"id": "constellation", "label_en": "Constellation", "label_fr": "Constellation"},
-            {"id": "stars_arc", "label_en": "Stars in Arc", "label_fr": "Étoiles en Arc"},
-            {"id": "stars_circle", "label_en": "Stars in Circle", "label_fr": "Étoiles en Cercle"},
-            {"id": "star_of_david", "label_en": "Star of David", "label_fr": "Étoile de David"},
-            {"id": "pentagram", "label_en": "Pentagram", "label_fr": "Pentagramme"}
+            {
+              "id": "single_star",
+              "label_en": "Single Star",
+              "label_fr": "Étoile Unique"
+            },
+            {
+              "id": "multiple_stars",
+              "label_en": "Multiple Stars",
+              "label_fr": "Plusieurs Étoiles"
+            },
+            {
+              "id": "constellation",
+              "label_en": "Constellation",
+              "label_fr": "Constellation"
+            },
+            {
+              "id": "stars_arc",
+              "label_en": "Stars in Arc",
+              "label_fr": "Étoiles en Arc"
+            },
+            {
+              "id": "stars_circle",
+              "label_en": "Stars in Circle",
+              "label_fr": "Étoiles en Cercle"
+            },
+            {
+              "id": "star_of_david",
+              "label_en": "Star of David",
+              "label_fr": "Étoile de David"
+            },
+            {
+              "id": "pentagram",
+              "label_en": "Pentagram",
+              "label_fr": "Pentagramme"
+            }
           ]
         },
         {
@@ -203,11 +467,23 @@
           "label_en": "Sun & Moon",
           "label_fr": "Soleil & Lune",
           "elements": [
-            {"id": "sun", "label_en": "Sun", "label_fr": "Soleil"},
-            {"id": "sun_of_may", "label_en": "Sun of May (with face)", "label_fr": "Soleil de Mai (avec visage)"},
-            {"id": "rising_sun", "label_en": "Rising Sun", "label_fr": "Soleil Levant"},
-            {"id": "crescent", "label_en": "Crescent Moon", "label_fr": "Croissant de Lune"},
-            {"id": "moon", "label_en": "Full Moon", "label_fr": "Pleine Lune"}
+            { "id": "sun", "label_en": "Sun", "label_fr": "Soleil" },
+            {
+              "id": "sun_of_may",
+              "label_en": "Sun of May (with face)",
+              "label_fr": "Soleil de Mai (avec visage)"
+            },
+            {
+              "id": "rising_sun",
+              "label_en": "Rising Sun",
+              "label_fr": "Soleil Levant"
+            },
+            {
+              "id": "crescent",
+              "label_en": "Crescent Moon",
+              "label_fr": "Croissant de Lune"
+            },
+            { "id": "moon", "label_en": "Full Moon", "label_fr": "Pleine Lune" }
           ]
         }
       ]
@@ -223,15 +499,39 @@
           "label_en": "Birds",
           "label_fr": "Oiseaux",
           "elements": [
-            {"id": "eagle", "label_en": "Eagle", "label_fr": "Aigle"},
-            {"id": "double_headed_eagle", "label_en": "Double-Headed Eagle", "label_fr": "Aigle Bicéphale"},
-            {"id": "parrot", "label_en": "Parrot (Sisserou)", "label_fr": "Perroquet (Sisserou)"},
-            {"id": "bird_of_paradise", "label_en": "Bird of Paradise", "label_fr": "Oiseau de Paradis"},
-            {"id": "crane", "label_en": "Crane", "label_fr": "Grue"},
-            {"id": "frigatebird", "label_en": "Frigatebird", "label_fr": "Frégate"},
-            {"id": "dove", "label_en": "Dove/Pigeon", "label_fr": "Colombe/Pigeon"},
-            {"id": "condor", "label_en": "Condor", "label_fr": "Condor"},
-            {"id": "other_bird", "label_en": "Other Bird", "label_fr": "Autre Oiseau"}
+            { "id": "eagle", "label_en": "Eagle", "label_fr": "Aigle" },
+            {
+              "id": "double_headed_eagle",
+              "label_en": "Double-Headed Eagle",
+              "label_fr": "Aigle Bicéphale"
+            },
+            {
+              "id": "parrot",
+              "label_en": "Parrot (Sisserou)",
+              "label_fr": "Perroquet (Sisserou)"
+            },
+            {
+              "id": "bird_of_paradise",
+              "label_en": "Bird of Paradise",
+              "label_fr": "Oiseau de Paradis"
+            },
+            { "id": "crane", "label_en": "Crane", "label_fr": "Grue" },
+            {
+              "id": "frigatebird",
+              "label_en": "Frigatebird",
+              "label_fr": "Frégate"
+            },
+            {
+              "id": "dove",
+              "label_en": "Dove/Pigeon",
+              "label_fr": "Colombe/Pigeon"
+            },
+            { "id": "condor", "label_en": "Condor", "label_fr": "Condor" },
+            {
+              "id": "other_bird",
+              "label_en": "Other Bird",
+              "label_fr": "Autre Oiseau"
+            }
           ]
         },
         {
@@ -239,13 +539,33 @@
           "label_en": "Mammals",
           "label_fr": "Mammifères",
           "elements": [
-            {"id": "lion", "label_en": "Lion", "label_fr": "Lion"},
-            {"id": "horse", "label_en": "Horse", "label_fr": "Cheval"},
-            {"id": "elephant", "label_en": "Elephant", "label_fr": "Éléphant"},
-            {"id": "cow_bull", "label_en": "Cow/Bull/Aurochs", "label_fr": "Vache/Taureau/Auroch"},
-            {"id": "boar", "label_en": "Boar/Wild Pig", "label_fr": "Sanglier/Cochon"},
-            {"id": "kangaroo", "label_en": "Kangaroo", "label_fr": "Kangourou"},
-            {"id": "leopard", "label_en": "Leopard/Jaguar", "label_fr": "Léopard/Jaguar"}
+            { "id": "lion", "label_en": "Lion", "label_fr": "Lion" },
+            { "id": "horse", "label_en": "Horse", "label_fr": "Cheval" },
+            {
+              "id": "elephant",
+              "label_en": "Elephant",
+              "label_fr": "Éléphant"
+            },
+            {
+              "id": "cow_bull",
+              "label_en": "Cow/Bull/Aurochs",
+              "label_fr": "Vache/Taureau/Auroch"
+            },
+            {
+              "id": "boar",
+              "label_en": "Boar/Wild Pig",
+              "label_fr": "Sanglier/Cochon"
+            },
+            {
+              "id": "kangaroo",
+              "label_en": "Kangaroo",
+              "label_fr": "Kangourou"
+            },
+            {
+              "id": "leopard",
+              "label_en": "Leopard/Jaguar",
+              "label_fr": "Léopard/Jaguar"
+            }
           ]
         },
         {
@@ -253,12 +573,20 @@
           "label_en": "Reptiles & Marine Life",
           "label_fr": "Reptiles & Animaux Marins",
           "elements": [
-            {"id": "serpent", "label_en": "Serpent/Snake", "label_fr": "Serpent"},
-            {"id": "dragon", "label_en": "Dragon", "label_fr": "Dragon"},
-            {"id": "crocodile", "label_en": "Crocodile/Alligator", "label_fr": "Crocodile"},
-            {"id": "fish", "label_en": "Fish", "label_fr": "Poisson"},
-            {"id": "dolphin", "label_en": "Dolphin", "label_fr": "Dauphin"},
-            {"id": "turtle", "label_en": "Turtle", "label_fr": "Tortue"}
+            {
+              "id": "serpent",
+              "label_en": "Serpent/Snake",
+              "label_fr": "Serpent"
+            },
+            { "id": "dragon", "label_en": "Dragon", "label_fr": "Dragon" },
+            {
+              "id": "crocodile",
+              "label_en": "Crocodile/Alligator",
+              "label_fr": "Crocodile"
+            },
+            { "id": "fish", "label_en": "Fish", "label_fr": "Poisson" },
+            { "id": "dolphin", "label_en": "Dolphin", "label_fr": "Dauphin" },
+            { "id": "turtle", "label_en": "Turtle", "label_fr": "Tortue" }
           ]
         },
         {
@@ -266,11 +594,15 @@
           "label_en": "Mythical Creatures",
           "label_fr": "Créatures Mythiques",
           "elements": [
-            {"id": "dragon", "label_en": "Dragon", "label_fr": "Dragon"},
-            {"id": "phoenix", "label_en": "Phoenix", "label_fr": "Phénix"},
-            {"id": "griffin", "label_en": "Griffin", "label_fr": "Griffon"},
-            {"id": "quetzal", "label_en": "Quetzal Bird", "label_fr": "Oiseau Quetzal"},
-            {"id": "wings", "label_en": "Wings", "label_fr": "Ailes"}
+            { "id": "dragon", "label_en": "Dragon", "label_fr": "Dragon" },
+            { "id": "phoenix", "label_en": "Phoenix", "label_fr": "Phénix" },
+            { "id": "griffin", "label_en": "Griffin", "label_fr": "Griffon" },
+            {
+              "id": "quetzal",
+              "label_en": "Quetzal Bird",
+              "label_fr": "Oiseau Quetzal"
+            },
+            { "id": "wings", "label_en": "Wings", "label_fr": "Ailes" }
           ]
         }
       ]
@@ -286,13 +618,33 @@
           "label_en": "Trees",
           "label_fr": "Arbres",
           "elements": [
-            {"id": "cedar", "label_en": "Cedar Tree (Lebanon)", "label_fr": "Cèdre (Liban)"},
-            {"id": "palm", "label_en": "Palm Tree", "label_fr": "Palmier"},
-            {"id": "olive", "label_en": "Olive Tree/Branch", "label_fr": "Olivier/Branche d'Olivier"},
-            {"id": "banana_tree", "label_en": "Banana Tree", "label_fr": "Bananier"},
-            {"id": "baobab", "label_en": "Baobab", "label_fr": "Baobab"},
-            {"id": "cotton", "label_en": "Cotton Plant", "label_fr": "Cotonnier"},
-            {"id": "mahogany", "label_en": "Mahogany Tree", "label_fr": "Acajou"}
+            {
+              "id": "cedar",
+              "label_en": "Cedar Tree (Lebanon)",
+              "label_fr": "Cèdre (Liban)"
+            },
+            { "id": "palm", "label_en": "Palm Tree", "label_fr": "Palmier" },
+            {
+              "id": "olive",
+              "label_en": "Olive Tree/Branch",
+              "label_fr": "Olivier/Branche d'Olivier"
+            },
+            {
+              "id": "banana_tree",
+              "label_en": "Banana Tree",
+              "label_fr": "Bananier"
+            },
+            { "id": "baobab", "label_en": "Baobab", "label_fr": "Baobab" },
+            {
+              "id": "cotton",
+              "label_en": "Cotton Plant",
+              "label_fr": "Cotonnier"
+            },
+            {
+              "id": "mahogany",
+              "label_en": "Mahogany Tree",
+              "label_fr": "Acajou"
+            }
           ]
         },
         {
@@ -300,16 +652,56 @@
           "label_en": "Leaves & Flowers",
           "label_fr": "Feuilles & Fleurs",
           "elements": [
-            {"id": "maple_leaf", "label_en": "Maple Leaf", "label_fr": "Feuille d'Érable"},
-            {"id": "namale_leaves", "label_en": "Namale Leaves/Fern", "label_fr": "Feuilles de Namale/Fougère"},
-            {"id": "laurel", "label_en": "Laurel Wreath", "label_fr": "Couronne de Laurier"},
-            {"id": "olive_branch", "label_en": "Olive Branch/Wreath", "label_fr": "Branche d'Olivier"},
-            {"id": "wheat", "label_en": "Wheat/Grain", "label_fr": "Blé/Céréales"},
-            {"id": "nutmeg", "label_en": "Nutmeg", "label_fr": "Noix de Muscade"},
-            {"id": "cactus", "label_en": "Cactus/Prickly Pear", "label_fr": "Cactus/Figuier de Barbarie"},
-            {"id": "lotus", "label_en": "Lotus Flower", "label_fr": "Fleur de Lotus"},
-            {"id": "pomegranate", "label_en": "Pomegranate (Granada)", "label_fr": "Grenade (Fruit)"},
-            {"id": "fleur_de_lys", "label_en": "Fleur-de-lis", "label_fr": "Fleur de Lys"}
+            {
+              "id": "maple_leaf",
+              "label_en": "Maple Leaf",
+              "label_fr": "Feuille d'Érable"
+            },
+            {
+              "id": "namale_leaves",
+              "label_en": "Namale Leaves/Fern",
+              "label_fr": "Feuilles de Namale/Fougère"
+            },
+            {
+              "id": "laurel",
+              "label_en": "Laurel Wreath",
+              "label_fr": "Couronne de Laurier"
+            },
+            {
+              "id": "olive_branch",
+              "label_en": "Olive Branch/Wreath",
+              "label_fr": "Branche d'Olivier"
+            },
+            {
+              "id": "wheat",
+              "label_en": "Wheat/Grain",
+              "label_fr": "Blé/Céréales"
+            },
+            {
+              "id": "nutmeg",
+              "label_en": "Nutmeg",
+              "label_fr": "Noix de Muscade"
+            },
+            {
+              "id": "cactus",
+              "label_en": "Cactus/Prickly Pear",
+              "label_fr": "Cactus/Figuier de Barbarie"
+            },
+            {
+              "id": "lotus",
+              "label_en": "Lotus Flower",
+              "label_fr": "Fleur de Lotus"
+            },
+            {
+              "id": "pomegranate",
+              "label_en": "Pomegranate (Granada)",
+              "label_fr": "Grenade (Fruit)"
+            },
+            {
+              "id": "fleur_de_lys",
+              "label_en": "Fleur-de-lis",
+              "label_fr": "Fleur de Lys"
+            }
           ]
         }
       ]
@@ -325,12 +717,20 @@
           "label_en": "Bladed Weapons",
           "label_fr": "Armes Blanches",
           "elements": [
-            {"id": "sword", "label_en": "Sword", "label_fr": "Épée"},
-            {"id": "sabre", "label_en": "Sabre", "label_fr": "Sabre"},
-            {"id": "khanjar", "label_en": "Khanjar/Dagger", "label_fr": "Khanjar/Dague"},
-            {"id": "machete", "label_en": "Machete", "label_fr": "Machette"},
-            {"id": "bayonet", "label_en": "Bayonet", "label_fr": "Baïonnette"},
-            {"id": "halberd", "label_en": "Halberd", "label_fr": "Hallebarde"}
+            { "id": "sword", "label_en": "Sword", "label_fr": "Épée" },
+            { "id": "sabre", "label_en": "Sabre", "label_fr": "Sabre" },
+            {
+              "id": "khanjar",
+              "label_en": "Khanjar/Dagger",
+              "label_fr": "Khanjar/Dague"
+            },
+            { "id": "machete", "label_en": "Machete", "label_fr": "Machette" },
+            {
+              "id": "bayonet",
+              "label_en": "Bayonet",
+              "label_fr": "Baïonnette"
+            },
+            { "id": "halberd", "label_en": "Halberd", "label_fr": "Hallebarde" }
           ]
         },
         {
@@ -338,10 +738,14 @@
           "label_en": "Ranged Weapons",
           "label_fr": "Armes à Distance",
           "elements": [
-            {"id": "rifle", "label_en": "Rifle/Gun", "label_fr": "Fusil"},
-            {"id": "cannon", "label_en": "Cannon", "label_fr": "Canon"},
-            {"id": "bow_arrow", "label_en": "Bow & Arrow", "label_fr": "Arc & Flèche"},
-            {"id": "spear", "label_en": "Spear/Lance", "label_fr": "Lance"}
+            { "id": "rifle", "label_en": "Rifle/Gun", "label_fr": "Fusil" },
+            { "id": "cannon", "label_en": "Cannon", "label_fr": "Canon" },
+            {
+              "id": "bow_arrow",
+              "label_en": "Bow & Arrow",
+              "label_fr": "Arc & Flèche"
+            },
+            { "id": "spear", "label_en": "Spear/Lance", "label_fr": "Lance" }
           ]
         },
         {
@@ -349,9 +753,9 @@
           "label_en": "Defensive Equipment",
           "label_fr": "Équipement Défensif",
           "elements": [
-            {"id": "shield", "label_en": "Shield", "label_fr": "Bouclier"},
-            {"id": "helmet", "label_en": "Helmet", "label_fr": "Casque"},
-            {"id": "armor", "label_en": "Armor", "label_fr": "Armure"}
+            { "id": "shield", "label_en": "Shield", "label_fr": "Bouclier" },
+            { "id": "helmet", "label_en": "Helmet", "label_fr": "Casque" },
+            { "id": "armor", "label_en": "Armor", "label_fr": "Armure" }
           ]
         },
         {
@@ -359,14 +763,18 @@
           "label_en": "Tools",
           "label_fr": "Outils",
           "elements": [
-            {"id": "axe", "label_en": "Axe", "label_fr": "Hache"},
-            {"id": "hoe", "label_en": "Hoe", "label_fr": "Houe"},
-            {"id": "pickaxe", "label_en": "Pickaxe", "label_fr": "Pioche"},
-            {"id": "saw", "label_en": "Saw", "label_fr": "Scie"},
-            {"id": "hammer", "label_en": "Hammer", "label_fr": "Marteau"},
-            {"id": "gear", "label_en": "Gear/Cogwheel", "label_fr": "Engrenage"},
-            {"id": "anchor", "label_en": "Anchor", "label_fr": "Ancre"},
-            {"id": "trident", "label_en": "Trident", "label_fr": "Trident"}
+            { "id": "axe", "label_en": "Axe", "label_fr": "Hache" },
+            { "id": "hoe", "label_en": "Hoe", "label_fr": "Houe" },
+            { "id": "pickaxe", "label_en": "Pickaxe", "label_fr": "Pioche" },
+            { "id": "saw", "label_en": "Saw", "label_fr": "Scie" },
+            { "id": "hammer", "label_en": "Hammer", "label_fr": "Marteau" },
+            {
+              "id": "gear",
+              "label_en": "Gear/Cogwheel",
+              "label_fr": "Engrenage"
+            },
+            { "id": "anchor", "label_en": "Anchor", "label_fr": "Ancre" },
+            { "id": "trident", "label_en": "Trident", "label_fr": "Trident" }
           ]
         }
       ]
@@ -382,12 +790,32 @@
           "label_en": "People",
           "label_fr": "Personnes",
           "elements": [
-            {"id": "human_figure", "label_en": "Human Figure", "label_fr": "Figure Humaine"},
-            {"id": "worker", "label_en": "Worker/Laborer", "label_fr": "Travailleur/Ouvrier"},
-            {"id": "warrior", "label_en": "Warrior/Soldier", "label_fr": "Guerrier/Soldat"},
-            {"id": "supporters", "label_en": "Heraldic Supporters", "label_fr": "Supports Héraldiques"},
-            {"id": "hands", "label_en": "Hands", "label_fr": "Mains"},
-            {"id": "phrygian_cap", "label_en": "Phrygian Cap/Liberty Cap", "label_fr": "Bonnet Phrygien"}
+            {
+              "id": "human_figure",
+              "label_en": "Human Figure",
+              "label_fr": "Figure Humaine"
+            },
+            {
+              "id": "worker",
+              "label_en": "Worker/Laborer",
+              "label_fr": "Travailleur/Ouvrier"
+            },
+            {
+              "id": "warrior",
+              "label_en": "Warrior/Soldier",
+              "label_fr": "Guerrier/Soldat"
+            },
+            {
+              "id": "supporters",
+              "label_en": "Heraldic Supporters",
+              "label_fr": "Supports Héraldiques"
+            },
+            { "id": "hands", "label_en": "Hands", "label_fr": "Mains" },
+            {
+              "id": "phrygian_cap",
+              "label_en": "Phrygian Cap/Liberty Cap",
+              "label_fr": "Bonnet Phrygien"
+            }
           ]
         }
       ]
@@ -403,9 +831,21 @@
           "label_en": "Vessels",
           "label_fr": "Navires",
           "elements": [
-            {"id": "ship", "label_en": "Ship/Boat", "label_fr": "Navire/Bateau"},
-            {"id": "canoe", "label_en": "Canoe/Pirogue", "label_fr": "Canoë/Pirogue"},
-            {"id": "dhow", "label_en": "Dhow (Arab Boat)", "label_fr": "Boutre (Bateau Arabe)"}
+            {
+              "id": "ship",
+              "label_en": "Ship/Boat",
+              "label_fr": "Navire/Bateau"
+            },
+            {
+              "id": "canoe",
+              "label_en": "Canoe/Pirogue",
+              "label_fr": "Canoë/Pirogue"
+            },
+            {
+              "id": "dhow",
+              "label_en": "Dhow (Arab Boat)",
+              "label_fr": "Boutre (Bateau Arabe)"
+            }
           ]
         },
         {
@@ -413,9 +853,9 @@
           "label_en": "Water Elements",
           "label_fr": "Éléments Aquatiques",
           "elements": [
-            {"id": "waves", "label_en": "Waves", "label_fr": "Vagues"},
-            {"id": "sea", "label_en": "Sea/Ocean", "label_fr": "Mer/Océan"},
-            {"id": "river", "label_en": "River", "label_fr": "Rivière"}
+            { "id": "waves", "label_en": "Waves", "label_fr": "Vagues" },
+            { "id": "sea", "label_en": "Sea/Ocean", "label_fr": "Mer/Océan" },
+            { "id": "river", "label_en": "River", "label_fr": "Rivière" }
           ]
         }
       ]
@@ -431,11 +871,19 @@
           "label_en": "Buildings",
           "label_fr": "Bâtiments",
           "elements": [
-            {"id": "castle", "label_en": "Castle/Fortress", "label_fr": "Château/Forteresse"},
-            {"id": "temple", "label_en": "Temple", "label_fr": "Temple"},
-            {"id": "angkor_wat", "label_en": "Angkor Wat", "label_fr": "Angkor Wat"},
-            {"id": "mosque", "label_en": "Mosque", "label_fr": "Mosquée"},
-            {"id": "tower", "label_en": "Tower", "label_fr": "Tour"}
+            {
+              "id": "castle",
+              "label_en": "Castle/Fortress",
+              "label_fr": "Château/Forteresse"
+            },
+            { "id": "temple", "label_en": "Temple", "label_fr": "Temple" },
+            {
+              "id": "angkor_wat",
+              "label_en": "Angkor Wat",
+              "label_fr": "Angkor Wat"
+            },
+            { "id": "mosque", "label_en": "Mosque", "label_fr": "Mosquée" },
+            { "id": "tower", "label_en": "Tower", "label_fr": "Tour" }
           ]
         },
         {
@@ -443,9 +891,17 @@
           "label_en": "Monuments",
           "label_fr": "Monuments",
           "elements": [
-            {"id": "pyramid", "label_en": "Pyramid", "label_fr": "Pyramide"},
-            {"id": "monument", "label_en": "Monument", "label_fr": "Monument"},
-            {"id": "column", "label_en": "Column/Pillar", "label_fr": "Colonne/Pilier"}
+            { "id": "pyramid", "label_en": "Pyramid", "label_fr": "Pyramide" },
+            {
+              "id": "monument",
+              "label_en": "Monument",
+              "label_fr": "Monument"
+            },
+            {
+              "id": "column",
+              "label_en": "Column/Pillar",
+              "label_fr": "Colonne/Pilier"
+            }
           ]
         }
       ]
@@ -461,12 +917,24 @@
           "label_en": "Heraldic Elements",
           "label_fr": "Éléments Héraldiques",
           "elements": [
-            {"id": "coat_of_arms", "label_en": "Coat of Arms", "label_fr": "Blason/Armoiries"},
-            {"id": "crown", "label_en": "Crown/Tiara", "label_fr": "Couronne/Tiare"},
-            {"id": "crest", "label_en": "Crest", "label_fr": "Cimier"},
-            {"id": "scepter", "label_en": "Scepter", "label_fr": "Sceptre"},
-            {"id": "papal_keys", "label_en": "Papal Keys", "label_fr": "Clés Papales"},
-            {"id": "orb", "label_en": "Orb", "label_fr": "Globe Impérial"}
+            {
+              "id": "coat_of_arms",
+              "label_en": "Coat of Arms",
+              "label_fr": "Blason/Armoiries"
+            },
+            {
+              "id": "crown",
+              "label_en": "Crown/Tiara",
+              "label_fr": "Couronne/Tiare"
+            },
+            { "id": "crest", "label_en": "Crest", "label_fr": "Cimier" },
+            { "id": "scepter", "label_en": "Scepter", "label_fr": "Sceptre" },
+            {
+              "id": "papal_keys",
+              "label_en": "Papal Keys",
+              "label_fr": "Clés Papales"
+            },
+            { "id": "orb", "label_en": "Orb", "label_fr": "Globe Impérial" }
           ]
         }
       ]
@@ -482,9 +950,21 @@
           "label_en": "Crosses",
           "label_fr": "Croix",
           "elements": [
-            {"id": "christian_cross", "label_en": "Christian Cross", "label_fr": "Croix Chrétienne"},
-            {"id": "orthodox_cross", "label_en": "Orthodox Cross", "label_fr": "Croix Orthodoxe"},
-            {"id": "george_cross", "label_en": "St. George's Cross", "label_fr": "Croix de St-Georges"}
+            {
+              "id": "christian_cross",
+              "label_en": "Christian Cross",
+              "label_fr": "Croix Chrétienne"
+            },
+            {
+              "id": "orthodox_cross",
+              "label_en": "Orthodox Cross",
+              "label_fr": "Croix Orthodoxe"
+            },
+            {
+              "id": "george_cross",
+              "label_en": "St. George's Cross",
+              "label_fr": "Croix de St-Georges"
+            }
           ]
         },
         {
@@ -492,9 +972,13 @@
           "label_en": "Islamic Symbols",
           "label_fr": "Symboles Islamiques",
           "elements": [
-            {"id": "shahada", "label_en": "Shahada", "label_fr": "Chahada"},
-            {"id": "takbir", "label_en": "Takbir", "label_fr": "Takbir"},
-            {"id": "crescent_star", "label_en": "Crescent & Star", "label_fr": "Croissant & Étoile"}
+            { "id": "shahada", "label_en": "Shahada", "label_fr": "Chahada" },
+            { "id": "takbir", "label_en": "Takbir", "label_fr": "Takbir" },
+            {
+              "id": "crescent_star",
+              "label_en": "Crescent & Star",
+              "label_fr": "Croissant & Étoile"
+            }
           ]
         },
         {
@@ -502,9 +986,17 @@
           "label_en": "Other Religious",
           "label_fr": "Autres Symboles Religieux",
           "elements": [
-            {"id": "star_of_david", "label_en": "Star of David", "label_fr": "Étoile de David"},
-            {"id": "dharma_wheel", "label_en": "Dharma Wheel/Ashoka Chakra", "label_fr": "Roue du Dharma/Chakra d'Ashoka"},
-            {"id": "menorah", "label_en": "Menorah", "label_fr": "Ménorah"}
+            {
+              "id": "star_of_david",
+              "label_en": "Star of David",
+              "label_fr": "Étoile de David"
+            },
+            {
+              "id": "dharma_wheel",
+              "label_en": "Dharma Wheel/Ashoka Chakra",
+              "label_fr": "Roue du Dharma/Chakra d'Ashoka"
+            },
+            { "id": "menorah", "label_en": "Menorah", "label_fr": "Ménorah" }
           ]
         }
       ]
@@ -520,10 +1012,26 @@
           "label_en": "Inscriptions",
           "label_fr": "Inscriptions",
           "elements": [
-            {"id": "arabic_script", "label_en": "Arabic Script", "label_fr": "Écriture Arabe"},
-            {"id": "latin_script", "label_en": "Latin Script", "label_fr": "Écriture Latine"},
-            {"id": "motto", "label_en": "Motto/Slogan", "label_fr": "Devise/Slogan"},
-            {"id": "banner_text", "label_en": "Banner with Text", "label_fr": "Bandeau avec Texte"}
+            {
+              "id": "arabic_script",
+              "label_en": "Arabic Script",
+              "label_fr": "Écriture Arabe"
+            },
+            {
+              "id": "latin_script",
+              "label_en": "Latin Script",
+              "label_fr": "Écriture Latine"
+            },
+            {
+              "id": "motto",
+              "label_en": "Motto/Slogan",
+              "label_fr": "Devise/Slogan"
+            },
+            {
+              "id": "banner_text",
+              "label_en": "Banner with Text",
+              "label_fr": "Bandeau avec Texte"
+            }
           ]
         }
       ]
@@ -539,11 +1047,31 @@
           "label_en": "Asian Symbols",
           "label_fr": "Symboles Asiatiques",
           "elements": [
-            {"id": "taeguk", "label_en": "Taeguk (Yin-Yang)", "label_fr": "Taeguk (Yin-Yang)"},
-            {"id": "trigrams", "label_en": "Trigrams", "label_fr": "Trigrammes"},
-            {"id": "soyombo", "label_en": "Soyombo (Mongolia)", "label_fr": "Soyombo (Mongolie)"},
-            {"id": "tunduk", "label_en": "Tunduk (Kyrgyzstan)", "label_fr": "Toundouk (Kirghizstan)"},
-            {"id": "chakra", "label_en": "Ashoka Chakra", "label_fr": "Chakra d'Ashoka"}
+            {
+              "id": "taeguk",
+              "label_en": "Taeguk (Yin-Yang)",
+              "label_fr": "Taeguk (Yin-Yang)"
+            },
+            {
+              "id": "trigrams",
+              "label_en": "Trigrams",
+              "label_fr": "Trigrammes"
+            },
+            {
+              "id": "soyombo",
+              "label_en": "Soyombo (Mongolia)",
+              "label_fr": "Soyombo (Mongolie)"
+            },
+            {
+              "id": "tunduk",
+              "label_en": "Tunduk (Kyrgyzstan)",
+              "label_fr": "Toundouk (Kirghizstan)"
+            },
+            {
+              "id": "chakra",
+              "label_en": "Ashoka Chakra",
+              "label_fr": "Chakra d'Ashoka"
+            }
           ]
         },
         {
@@ -551,10 +1079,26 @@
           "label_en": "African Symbols",
           "label_fr": "Symboles Africains",
           "elements": [
-            {"id": "folk_pattern", "label_en": "Folk/Tribal Pattern", "label_fr": "Motif Traditionnel/Tribal"},
-            {"id": "mokorotlo", "label_en": "Mokorotlo Hat (Lesotho)", "label_fr": "Chapeau Mokorotlo (Lesotho)"},
-            {"id": "zimbabwe_bird", "label_en": "Zimbabwe Bird", "label_fr": "Oiseau du Zimbabwe"},
-            {"id": "kente", "label_en": "Kente Pattern", "label_fr": "Motif Kente"}
+            {
+              "id": "folk_pattern",
+              "label_en": "Folk/Tribal Pattern",
+              "label_fr": "Motif Traditionnel/Tribal"
+            },
+            {
+              "id": "mokorotlo",
+              "label_en": "Mokorotlo Hat (Lesotho)",
+              "label_fr": "Chapeau Mokorotlo (Lesotho)"
+            },
+            {
+              "id": "zimbabwe_bird",
+              "label_en": "Zimbabwe Bird",
+              "label_fr": "Oiseau du Zimbabwe"
+            },
+            {
+              "id": "kente",
+              "label_en": "Kente Pattern",
+              "label_fr": "Motif Kente"
+            }
           ]
         },
         {
@@ -562,8 +1106,16 @@
           "label_en": "European Symbols",
           "label_fr": "Symboles Européens",
           "elements": [
-            {"id": "georgian_crosses", "label_en": "Georgian Crosses", "label_fr": "Croix Géorgiennes"},
-            {"id": "bolnisi_cross", "label_en": "Bolnisi Cross", "label_fr": "Croix de Bolnissi"}
+            {
+              "id": "georgian_crosses",
+              "label_en": "Georgian Crosses",
+              "label_fr": "Croix Géorgiennes"
+            },
+            {
+              "id": "bolnisi_cross",
+              "label_en": "Bolnisi Cross",
+              "label_fr": "Croix de Bolnissi"
+            }
           ]
         },
         {
@@ -571,14 +1123,42 @@
           "label_en": "Other Symbols",
           "label_fr": "Autres Symboles",
           "elements": [
-            {"id": "map_silhouette", "label_en": "Map Silhouette", "label_fr": "Silhouette de Carte"},
-            {"id": "armillary_sphere", "label_en": "Armillary Sphere", "label_fr": "Sphère Armillaire"},
-            {"id": "boars_tusk", "label_en": "Boar's Tusk", "label_fr": "Défense de Sanglier"},
-            {"id": "book", "label_en": "Book", "label_fr": "Livre"},
-            {"id": "flag", "label_en": "Flag within Flag", "label_fr": "Drapeau dans Drapeau"},
-            {"id": "flame", "label_en": "Flame/Fire", "label_fr": "Flamme/Feu"},
-            {"id": "taijitu", "label_en": "Yin-Yang/Taijitu", "label_fr": "Yin-Yang/Taijitu"},
-            {"id": "pillars", "label_en": "Pillars/Columns", "label_fr": "Piliers/Colonnes"}
+            {
+              "id": "map_silhouette",
+              "label_en": "Map Silhouette",
+              "label_fr": "Silhouette de Carte"
+            },
+            {
+              "id": "armillary_sphere",
+              "label_en": "Armillary Sphere",
+              "label_fr": "Sphère Armillaire"
+            },
+            {
+              "id": "boars_tusk",
+              "label_en": "Boar's Tusk",
+              "label_fr": "Défense de Sanglier"
+            },
+            { "id": "book", "label_en": "Book", "label_fr": "Livre" },
+            {
+              "id": "flag",
+              "label_en": "Flag within Flag",
+              "label_fr": "Drapeau dans Drapeau"
+            },
+            {
+              "id": "flame",
+              "label_en": "Flame/Fire",
+              "label_fr": "Flamme/Feu"
+            },
+            {
+              "id": "taijitu",
+              "label_en": "Yin-Yang/Taijitu",
+              "label_fr": "Yin-Yang/Taijitu"
+            },
+            {
+              "id": "pillars",
+              "label_en": "Pillars/Columns",
+              "label_fr": "Piliers/Colonnes"
+            }
           ]
         }
       ]
@@ -594,12 +1174,36 @@
           "label_en": "Aspect Ratios",
           "label_fr": "Ratios d'Aspect",
           "elements": [
-            {"id": "square", "label_en": "Square (1:1)", "label_fr": "Carré (1:1)"},
-            {"id": "standard", "label_en": "Standard (3:4, 4:3)", "label_fr": "Standard (3:4, 4:3)"},
-            {"id": "wide", "label_en": "Wide (2:3, 3:2)", "label_fr": "Large (2:3, 3:2)"},
-            {"id": "long", "label_en": "Long (3:5, 5:3)", "label_fr": "Long (3:5, 5:3)"},
-            {"id": "extra_long", "label_en": "Extra Long (1:2)", "label_fr": "Très Long (1:2)"},
-            {"id": "unique", "label_en": "Unique Shape", "label_fr": "Forme Unique"}
+            {
+              "id": "square",
+              "label_en": "Square (1:1)",
+              "label_fr": "Carré (1:1)"
+            },
+            {
+              "id": "standard",
+              "label_en": "Standard (3:4, 4:3)",
+              "label_fr": "Standard (3:4, 4:3)"
+            },
+            {
+              "id": "wide",
+              "label_en": "Wide (2:3, 3:2)",
+              "label_fr": "Large (2:3, 3:2)"
+            },
+            {
+              "id": "long",
+              "label_en": "Long (3:5, 5:3)",
+              "label_fr": "Long (3:5, 5:3)"
+            },
+            {
+              "id": "extra_long",
+              "label_en": "Extra Long (1:2)",
+              "label_fr": "Très Long (1:2)"
+            },
+            {
+              "id": "unique",
+              "label_en": "Unique Shape",
+              "label_fr": "Forme Unique"
+            }
           ]
         }
       ]

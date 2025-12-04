@@ -11,9 +11,24 @@ const taxonomyData = taxonomy as Taxonomy;
 // Quick filter definitions - shown directly without toggle panel
 const quickFilterConfig = {
   layouts: [
-    { id: "vertical_triband", label_en: "3 Vertical", label_fr: "3 Verticales", category: "band_layouts" },
-    { id: "horizontal_triband", label_en: "3 Horizontal", label_fr: "3 Horizontales", category: "band_layouts" },
-    { id: "other_bands", label_en: "Other Bands", label_fr: "Autres Bandes", category: "band_layouts" },
+    {
+      id: "vertical_triband",
+      label_en: "3 Vertical",
+      label_fr: "3 Verticales",
+      category: "band_layouts",
+    },
+    {
+      id: "horizontal_triband",
+      label_en: "3 Horizontal",
+      label_fr: "3 Horizontales",
+      category: "band_layouts",
+    },
+    {
+      id: "other_bands",
+      label_en: "Other Bands",
+      label_fr: "Autres Bandes",
+      category: "band_layouts",
+    },
   ],
   colors: [
     { id: "blue", label_en: "Blue", label_fr: "Bleu", hex: "#2563EB" },
@@ -23,11 +38,36 @@ const quickFilterConfig = {
     { id: "black", label_en: "Black", label_fr: "Noir", hex: "#1F2937" },
   ],
   elements: [
-    { id: "animals", label_en: "Animals", label_fr: "Animaux", category: "main_category" },
-    { id: "rifle", label_en: "Firearms", label_fr: "Armes à feu", category: "ranged" },
-    { id: "weapons", label_en: "Weapons", label_fr: "Armes", category: "main_category" },
-    { id: "flora", label_en: "Flora", label_fr: "Flore", category: "main_category" },
-    { id: "motto", label_en: "Motto/Text", label_fr: "Devise/Texte", category: "inscriptions" },
+    {
+      id: "animals",
+      label_en: "Animals",
+      label_fr: "Animaux",
+      category: "main_category",
+    },
+    {
+      id: "rifle",
+      label_en: "Firearms",
+      label_fr: "Armes à feu",
+      category: "ranged",
+    },
+    {
+      id: "weapons",
+      label_en: "Weapons",
+      label_fr: "Armes",
+      category: "main_category",
+    },
+    {
+      id: "flora",
+      label_en: "Flora",
+      label_fr: "Flore",
+      category: "main_category",
+    },
+    {
+      id: "motto",
+      label_en: "Motto/Text",
+      label_fr: "Devise/Texte",
+      category: "inscriptions",
+    },
   ],
 };
 
@@ -40,7 +80,6 @@ export function TopFiltersMobile() {
     clearFilters,
     setFiltersPanelOpen,
   } = useAppStore();
-  const { getAvailableFilters } = useFlags(activeFilters, "");
 
   const lang = language === "fr" ? "label_fr" : "label_en";
 
@@ -61,7 +100,10 @@ export function TopFiltersMobile() {
 
   // Handle "other bands" filter - matches flags with band layouts that aren't triband
   const handleOtherBandsClick = () => {
-    const filter: ActiveFilter = { categoryId: "band_layouts", elementId: "other_bands" };
+    const filter: ActiveFilter = {
+      categoryId: "band_layouts",
+      elementId: "other_bands",
+    };
     if (isFilterActive("band_layouts", "other_bands")) {
       removeFilter(filter);
     } else {
@@ -166,7 +208,9 @@ export function TopFiltersMobile() {
                   label={element[lang]}
                   isActive={isActive}
                   isDisabled={false}
-                  onClick={() => handleFilterClick(element.category, element.id)}
+                  onClick={() =>
+                    handleFilterClick(element.category, element.id)
+                  }
                 />
               );
             })}
@@ -242,8 +286,16 @@ function MobileFiltersPanel() {
     { id: "Africa", label_en: "Africa", label_fr: "Afrique" },
     { id: "Asia", label_en: "Asia", label_fr: "Asie" },
     { id: "Europe", label_en: "Europe", label_fr: "Europe" },
-    { id: "North America", label_en: "North America", label_fr: "Amérique du Nord" },
-    { id: "South America", label_en: "South America", label_fr: "Amérique du Sud" },
+    {
+      id: "North America",
+      label_en: "North America",
+      label_fr: "Amérique du Nord",
+    },
+    {
+      id: "South America",
+      label_en: "South America",
+      label_fr: "Amérique du Sud",
+    },
     { id: "Oceania", label_en: "Oceania", label_fr: "Océanie" },
   ];
 
@@ -292,7 +344,10 @@ function MobileFiltersPanel() {
                 <div className="flex flex-wrap gap-2">
                   {continents.map((continent) => {
                     const isActive = isFilterActive("regions", continent.id);
-                    const isAvailable = getAvailableFilters("regions", continent.id);
+                    const isAvailable = getAvailableFilters(
+                      "regions",
+                      continent.id
+                    );
 
                     return (
                       <FilterButton
@@ -300,7 +355,9 @@ function MobileFiltersPanel() {
                         label={continent[lang]}
                         isActive={isActive}
                         isDisabled={!isActive && !isAvailable}
-                        onClick={() => handleFilterClick("regions", continent.id)}
+                        onClick={() =>
+                          handleFilterClick("regions", continent.id)
+                        }
                       />
                     );
                   })}
@@ -311,7 +368,7 @@ function MobileFiltersPanel() {
               {taxonomyData.categories.map((category) => {
                 // Skip categories already shown in quick filters
                 if (["colors", "flag_shape"].includes(category.id)) return null;
-                
+
                 return (
                   <div key={category.id}>
                     <h3 className="text-sm font-semibold text-[var(--color-text)] mb-3">
@@ -319,12 +376,13 @@ function MobileFiltersPanel() {
                     </h3>
                     {category.subcategories.map((subcategory) => {
                       const visibleElements = subcategory.elements.filter(
-                        (element) => getAvailableFilters(subcategory.id, element.id) || 
+                        (element) =>
+                          getAvailableFilters(subcategory.id, element.id) ||
                           isFilterActive(subcategory.id, element.id)
                       );
-                      
+
                       if (visibleElements.length === 0) return null;
-                      
+
                       return (
                         <div key={subcategory.id} className="mb-4">
                           <p className="text-xs text-[var(--color-text-secondary)] mb-2">
@@ -344,7 +402,10 @@ function MobileFiltersPanel() {
                                   isActive={isActive}
                                   isDisabled={false}
                                   onClick={() =>
-                                    handleFilterClick(subcategory.id, element.id)
+                                    handleFilterClick(
+                                      subcategory.id,
+                                      element.id
+                                    )
                                   }
                                 />
                               );

@@ -99,7 +99,7 @@ const elementKeywords: Record<string, string[]> = {
 // Extract all elements/symbols from flag attributes
 function extractElements(attributes: FlagAttribute[]): string[] {
   const elements: string[] = [];
-  
+
   attributes.forEach(attr => {
     if (attr.element && !attr.element.startsWith('color_')) {
       elements.push(attr.element.toLowerCase());
@@ -111,14 +111,14 @@ function extractElements(attributes: FlagAttribute[]): string[] {
       elements.push(...attr.includes.map(e => e.toLowerCase()));
     }
   });
-  
+
   return [...new Set(elements)];
 }
 
 // Count total stars on a flag
 export function countStars(attributes: FlagAttribute[]): number {
   let total = 0;
-  
+
   attributes.forEach(attr => {
     if (attr.element === 'single_star') {
       total += 1;
@@ -136,14 +136,14 @@ export function countStars(attributes: FlagAttribute[]): number {
       total += attr.count || 10;
     }
   });
-  
+
   return total;
 }
 
 // Check if flag has constellation
 function hasConstellation(attributes: FlagAttribute[]): boolean {
-  return attributes.some(attr => 
-    attr.element === 'constellation' || 
+  return attributes.some(attr =>
+    attr.element === 'constellation' ||
     attr.type === 'southern_cross' ||
     attr.type === 'commonwealth_star'
   );
@@ -174,7 +174,7 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
   const colors = countryData.colors || [];
   const colorCount = countryData.color_count || 0;
   const layout = countryData.layout || '';
-  
+
   // ===== MAIN CATEGORY FILTER (all elements in category) =====
   if (categoryId === 'main_category') {
     const subcategoryIds = getCategorySubcategories(elementId);
@@ -189,7 +189,7 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
     }
     return false;
   }
-  
+
   // ===== SUBCATEGORY FILTER (all elements in subcategory) =====
   if (categoryId === 'subcategory') {
     const subElements = getSubcategoryElements(elementId);
@@ -207,7 +207,7 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
     }
     return false;
   }
-  
+
   // ===== OTHER BANDS FILTER (non-triband layouts) =====
   if (categoryId === 'band_layouts' && elementId === 'other_bands') {
     const otherBandLayouts = [
@@ -215,9 +215,9 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
       'diagonal_division', 'diagonal_band'
     ];
     return otherBandLayouts.some(l => layout.toLowerCase().includes(l.toLowerCase())) ||
-           elements.some(e => otherBandLayouts.some(l => e.toLowerCase().includes(l.toLowerCase())));
+      elements.some(e => otherBandLayouts.some(l => e.toLowerCase().includes(l.toLowerCase())));
   }
-  
+
   // ===== STAR COUNT FILTER =====
   if (categoryId === 'star_count') {
     const starCount = countStars(attributes);
@@ -234,20 +234,20 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
       default: return false;
     }
   }
-  
+
   // ===== CONTINENTS =====
   if (categoryId === 'continents' || categoryId === 'regions') {
     return countryData.continent === elementId;
   }
-  
+
   // ===== COLORS =====
   if (categoryId === 'colors' || categoryId === 'primary_colors' || categoryId === 'secondary_colors') {
-    return colors.some(c => 
-      c.toLowerCase() === elementId.toLowerCase() || 
+    return colors.some(c =>
+      c.toLowerCase() === elementId.toLowerCase() ||
       c.toLowerCase().includes(elementId.toLowerCase())
     );
   }
-  
+
   // ===== COLOR COUNT =====
   if (categoryId === 'color_count' || categoryId === 'colors_quantity') {
     switch (elementId) {
@@ -259,10 +259,10 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
       default: return false;
     }
   }
-  
+
   // ===== FLAG LAYOUT/SHAPE =====
-  if (categoryId === 'flag_shape' || categoryId === 'band_layouts' || 
-      categoryId === 'cross_layouts' || categoryId === 'special_layouts' || categoryId === 'unique_shapes') {
+  if (categoryId === 'flag_shape' || categoryId === 'band_layouts' ||
+    categoryId === 'cross_layouts' || categoryId === 'special_layouts' || categoryId === 'unique_shapes') {
     const layoutMappings: Record<string, string[]> = {
       'horizontal_triband': ['horizontal_triband'],
       'vertical_triband': ['vertical_triband'],
@@ -285,18 +285,18 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
       'non_rectangular': ['non_rectangular'],
       'serrated': ['serrated']
     };
-    
+
     const mappedLayouts = layoutMappings[elementId] || [elementId];
-    
+
     if (mappedLayouts.some(m => layout.toLowerCase().includes(m.toLowerCase()))) {
       return true;
     }
-    
-    return elements.some(e => 
+
+    return elements.some(e =>
       mappedLayouts.some(m => e.toLowerCase().includes(m.toLowerCase()))
     );
   }
-  
+
   // ===== GEOMETRIC ELEMENTS =====
   if (categoryId === 'geometric' || categoryId === 'shapes') {
     const shapeMappings: Record<string, string[]> = {
@@ -307,52 +307,52 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
       'border': ['border', 'bordure'],
       'fimbriation': ['fimbriation', 'fimbriated']
     };
-    
+
     const mappedShapes = shapeMappings[elementId] || [elementId];
-    return elements.some(e => 
+    return elements.some(e =>
       mappedShapes.some(m => e.toLowerCase().includes(m.toLowerCase()))
     );
   }
-  
+
   // ===== PROPORTIONS =====
   if (categoryId === 'proportions' || categoryId === 'ratios') {
     const countryRatio = FLAG_RATIOS[countryName];
     if (!countryRatio) return elementId === 'wide';
     return countryRatio.category === elementId as AspectRatioCategory;
   }
-  
+
   // ===== CELESTIAL - STARS =====
   if (categoryId === 'celestial' || categoryId === 'stars') {
     if (elementId === 'single_star') {
       return elements.includes('single_star') && !hasConstellation(attributes);
     }
-    
+
     if (elementId === 'multiple_stars') {
       return elements.includes('multiple_stars') && !hasConstellation(attributes);
     }
-    
+
     if (elementId === 'constellation') {
       return hasConstellation(attributes) || elements.includes('constellation');
     }
-    
+
     if (elementId === 'stars_arc') {
       return elements.includes('stars_arc');
     }
-    
+
     if (elementId === 'stars_circle') {
       return elements.includes('stars_circle');
     }
-    
+
     // Star of David is ONLY in religious category, not celestial
     if (elementId === 'star_of_david') {
       return false; // Not in celestial
     }
-    
+
     if (elementId === 'pentagram') {
       return elements.includes('pentagram');
     }
   }
-  
+
   // ===== CELESTIAL - SUN & MOON =====
   if (categoryId === 'celestial' || categoryId === 'sun_moon') {
     if (elementId === 'sun') {
@@ -371,10 +371,10 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
       return elements.includes('moon');
     }
   }
-  
+
   // ===== ANIMALS =====
-  if (categoryId === 'animals' || categoryId === 'birds' || 
-      categoryId === 'mammals' || categoryId === 'reptiles_fish' || categoryId === 'mythical') {
+  if (categoryId === 'animals' || categoryId === 'birds' ||
+    categoryId === 'mammals' || categoryId === 'reptiles_fish' || categoryId === 'mythical') {
     const animalMappings: Record<string, string[]> = {
       'eagle': ['eagle', 'double_headed_eagle'],
       'double_headed_eagle': ['double_headed_eagle', 'double_headed'],
@@ -402,13 +402,13 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
       'griffin': ['griffin'],
       'quetzal': ['quetzal']
     };
-    
+
     const mappedAnimals = animalMappings[elementId] || [elementId];
-    return elements.some(e => 
+    return elements.some(e =>
       mappedAnimals.some(m => e.toLowerCase().includes(m.toLowerCase()))
     );
   }
-  
+
   // ===== FLORA =====
   if (categoryId === 'flora' || categoryId === 'trees' || categoryId === 'leaves_flowers') {
     const floraMappings: Record<string, string[]> = {
@@ -427,16 +427,16 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
       'cactus': ['cactus', 'prickly_pear'],
       'lotus': ['lotus']
     };
-    
+
     const mappedFlora = floraMappings[elementId] || [elementId];
-    return elements.some(e => 
+    return elements.some(e =>
       mappedFlora.some(m => e.toLowerCase().includes(m.toLowerCase()))
     );
   }
-  
+
   // ===== WEAPONS & TOOLS =====
-  if (categoryId === 'weapons' || categoryId === 'bladed' || 
-      categoryId === 'ranged' || categoryId === 'defensive' || categoryId === 'tools') {
+  if (categoryId === 'weapons' || categoryId === 'bladed' ||
+    categoryId === 'ranged' || categoryId === 'defensive' || categoryId === 'tools') {
     const weaponMappings: Record<string, string[]> = {
       'sword': ['sword'],
       'sabre': ['sabre'],
@@ -460,13 +460,13 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
       'anchor': ['anchor'],
       'trident': ['trident']
     };
-    
+
     const mappedWeapons = weaponMappings[elementId] || [elementId];
-    return elements.some(e => 
+    return elements.some(e =>
       mappedWeapons.some(m => e.toLowerCase().includes(m.toLowerCase()))
     );
   }
-  
+
   // ===== HUMAN FIGURES =====
   if (categoryId === 'human' || categoryId === 'people') {
     const humanMappings: Record<string, string[]> = {
@@ -477,13 +477,13 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
       'hands': ['hands', 'hand'],
       'phrygian_cap': ['phrygian_cap', 'liberty_cap', 'bonnet']
     };
-    
+
     const mappedHuman = humanMappings[elementId] || [elementId];
-    return elements.some(e => 
+    return elements.some(e =>
       mappedHuman.some(m => e.toLowerCase().includes(m.toLowerCase()))
     );
   }
-  
+
   // ===== MARITIME =====
   if (categoryId === 'maritime' || categoryId === 'vessels' || categoryId === 'water_elements') {
     const maritimeMappings: Record<string, string[]> = {
@@ -494,13 +494,13 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
       'sea': ['sea', 'ocean'],
       'river': ['river']
     };
-    
+
     const mappedMaritime = maritimeMappings[elementId] || [elementId];
-    return elements.some(e => 
+    return elements.some(e =>
       mappedMaritime.some(m => e.toLowerCase().includes(m.toLowerCase()))
     );
   }
-  
+
   // ===== ARCHITECTURE =====
   if (categoryId === 'architecture' || categoryId === 'buildings' || categoryId === 'monuments') {
     const archMappings: Record<string, string[]> = {
@@ -513,13 +513,13 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
       'monument': ['monument'],
       'column': ['column', 'pillar']
     };
-    
+
     const mappedArch = archMappings[elementId] || [elementId];
-    return elements.some(e => 
+    return elements.some(e =>
       mappedArch.some(m => e.toLowerCase().includes(m.toLowerCase()))
     );
   }
-  
+
   // ===== HERALDRY =====
   if (categoryId === 'heraldry' || categoryId === 'heraldic_elements') {
     const heraldryMappings: Record<string, string[]> = {
@@ -530,16 +530,16 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
       'papal_keys': ['papal_keys'],
       'orb': ['orb']
     };
-    
+
     const mappedHeraldry = heraldryMappings[elementId] || [elementId];
-    return elements.some(e => 
+    return elements.some(e =>
       mappedHeraldry.some(m => e.toLowerCase().includes(m.toLowerCase()))
     );
   }
-  
+
   // ===== RELIGIOUS SYMBOLS =====
-  if (categoryId === 'religious' || categoryId === 'crosses' || 
-      categoryId === 'islamic' || categoryId === 'other_religious') {
+  if (categoryId === 'religious' || categoryId === 'crosses' ||
+    categoryId === 'islamic' || categoryId === 'other_religious') {
     const religiousMappings: Record<string, string[]> = {
       'christian_cross': ['christian_cross', 'george_cross'],
       'orthodox_cross': ['orthodox_cross'],
@@ -551,13 +551,13 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
       'dharma_wheel': ['dharma_wheel', 'chakra', 'ashoka'],
       'menorah': ['menorah']
     };
-    
+
     const mappedReligious = religiousMappings[elementId] || [elementId];
-    return elements.some(e => 
+    return elements.some(e =>
       mappedReligious.some(m => e.toLowerCase().includes(m.toLowerCase()))
     );
   }
-  
+
   // ===== TEXT & INSCRIPTIONS =====
   if (categoryId === 'text' || categoryId === 'inscriptions') {
     const textMappings: Record<string, string[]> = {
@@ -566,16 +566,16 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
       'motto': ['motto', 'banner_text'],
       'banner_text': ['banner_text', 'motto']
     };
-    
+
     const mappedText = textMappings[elementId] || [elementId];
-    return elements.some(e => 
+    return elements.some(e =>
       mappedText.some(m => e.toLowerCase().includes(m.toLowerCase()))
     );
   }
-  
+
   // ===== LOCAL & CULTURAL SYMBOLS =====
-  if (categoryId === 'local_symbols' || categoryId === 'asian' || 
-      categoryId === 'african' || categoryId === 'european' || categoryId === 'other_symbols') {
+  if (categoryId === 'local_symbols' || categoryId === 'asian' ||
+    categoryId === 'african' || categoryId === 'european' || categoryId === 'other_symbols') {
     const localMappings: Record<string, string[]> = {
       'taeguk': ['taeguk'],
       'trigrams': ['trigrams'],
@@ -594,26 +594,26 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
       'book': ['book'],
       'flag': ['flag']
     };
-    
+
     const mappedLocal = localMappings[elementId] || [elementId];
-    return elements.some(e => 
+    return elements.some(e =>
       mappedLocal.some(m => e.toLowerCase().includes(m.toLowerCase()))
     );
   }
-  
+
   // ===== DIRECT ELEMENT MATCH (element filter from tags) =====
   if (categoryId === 'elements') {
-    return elements.some(e => 
-      e === elementId || 
-      e.toLowerCase().includes(elementId.toLowerCase()) || 
+    return elements.some(e =>
+      e === elementId ||
+      e.toLowerCase().includes(elementId.toLowerCase()) ||
       elementId.toLowerCase().includes(e.toLowerCase())
     );
   }
-  
+
   // Default: try direct match
-  return elements.some(e => 
-    e === elementId || 
-    e.toLowerCase().includes(elementId.toLowerCase()) || 
+  return elements.some(e =>
+    e === elementId ||
+    e.toLowerCase().includes(elementId.toLowerCase()) ||
     elementId.toLowerCase().includes(e.toLowerCase())
   );
 }
@@ -622,7 +622,7 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
 function matchesKeyword(countryData: FlagsData[string], query: string): boolean {
   const elements = extractElements(countryData.attributes);
   const colors = countryData.colors || [];
-  
+
   // Check against element keywords
   for (const [elementId, keywords] of Object.entries(elementKeywords)) {
     if (keywords.some(kw => kw.toLowerCase().includes(query) || query.includes(kw.toLowerCase()))) {
@@ -636,30 +636,30 @@ function matchesKeyword(countryData: FlagsData[string], query: string): boolean 
       }
     }
   }
-  
+
   // Direct element match
   if (elements.some(e => e.toLowerCase().includes(query))) {
     return true;
   }
-  
+
   // Direct color match
   if (colors.some(c => c.toLowerCase().includes(query))) {
     return true;
   }
-  
+
   // Check for motto text if searching for specific text
   const mottoAttr = countryData.attributes.find(a => a.element === 'motto' || a.element === 'banner_text');
   if (mottoAttr && mottoAttr.text && mottoAttr.text.toLowerCase().includes(query)) {
     return true;
   }
-  
+
   return false;
 }
 
 export function useFlags(activeFilters: ActiveFilter[], searchQuery: string, sortBy: string = 'alphabetical') {
   const filteredFlags = useMemo(() => {
     let result = Object.entries(flags);
-    
+
     // Apply search filter (country name in EN/FR + keyword search)
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase().trim();
@@ -668,29 +668,29 @@ export function useFlags(activeFilters: ActiveFilter[], searchQuery: string, sor
         if (countryName.toLowerCase().includes(query)) {
           return true;
         }
-        
+
         // Match French country name
         const countryTrans = translations.countries[countryName];
         if (countryTrans && countryTrans.fr.toLowerCase().includes(query)) {
           return true;
         }
-        
+
         // Match by keywords (elements, colors, etc.)
         if (matchesKeyword(countryData, query)) {
           return true;
         }
-        
+
         return false;
       });
     }
-    
+
     // Apply attribute filters (AND logic)
     if (activeFilters.length > 0) {
-      result = result.filter(([countryName, countryData]) => 
+      result = result.filter(([countryName, countryData]) =>
         activeFilters.every(filter => matchesFilter(countryName, countryData, filter))
       );
     }
-    
+
     // Apply sorting
     switch (sortBy) {
       case 'stars_desc':
@@ -722,40 +722,40 @@ export function useFlags(activeFilters: ActiveFilter[], searchQuery: string, sor
         result.sort(([aName], [bName]) => aName.localeCompare(bName));
         break;
     }
-    
+
     return result;
   }, [activeFilters, searchQuery, sortBy]);
-  
+
   // Get all countries for availability checking
   const allCountries = useMemo(() => Object.entries(flags), []);
-  
+
   // Check which filter elements would result in matches
   const getAvailableFilters = useMemo(() => {
     return (categoryId: string, elementId: string): boolean => {
       const testFilter: ActiveFilter = { categoryId, elementId };
-      
+
       // Check if this exact filter is already active
       const isAlreadyActive = activeFilters.some(
         f => f.categoryId === categoryId && f.elementId === elementId
       );
-      
+
       if (isAlreadyActive) return true;
-      
+
       // Check if adding this filter would result in any matches
-      const wouldMatch = filteredFlags.some(([countryName, countryData]) => 
+      const wouldMatch = filteredFlags.some(([countryName, countryData]) =>
         matchesFilter(countryName, countryData, testFilter)
       );
-      
+
       return wouldMatch;
     };
   }, [activeFilters, filteredFlags]);
-  
+
   // Check if a whole category has any matches
   const checkCategoryHasMatches = useMemo(() => {
     return (categoryId: string): boolean => {
       const category = taxonomyData.categories.find(c => c.id === categoryId);
       if (!category) return false;
-      
+
       return category.subcategories.some(sub =>
         sub.elements.some(elem =>
           getAvailableFilters(sub.id, elem.id)
@@ -763,7 +763,7 @@ export function useFlags(activeFilters: ActiveFilter[], searchQuery: string, sor
       );
     };
   }, [getAvailableFilters]);
-  
+
   // Check if a subcategory has any matches
   const checkSubcategoryHasMatches = useMemo(() => {
     return (subcategoryId: string): boolean => {
@@ -778,7 +778,7 @@ export function useFlags(activeFilters: ActiveFilter[], searchQuery: string, sor
       return false;
     };
   }, [getAvailableFilters]);
-  
+
   return {
     flags: filteredFlags,
     totalCount: allCountries.length,

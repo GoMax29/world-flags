@@ -48,7 +48,11 @@
       { "element": "coat_of_arms", "position": "center" },
       { "element": "cow_bull", "type": "cattle", "count": 2 },
       { "element": "crown" },
-      { "element": "motto", "text": "VIRTUS UNITA FORTIOR", "translation": "United Virtue is Stronger" }
+      {
+        "element": "motto",
+        "text": "VIRTUS UNITA FORTIOR",
+        "translation": "United Virtue is Stronger"
+      }
     ]
   },
   "Angola": {
@@ -211,7 +215,11 @@
       { "element": "hammer" },
       { "element": "oar" },
       { "element": "laurel" },
-      { "element": "motto", "text": "SUB UMBRA FLOREO", "translation": "Under the Shade I Flourish" }
+      {
+        "element": "motto",
+        "text": "SUB UMBRA FLOREO",
+        "translation": "Under the Shade I Flourish"
+      }
     ]
   },
   "Benin": {
@@ -279,7 +287,11 @@
       { "element": "disk", "color": "blue" },
       { "element": "constellation", "count": 27 },
       { "element": "multiple_stars", "count": 27 },
-      { "element": "motto", "text": "ORDEM E PROGRESSO", "translation": "Order and Progress" }
+      {
+        "element": "motto",
+        "text": "ORDEM E PROGRESSO",
+        "translation": "Order and Progress"
+      }
     ]
   },
   "Brunei": {
@@ -299,7 +311,11 @@
       { "element": "human_figure", "type": "supporters" },
       { "element": "umbrella", "type": "royal_umbrella" },
       { "element": "banner_text" },
-      { "element": "motto", "text": "الدائمون المحسنون بالهدى", "translation": "Always in service with guidance" }
+      {
+        "element": "motto",
+        "text": "الدائمون المحسنون بالهدى",
+        "translation": "Always in service with guidance"
+      }
     ]
   },
   "Bulgaria": {
@@ -870,7 +886,11 @@
       { "element": "trumpet" },
       { "element": "anchor" },
       { "element": "phrygian_cap", "type": "liberty_cap" },
-      { "element": "motto", "text": "L'UNION FAIT LA FORCE", "translation": "Unity Makes Strength" }
+      {
+        "element": "motto",
+        "text": "L'UNION FAIT LA FORCE",
+        "translation": "Unity Makes Strength"
+      }
     ]
   },
   "Honduras": {
@@ -1247,7 +1267,11 @@
       { "element": "vertical_biband" },
       { "element": "george_cross", "position": "canton" },
       { "element": "christian_cross" },
-      { "element": "motto", "text": "FOR GALLANTRY", "translation": "For Gallantry" },
+      {
+        "element": "motto",
+        "text": "FOR GALLANTRY",
+        "translation": "For Gallantry"
+      },
       { "element": "human_figure", "type": "saint_george" },
       { "element": "horse" },
       { "element": "sword" },
@@ -1935,7 +1959,11 @@
       { "element": "crown" },
       { "element": "lion", "type": "rampant" },
       { "element": "tower", "type": "castle" },
-      { "element": "motto", "text": "PLVS VLTRA", "translation": "Further Beyond" },
+      {
+        "element": "motto",
+        "text": "PLVS VLTRA",
+        "translation": "Further Beyond"
+      },
       { "element": "pomegranate", "type": "granada" },
       { "element": "fleur_de_lys" },
       { "element": "pillars", "type": "pillars_of_hercules" },
