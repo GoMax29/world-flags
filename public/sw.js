@@ -1,6 +1,6 @@
-const CACHE_NAME = 'world-flags-v1';
-const STATIC_CACHE = 'world-flags-static-v1';
-const FLAG_CACHE = 'world-flags-images-v1';
+const CACHE_NAME = 'world-flags-v2';
+const STATIC_CACHE = 'world-flags-static-v2';
+const FLAG_CACHE = 'world-flags-images-v1'; // Keep flag images cached
 
 // Static assets to cache
 const STATIC_ASSETS = [
@@ -114,6 +114,8 @@ self.addEventListener('message', (event) => {
     self.skipWaiting();
   }
 });
+
+
 
 
 
