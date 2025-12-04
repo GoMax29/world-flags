@@ -28,7 +28,6 @@ export function TopFiltersMobile() {
     addFilter, 
     removeFilter, 
     clearFilters,
-    isFiltersPanelOpen,
     setFiltersPanelOpen 
   } = useAppStore();
   const { getAvailableFilters } = useFlags(activeFilters, '');

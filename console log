@@ -1,0 +1,25 @@
+15:31:47.222 Running build in Washington, D.C., USA (East) – iad1
+15:31:47.223 Build machine configuration: 2 cores, 8 GB
+15:31:47.378 Cloning github.com/GoMax29/world-flags (Branch: main, Commit: 0afb039)
+15:31:47.379 Previous build caches not available.
+15:31:47.769 Cloning completed: 391.000ms
+15:31:48.130 Running "vercel build"
+15:31:48.648 Vercel CLI 48.12.1
+15:31:49.254 Installing dependencies...
+15:31:56.486 
+15:31:56.487 added 250 packages in 7s
+15:31:56.487 
+15:31:56.487 64 packages are looking for funding
+15:31:56.487   run `npm fund` for details
+15:31:56.538 Running "npm run build"
+15:31:57.192 
+15:31:57.192 > world-flags-app@0.0.0 build
+15:31:57.192 > tsc -b && vite build
+15:31:57.192 
+15:32:00.322 src/components/CountryInfoPanel.tsx(54,32): error TS2339: Property 'translation' does not exist on type 'FlagAttribute'.
+15:32:00.323 src/components/FiltersSidebar.tsx(36,5): error TS6133: 'checkCategoryHasMatches' is declared but its value is never read.
+15:32:00.323 src/components/FiltersSidebar.tsx(37,5): error TS6133: 'checkSubcategoryHasMatches' is declared but its value is never read.
+15:32:00.324 src/components/FiltersSidebar.tsx(409,3): error TS6133: 'id' is declared but its value is never read.
+15:32:00.324 src/components/TopFiltersMobile.tsx(31,5): error TS6133: 'isFiltersPanelOpen' is declared but its value is never read.
+15:32:00.324 src/lib/utils.ts(35,16): error TS2503: Cannot find namespace 'NodeJS'.
+15:32:01.020 Error: Command "npm run build" exited with 2

@@ -18,6 +18,7 @@ export interface FlagAttribute {
   optional?: boolean;
   background?: string;
   text?: string;
+  translation?: string;
   border_only?: boolean;
   different_sides?: boolean;
 }

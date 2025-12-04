@@ -31,11 +31,7 @@ const colorHexMap: Record<string, string> = {
 export function FiltersSidebar() {
   const { language, activeFilters, addFilter, removeFilter, clearFilters } =
     useAppStore();
-  const {
-    getAvailableFilters,
-    checkCategoryHasMatches,
-    checkSubcategoryHasMatches,
-  } = useFlags(activeFilters, "");
+  const { getAvailableFilters } = useFlags(activeFilters, "");
   // All categories expanded by default
   const [expandedCategories, setExpandedCategories] = useState<string[]>(
     taxonomyData.categories.map((c) => c.id)
@@ -406,7 +402,7 @@ interface CategorySectionProps {
 }
 
 function CategorySection({
-  id,
+  id: _id,
   label,
   icon,
   isExpanded,
@@ -416,6 +412,7 @@ function CategorySection({
   onCategoryFilter,
   isCategoryActive,
 }: CategorySectionProps) {
+  void _id; // Suppress unused variable warning
   return (
     <div className="border-b border-[var(--color-border)]">
       <div className="flex items-center">
