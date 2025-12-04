@@ -13,7 +13,7 @@ export function getFlagUrl(countryCode: string, size: 64 | 128 | 256 = 128): str
     128: 'w160',
     256: 'w320',
   };
-  
+
   return `https://flagcdn.com/${sizeMap[size]}/${countryCode.toLowerCase()}.png`;
 }
 
@@ -33,7 +33,7 @@ export function debounce<T extends (...args: Parameters<T>) => void>(
   wait: number
 ): (...args: Parameters<T>) => void {
   let timeout: ReturnType<typeof setTimeout> | null = null;
-  
+
   return (...args: Parameters<T>) => {
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);

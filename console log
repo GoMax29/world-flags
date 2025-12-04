@@ -1,25 +1,29 @@
-15:31:47.222 Running build in Washington, D.C., USA (East) – iad1
-15:31:47.223 Build machine configuration: 2 cores, 8 GB
-15:31:47.378 Cloning github.com/GoMax29/world-flags (Branch: main, Commit: 0afb039)
-15:31:47.379 Previous build caches not available.
-15:31:47.769 Cloning completed: 391.000ms
-15:31:48.130 Running "vercel build"
-15:31:48.648 Vercel CLI 48.12.1
-15:31:49.254 Installing dependencies...
-15:31:56.486 
-15:31:56.487 added 250 packages in 7s
-15:31:56.487 
-15:31:56.487 64 packages are looking for funding
-15:31:56.487   run `npm fund` for details
-15:31:56.538 Running "npm run build"
-15:31:57.192 
-15:31:57.192 > world-flags-app@0.0.0 build
-15:31:57.192 > tsc -b && vite build
-15:31:57.192 
-15:32:00.322 src/components/CountryInfoPanel.tsx(54,32): error TS2339: Property 'translation' does not exist on type 'FlagAttribute'.
-15:32:00.323 src/components/FiltersSidebar.tsx(36,5): error TS6133: 'checkCategoryHasMatches' is declared but its value is never read.
-15:32:00.323 src/components/FiltersSidebar.tsx(37,5): error TS6133: 'checkSubcategoryHasMatches' is declared but its value is never read.
-15:32:00.324 src/components/FiltersSidebar.tsx(409,3): error TS6133: 'id' is declared but its value is never read.
-15:32:00.324 src/components/TopFiltersMobile.tsx(31,5): error TS6133: 'isFiltersPanelOpen' is declared but its value is never read.
-15:32:00.324 src/lib/utils.ts(35,16): error TS2503: Cannot find namespace 'NodeJS'.
-15:32:01.020 Error: Command "npm run build" exited with 2
+15:35:54.723 Running build in Washington, D.C., USA (East) – iad1
+15:35:54.727 Build machine configuration: 2 cores, 8 GB
+15:35:55.110 Cloning github.com/GoMax29/world-flags (Branch: main, Commit: b48017d)
+15:35:55.111 Previous build caches not available.
+15:35:56.101 Cloning completed: 990.000ms
+15:35:56.769 Running "vercel build"
+15:35:57.184 Vercel CLI 48.12.1
+15:35:57.903 Installing dependencies...
+15:36:03.921 
+15:36:03.922 added 250 packages in 6s
+15:36:03.923 
+15:36:03.923 64 packages are looking for funding
+15:36:03.923   run `npm fund` for details
+15:36:03.968 Running "npm run build"
+15:36:04.083 
+15:36:04.084 > world-flags-app@0.0.0 build
+15:36:04.084 > tsc -b && vite build
+15:36:04.084 
+15:36:07.871 [36mvite v5.4.21 [32mbuilding for production...[36m[39m
+15:36:07.927 transforming...
+15:36:11.833 [32m✓[39m 2152 modules transformed.
+15:36:12.022 [31mx[39m Build failed in 4.13s
+15:36:12.023 [31merror during build:
+15:36:12.023 [31m[vite:terser] terser not found. Since Vite v3, terser has become an optional dependency. You need to install it.[31m
+15:36:12.024     at loadTerserPath (file:///vercel/path0/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:19705:13)
+15:36:12.024     at Object.renderChunk (file:///vercel/path0/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:19740:27)
+15:36:12.024     at file:///vercel/path0/node_modules/rollup/dist/es/shared/node-entry.js:22451:40
+15:36:12.024     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)[39m
+15:36:12.056 Error: Command "npm run build" exited with 1

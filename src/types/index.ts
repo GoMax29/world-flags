@@ -105,33 +105,33 @@ export interface AppState {
   // Theme
   isDarkMode: boolean;
   toggleDarkMode: () => void;
-  
+
   // Language
   language: Language;
   setLanguage: (lang: Language) => void;
-  
+
   // Zoom
   zoomLevel: ZoomLevel;
   setZoomLevel: (level: ZoomLevel) => void;
-  
+
   // Filters
   activeFilters: ActiveFilter[];
   addFilter: (filter: ActiveFilter) => void;
   removeFilter: (filter: ActiveFilter) => void;
   clearFilters: () => void;
-  
+
   // Sorting
   sortBy: SortOption;
   setSortBy: (sort: SortOption) => void;
-  
+
   // Selected country
   selectedCountry: string | null;
   setSelectedCountry: (country: string | null) => void;
-  
+
   // Search
   searchQuery: string;
   setSearchQuery: (query: string) => void;
-  
+
   // Mobile filters panel
   isFiltersPanelOpen: boolean;
   setFiltersPanelOpen: (open: boolean) => void;

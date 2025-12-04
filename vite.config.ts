@@ -18,14 +18,8 @@ export default defineConfig({
     },
     // Enable source maps for debugging
     sourcemap: false,
-    // Optimize for production
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-      },
-    },
+    // Use esbuild for minification (default, faster than terser)
+    minify: 'esbuild',
   },
   // Optimize dev server
   server: {
