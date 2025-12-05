@@ -30,6 +30,7 @@ export interface FlagData {
   color_count: number;
   layout: string;
   attributes: FlagAttribute[];
+  band_colors?: string[]; // Explicit band colors in order (1st, 2nd, 3rd band) for triband/biband flags
 }
 
 export interface FlagsData {
@@ -80,6 +81,24 @@ export interface ActiveFilter {
   elementId: string;
 }
 
+// Pattern schema with color painting
+export interface PatternSchema {
+  id: string;
+  label_en: string;
+  label_fr: string;
+  segments: number; // Number of colorable segments
+  type: 'horizontal' | 'vertical' | 'diagonal' | 'special';
+}
+
+export interface PatternColorFilter {
+  schemaId: string | null;
+  colors: (string | null)[]; // Array of colors for each segment, null = any color
+  requireSymbol: boolean; // If true, only show flags with coat of arms/symbol
+}
+
+// Menu mode
+export type MenuMode = 'light' | 'advanced';
+
 // Zoom levels
 export type ZoomLevel = 'small' | 'medium' | 'large';
 
@@ -119,6 +138,21 @@ export interface AppState {
   addFilter: (filter: ActiveFilter) => void;
   removeFilter: (filter: ActiveFilter) => void;
   clearFilters: () => void;
+
+  // Exclusive color mode
+  exclusiveColorMode: boolean;
+  setExclusiveColorMode: (exclusive: boolean) => void;
+
+  // Pattern schema with colors
+  patternColorFilter: PatternColorFilter;
+  setPatternSchema: (schemaId: string | null) => void;
+  setPatternColor: (index: number, color: string | null) => void;
+  clearPatternColors: () => void;
+  setPatternRequireSymbol: (requireSymbol: boolean) => void;
+
+  // Menu mode (light/advanced)
+  menuMode: MenuMode;
+  setMenuMode: (mode: MenuMode) => void;
 
   // Sorting
   sortBy: SortOption;

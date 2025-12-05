@@ -48,6 +48,68 @@
               "icon": "🏝️"
             }
           ]
+        },
+        {
+          "id": "culture_regions",
+          "label_en": "Cultural Regions",
+          "label_fr": "Régions Culturelles",
+          "elements": [
+            {
+              "id": "central_america",
+              "label_en": "Central America",
+              "label_fr": "Amérique Centrale",
+              "icon": "🌴"
+            },
+            {
+              "id": "caribbean",
+              "label_en": "Caribbean",
+              "label_fr": "Caraïbes",
+              "icon": "🏝️"
+            },
+            {
+              "id": "middle_east",
+              "label_en": "Middle East",
+              "label_fr": "Moyen-Orient",
+              "icon": "🕌"
+            },
+            {
+              "id": "scandinavia",
+              "label_en": "Scandinavia",
+              "label_fr": "Scandinavie",
+              "icon": "❄️"
+            },
+            {
+              "id": "southeast_asia",
+              "label_en": "Southeast Asia",
+              "label_fr": "Asie du Sud-Est",
+              "icon": "🛕"
+            }
+          ]
+        },
+        {
+          "id": "color_schemes",
+          "label_en": "Pan-Color Schemes",
+          "label_fr": "Schémas Pan-Couleurs",
+          "elements": [
+            {
+              "id": "pan_slavic",
+              "label_en": "Pan-Slavic",
+              "label_fr": "Panslave",
+              "icon": "🔵"
+            },
+            {
+              "id": "pan_african",
+              "label_en": "Pan-African",
+              "label_fr": "Panafricain",
+              "icon": "🟢"
+            },
+            {
+              "id": "pan_arab",
+              "label_en": "Pan-Arab",
+              "label_fr": "Panarabe",
+              "icon": "🔴"
+            }
+          ]
         }
       ]
     },

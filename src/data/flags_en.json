@@ -119,6 +119,7 @@
     "colors": ["red", "white"],
     "color_count": 2,
     "layout": "horizontal_triband",
+    "band_colors": ["red", "white", "red"],
     "attributes": [{ "element": "horizontal_triband" }]
   },
   "Azerbaijan": {
@@ -459,6 +460,7 @@
     "colors": ["red", "white"],
     "color_count": 2,
     "layout": "vertical_triband",
+    "band_colors": ["red", "white", "red"],
     "attributes": [
       { "element": "vertical_triband", "proportions": "1:2:1" },
       { "element": "maple_leaf", "color": "red" }
@@ -1341,6 +1343,7 @@
     "colors": ["maroon", "white"],
     "color_count": 2,
     "layout": "horizontal_triband",
+    "band_colors": ["maroon", "white", "maroon"],
     "attributes": [{ "element": "horizontal_triband", "proportions": "2:1:2" }]
   },
   "Lebanon": {
@@ -1542,6 +1545,7 @@
     "colors": ["green", "white", "red", "brown", "gold"],
     "color_count": 5,
     "layout": "vertical_triband",
+    "band_colors": ["green", "white", "red"],
     "attributes": [
       { "element": "vertical_triband" },
       { "element": "coat_of_arms", "position": "center" },
@@ -1606,6 +1610,7 @@
     "colors": ["red", "blue", "yellow"],
     "color_count": 3,
     "layout": "vertical_triband",
+    "band_colors": ["red", "blue", "red"],
     "attributes": [
       { "element": "vertical_triband" },
       { "element": "soyombo", "color": "yellow" },
@@ -1844,6 +1849,7 @@
     "colors": ["green", "white"],
     "color_count": 2,
     "layout": "vertical_biband",
+    "band_colors": ["white", "green"],
     "attributes": [
       { "element": "plain_field", "color": "green" },
       { "element": "vertical_band", "color": "white", "position": "hoist" },
@@ -1899,6 +1905,7 @@
     "colors": ["red", "white", "blue", "yellow", "green", "brown"],
     "color_count": 6,
     "layout": "horizontal_triband",
+    "band_colors": ["red", "white", "blue"],
     "has_distinct_sides": true,
     "attributes": [
       { "element": "horizontal_triband" },
@@ -1944,6 +1951,7 @@
     "colors": ["red", "white", "green", "gold", "blue"],
     "color_count": 5,
     "layout": "vertical_triband",
+    "band_colors": ["red", "white", "red"],
     "attributes": [
       { "element": "vertical_triband" },
       { "element": "coat_of_arms", "position": "center" },
@@ -2265,6 +2273,7 @@
     "colors": ["red", "yellow", "blue", "white", "purple"],
     "color_count": 5,
     "layout": "horizontal_triband",
+    "band_colors": ["red", "yellow", "red"],
     "attributes": [
       { "element": "horizontal_triband", "proportions": "1:2:1" },
       { "element": "coat_of_arms" },
@@ -2347,12 +2356,13 @@
   "Syria": {
     "code": "SY",
     "continent": "Asia",
-    "colors": ["red", "white", "black", "green"],
+    "colors": ["green", "white", "black", "red"],
     "color_count": 4,
     "layout": "horizontal_triband",
+    "band_colors": ["green", "white", "black"],
     "attributes": [
       { "element": "horizontal_triband" },
-      { "element": "multiple_stars", "count": 2, "color": "green" }
+      { "element": "multiple_stars", "count": 3, "color": "red" }
     ]
   },
   "Tajikistan": {
@@ -2644,6 +2654,17 @@
         "colors": ["red", "black", "orange"]
       },
       { "element": "eagle", "color": "orange" }
+    ]
+  },
+  "Palestine": {
+    "code": "PS",
+    "continent": "Asia",
+    "colors": ["black", "white", "green", "red"],
+    "color_count": 4,
+    "layout": "horizontal_triband",
+    "attributes": [
+      { "element": "horizontal_triband" },
+      { "element": "triangle_hoist", "color": "red" }
     ]
   },
   "Zimbabwe": {

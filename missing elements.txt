@@ -48,14 +48,141 @@
 
 ## ALL COMPLETED
 
-to fix : 
-# singapore and cabo verde should not appear under "circle" filter - FIXED (removed stars_circle)
-# samoa & papua new guinea should not appear under "cross" filter - FIXED (added constellation note)
-# malta and afghanisthan should not appear under "gold" color filter - FIXED (removed gold)
-# malta should not appear under "dragon" - FIXED (removed dragon element)
-# paraguay has no on his recto - Star of May is present on recto coat of arms
-# paraguay has lion ans phrygian_cap on his verso see capture - FIXED (added verso section)
-# haiti has phrygian_cap too - Already fixed in Session 2
-# add musical instrument as category - FIXED (added musical_instruments)
-# swaziland has two "sagaie" (spears) and a shield - Already present (Eswatini has spear count:2 and shield)
-# andora motto is not translated (in en/fr) - Already fixed in Session 2 ("United Virtue is Stronger")
+## FIXED (Session 5):
+# - Pan-color buttons (Panslave, Panafricain, Panarabe) moved to "Régions/Cultures" section
+# - Removed "Asie du Sud-Est" and "Moyen-Orient" buttons and their algorithms
+# - Removed South Sudan, Saudi Arabia, Lebanon from Pan-Arab countries list
+# - Renamed "Scandinavia" to "Pays Nordiques" (Nordic Countries)
+# - Added "Communist" button (red circle with yellow 5-pointed star) with: China, North Korea, Cuba, Laos, Vietnam
+# - All "Régions/Cultures" buttons are now exclusive (only one can be selected at a time)
+# - Mobile Light menu now matches desktop: no category titles, just buttons with thin separators
+# - Updated continent emojis: Africa 🦁, Europe 🐮, N. America 🗽, S. America 🗿, Asia 🐲, Oceania 🦘
+
+## ALL COMPLETED
+
+## FIXED (Session 6):
+# - Continent buttons now mutually exclusive (radio button style) - desktop & mobile
+# - Mobile continent labels changed to: AF, EU, N-A, S-A, AS, OC
+# - Diagonal division now includes: Seychelles, DRC, Saint Kitts and Nevis, Brunei, Marshall Islands, Trinidad and Tobago, Namibia, Tanzania, Bosnia and Herzegovina, Bhutan, Republic of the Congo, Philippines
+# - Search bar now resets all filters when user starts typing
+# - Color selector disabled/hidden for Diagonal division, Nordic cross, and Canton layouts
+# - STRICT band color matching by position implemented for 2-band and 3-band layouts
+# - "Any color" (null) can be set per individual band - only checks positions with specified colors
+# - Symbol / Coat of Arms toggle added to pattern selector, works in combination with band colors
+# - All changes applied to both desktop (LightFiltersSidebar) and mobile (TopFiltersMobile)
+
+## ALL COMPLETED
+
+## FIXED (Session 7):
+# - Added band_colors field to JSON for flags with A/B/A patterns: Canada, Peru, Mongolia, Austria, Latvia, Spain
+# - Syria band_colors corrected to ["green", "white", "black"] (green on top, not red!)
+# - Pakistan band_colors added: ["white", "green"] (white hoist, green fly) - was incorrectly showing for "right band = white"
+# - Updated extractBandColors() to prioritize explicit band_colors field
+# - Added fallback: 2-color tribands automatically assume A/B/A pattern
+# - Removed gold, maroon, light_blue from band color palette
+# - Improved band selection UI: color palette appears to the RIGHT of band preview (no truncation)
+# - "Any color" option (?) now FIRST in palette, clearly visible with striped pattern
+# - Smaller color circles (w-5 h-5) for compact horizontal layout
+# - Strict position matching: only matches if color at position matches
+# - Verified all 52 biband/triband flags - only Pakistan had wrong band order
+
+## ALL COMPLETED
+
+# ARCHIVE - Previous issue: 
+# Color-band filtering — issues to fix & required behaviors
+
+(All changes must also apply on mobile.)
+
+1. Incorrect flag results to fix (examples)
+
+These examples show errors in the current band-by-band color comparison logic:
+
+Syria must not appear when the upper band = red.
+
+Remove the following colors from the available palette: “or”, “marron”, and “bleu ciel”.
+
+Mongolia must not appear under:
+
+red / any / yellow
+
+Peru must not appear under:
+
+red / any / green
+
+Canada, Mongolia, and Peru must appear under:
+
+red / any / red
+
+These examples show that the current comparison logic is not detecting certain color patterns correctly.
+
+2. Review & fix the band comparison method
+
+The current logic comparing the 1st, 2nd, 3rd band colors seems flawed.
+
+Required update:
+
+Re-evaluate the comparison algorithm and the JSON structure used for color data.
+
+If needed, separate color-band data from symbol / coat-of-arms metadata, because mixing them may create false positives in band-matching.
+
+Before rewriting everything, try to detect patterns:
+
+Is the problem limited to the examples above?
+
+Or is the logic failing whenever a flag contains a symbol, split band, or non-standard layout?
+
+Update the algorithm to reliably match colors strictly by band position unless the band is set to "any-color".
+
+3. Color assignment UI — improved behavior
+
+Improve the interaction when selecting colors for each band:
+
+Desktop:
+
+Clicking on a band opens a small tooltip palette.
+
+Clicking a color in the palette sets the band color.
+
+The palette must include “any-color”.
+
+Selecting “any-color” turns the band into a greyed / slashed state indicating that any color is allowed.
+
+Mobile:
+
+On mobile, selection works in two taps, similar to selecting a skin-tone for emojis:
+
+First tap on the band → open the palette.
+
+Second tap → select the color (including “any-color”).
+
+4. “Any-color” behavior
+
+“Any-color” must be selectable on any band.
+
+When a band is set to “any-color”, the filter should not restrict that band at all.
+
+Other bands must still be matched strictly.
+
+The strict matching logic (fixed colors OR any-color) must remain consistent across:
+
+2-band horizontal
+
+3-band horizontal
+
+2-band vertical
+
+3-band vertical
+
+5. Acceptance criteria
+
+Syria, Mongolia, Peru, and Canada behave as required in the given examples.
+
+Removed colors no longer appear in the palette.
+
+“Any-color” works per band and interacts correctly with strict matching.
+
+Updated comparison logic correctly filters flags in all band configurations.
+
+UI interactions behave correctly on desktop and mobile.
+
+JSON structure and comparison logic are adjusted if necessary to fix structural problems.

@@ -1,6 +1,12 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { AppState, ActiveFilter, ZoomLevel, Language, SortOption } from '../types';
+import type { AppState, ActiveFilter, ZoomLevel, Language, SortOption, MenuMode, PatternColorFilter } from '../types';
+
+const initialPatternColorFilter: PatternColorFilter = {
+  schemaId: null,
+  colors: [],
+  requireSymbol: false,
+};
 
 export const useAppStore = create<AppState>()(
   persist(
@@ -38,7 +44,75 @@ export const useAppStore = create<AppState>()(
             (f) => !(f.categoryId === filter.categoryId && f.elementId === filter.elementId)
           ),
         })),
-      clearFilters: () => set({ activeFilters: [] }),
+      clearFilters: () => set({ 
+        activeFilters: [],
+        patternColorFilter: initialPatternColorFilter,
+        exclusiveColorMode: false,
+      }),
+
+      // Exclusive color mode
+      exclusiveColorMode: false,
+      setExclusiveColorMode: (exclusive: boolean) => set({ exclusiveColorMode: exclusive }),
+
+      // Pattern schema with colors
+      patternColorFilter: initialPatternColorFilter,
+      setPatternSchema: (schemaId: string | null) =>
+        set((state) => {
+          // Get segment count for this schema
+          const segmentCounts: Record<string, number> = {
+            'vertical_triband': 3,
+            'horizontal_triband': 3,
+            'vertical_biband': 2,
+            'horizontal_biband': 2,
+            'diagonal_division': 0, // No color selector for diagonal
+            'canton': 0, // No color selector for canton
+            'nordic_cross': 0, // No color selector for nordic cross
+          };
+          const segments = schemaId ? segmentCounts[schemaId] || 0 : 0;
+          return {
+            patternColorFilter: {
+              schemaId,
+              colors: Array(segments).fill(null),
+              requireSymbol: state.patternColorFilter.requireSymbol,
+            },
+            // Also add/remove the layout filter
+            activeFilters: schemaId
+              ? [
+                  ...state.activeFilters.filter(f => f.categoryId !== 'band_layouts' && f.categoryId !== 'cross_layouts' && f.categoryId !== 'special_layouts'),
+                  { categoryId: 'band_layouts', elementId: schemaId },
+                ]
+              : state.activeFilters.filter(f => f.categoryId !== 'band_layouts' && f.categoryId !== 'cross_layouts' && f.categoryId !== 'special_layouts'),
+          };
+        }),
+      setPatternRequireSymbol: (requireSymbol: boolean) =>
+        set((state) => ({
+          patternColorFilter: {
+            ...state.patternColorFilter,
+            requireSymbol,
+          },
+        })),
+      setPatternColor: (index: number, color: string | null) =>
+        set((state) => {
+          const newColors = [...state.patternColorFilter.colors];
+          newColors[index] = color;
+          return {
+            patternColorFilter: {
+              ...state.patternColorFilter,
+              colors: newColors,
+            },
+          };
+        }),
+      clearPatternColors: () =>
+        set((state) => ({
+          patternColorFilter: {
+            ...state.patternColorFilter,
+            colors: state.patternColorFilter.colors.map(() => null),
+          },
+        })),
+
+      // Menu mode
+      menuMode: 'light' as MenuMode,
+      setMenuMode: (menuMode: MenuMode) => set({ menuMode }),
 
       // Sorting
       sortBy: 'alphabetical' as SortOption,
@@ -48,9 +122,20 @@ export const useAppStore = create<AppState>()(
       selectedCountry: null as string | null,
       setSelectedCountry: (selectedCountry: string | null) => set({ selectedCountry }),
 
-      // Search
+      // Search - resets all filters when searching
       searchQuery: '',
-      setSearchQuery: (searchQuery: string) => set({ searchQuery }),
+      setSearchQuery: (searchQuery: string) => set((state) => {
+        // If user is typing a search, reset all filters
+        if (searchQuery.trim() !== '' && state.searchQuery.trim() === '') {
+          return {
+            searchQuery,
+            activeFilters: [],
+            patternColorFilter: initialPatternColorFilter,
+            exclusiveColorMode: false,
+          };
+        }
+        return { searchQuery };
+      }),
 
       // Mobile filters panel
       isFiltersPanelOpen: false,
@@ -62,6 +147,7 @@ export const useAppStore = create<AppState>()(
         isDarkMode: state.isDarkMode,
         language: state.language,
         zoomLevel: state.zoomLevel,
+        menuMode: state.menuMode,
       }),
     }
   )

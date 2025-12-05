@@ -1,9 +1,10 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, ChevronRight, X, Filter, RotateCcw } from "lucide-react";
+import { ChevronDown, ChevronRight, X, Filter, RotateCcw, Sparkles, Settings2 } from "lucide-react";
 import { useState, useMemo } from "react";
 import { useAppStore } from "../store/useAppStore";
 import { useFlags } from "../hooks/useFlags";
 import { FilterButton, ColorFilterButton } from "./FilterButton";
+import { LightFiltersSidebar } from "./LightFiltersSidebar";
 import taxonomy from "../data/taxonomy.json";
 import type { Taxonomy, ActiveFilter } from "../types";
 
@@ -29,7 +30,7 @@ const colorHexMap: Record<string, string> = {
 };
 
 export function FiltersSidebar() {
-  const { language, activeFilters, addFilter, removeFilter, clearFilters } =
+  const { language, activeFilters, addFilter, removeFilter, clearFilters, menuMode, setMenuMode } =
     useAppStore();
   const { getAvailableFilters } = useFlags(activeFilters, "");
   // All categories expanded by default
@@ -128,66 +129,106 @@ export function FiltersSidebar() {
       className="hidden lg:block w-72 h-[calc(100vh-4rem)] sticky top-16 overflow-hidden 
                       border-l border-[var(--color-border)] bg-[var(--color-bg)]"
     >
-      {/* Header */}
-      <div className="p-3 border-b border-[var(--color-border)] flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Filter className="w-5 h-5 text-primary-500" />
-          <h2 className="font-semibold text-[var(--color-text)]">
-            {language === "fr" ? "Filtres" : "Filters"}
-          </h2>
+      {/* Header with tabs */}
+      <div className="p-3 border-b border-[var(--color-border)]">
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-2">
+            <Filter className="w-5 h-5 text-primary-500" />
+            <h2 className="font-semibold text-[var(--color-text)]">
+              {language === "fr" ? "Filtres" : "Filters"}
+            </h2>
+            {activeFilters.length > 0 && (
+              <span className="px-2 py-0.5 text-xs font-medium bg-primary-500 text-white rounded-full">
+                {activeFilters.length}
+              </span>
+            )}
+          </div>
           {activeFilters.length > 0 && (
-            <span className="px-2 py-0.5 text-xs font-medium bg-primary-500 text-white rounded-full">
-              {activeFilters.length}
-            </span>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={clearFilters}
+              className="p-2 rounded-lg hover:bg-[var(--color-surface)] text-[var(--color-text-secondary)]
+                         hover:text-red-500 transition-colors"
+              aria-label="Clear all filters"
+            >
+              <RotateCcw className="w-4 h-4" />
+            </motion.button>
           )}
         </div>
-        {activeFilters.length > 0 && (
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={clearFilters}
-            className="p-2 rounded-lg hover:bg-[var(--color-surface)] text-[var(--color-text-secondary)]
-                       hover:text-red-500 transition-colors"
-            aria-label="Clear all filters"
+
+        {/* Light / Advanced Tabs */}
+        <div className="flex rounded-lg bg-[var(--color-surface)] p-1">
+          <button
+            onClick={() => setMenuMode('light')}
+            className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all
+              ${menuMode === 'light' 
+                ? 'bg-primary-500 text-white shadow-sm' 
+                : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
+              }`}
+            aria-pressed={menuMode === 'light'}
           >
-            <RotateCcw className="w-4 h-4" />
-          </motion.button>
-        )}
+            <Sparkles className="w-4 h-4" />
+            Light
+          </button>
+          <button
+            onClick={() => setMenuMode('advanced')}
+            className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all
+              ${menuMode === 'advanced' 
+                ? 'bg-primary-500 text-white shadow-sm' 
+                : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
+              }`}
+            aria-pressed={menuMode === 'advanced'}
+          >
+            <Settings2 className="w-4 h-4" />
+            {language === 'fr' ? 'Avancé' : 'Advanced'}
+          </button>
+        </div>
       </div>
 
-      {/* Active Filters Preview */}
-      <AnimatePresence>
-        {activeFilters.length > 0 && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden"
-          >
-            <div className="p-3 bg-primary-500/5 border-b border-[var(--color-border)]">
-              <div className="flex flex-wrap gap-1.5">
-                {activeFilters.map((filter) => (
-                  <motion.button
-                    key={`${filter.categoryId}-${filter.elementId}`}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                    onClick={() => removeFilter(filter)}
-                    className="px-2 py-1 text-xs bg-primary-500 text-white rounded-full 
-                               flex items-center gap-1 hover:bg-primary-600 transition-colors"
-                  >
-                    {filter.elementId.replace(/_/g, " ")}
-                    <X className="w-3 h-3" />
-                  </motion.button>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Light Mode Content */}
+      {menuMode === 'light' && (
+        <div className="h-[calc(100%-7rem)]">
+          <LightFiltersSidebar />
+        </div>
+      )}
 
-      {/* Scrollable Content */}
-      <div className="overflow-y-auto h-[calc(100%-4rem)] custom-scrollbar pb-6">
+      {/* Advanced Mode Content */}
+      {menuMode === 'advanced' && (
+        <>
+          {/* Active Filters Preview */}
+          <AnimatePresence>
+            {activeFilters.length > 0 && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="p-3 bg-primary-500/5 border-b border-[var(--color-border)]">
+                  <div className="flex flex-wrap gap-1.5">
+                    {activeFilters.map((filter) => (
+                      <motion.button
+                        key={`${filter.categoryId}-${filter.elementId}`}
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        exit={{ scale: 0 }}
+                        onClick={() => removeFilter(filter)}
+                        className="px-2 py-1 text-xs bg-primary-500 text-white rounded-full 
+                                   flex items-center gap-1 hover:bg-primary-600 transition-colors"
+                      >
+                        {filter.elementId.replace(/_/g, " ")}
+                        <X className="w-3 h-3" />
+                      </motion.button>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Scrollable Content */}
+          <div className="overflow-y-auto h-[calc(100%-7rem)] custom-scrollbar pb-6">
         {/* Visible Taxonomy Categories */}
         {visibleCategories.map((category) => {
           const categoryIcon = (category as any).icon || "📋";
@@ -384,7 +425,9 @@ export function FiltersSidebar() {
             </CategorySection>
           );
         })}
-      </div>
+          </div>
+        </>
+      )}
     </aside>
   );
 }
