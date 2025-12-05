@@ -686,7 +686,6 @@ const colorMapping: Record<string, string[]> = {
 
 // Extract band colors from flag data for strict position matching
 function extractBandColors(countryData: FlagsData[string], schemaId: string): (string | null)[] {
-  const layout = countryData.layout || '';
   const colors = countryData.colors || [];
   const attributes = countryData.attributes;
   
@@ -761,13 +760,7 @@ function matchesPatternColors(countryData: FlagsData[string], patternColorFilter
   if (['diagonal_division', 'nordic_cross', 'canton'].includes(schemaId)) {
     // Just check layout
     if (schemaId === 'diagonal_division') {
-      // Special countries for diagonal division
-      const diagonalCountries = [
-        'Seychelles', 'Democratic Republic of the Congo', 'Saint Kitts and Nevis',
-        'Brunei', 'Marshall Islands', 'Trinidad and Tobago', 'Namibia', 'Tanzania',
-        'Bosnia and Herzegovina', 'Bhutan'
-      ];
-      // Check if flag name matches or layout matches
+      // Check if flag has diagonal layout or diagonal attributes
       return layout.toLowerCase().includes('diagonal') || 
              attributes.some(a => a.element === 'diagonal_division' || a.element === 'diagonal_band');
     }

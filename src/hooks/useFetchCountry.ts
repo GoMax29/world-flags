@@ -122,3 +122,4 @@ export function formatArea(area: number, locale: string = 'fr-FR'): string {
 
 
 
+
