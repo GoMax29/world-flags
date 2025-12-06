@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { cn } from '../lib/utils';
+import type { ColorFilterMode } from '../types';
 
 interface IconFilterButtonProps {
   icon: string;
@@ -100,7 +101,69 @@ export function ColorButton({
   );
 }
 
-// Exclusive toggle button
+// Color filter mode toggle (3 states: OR, AND, NOT)
+
+interface ColorModeToggleProps {
+  mode: ColorFilterMode;
+  onModeChange: (mode: ColorFilterMode) => void;
+  language: 'en' | 'fr';
+}
+
+export function ColorModeToggle({ mode, onModeChange, language }: ColorModeToggleProps) {
+  const cycleMode = () => {
+    const modes: ColorFilterMode[] = ['or', 'and', 'not'];
+    const currentIndex = modes.indexOf(mode);
+    const nextIndex = (currentIndex + 1) % modes.length;
+    onModeChange(modes[nextIndex]);
+  };
+
+  const getModeConfig = () => {
+    switch (mode) {
+      case 'or':
+        return {
+          icon: '🔓',
+          label: language === 'fr' ? 'Multi' : 'Multi',
+          bgClass: 'bg-[var(--color-surface)] text-[var(--color-text-secondary)] border-[var(--color-border)]',
+          hint: language === 'fr' ? 'Inclut ces couleurs' : 'Include these colors',
+        };
+      case 'and':
+        return {
+          icon: '🔒',
+          label: language === 'fr' ? 'Exact' : 'Exact',
+          bgClass: 'bg-amber-500 text-white border-amber-500',
+          hint: language === 'fr' ? 'Seulement ces couleurs' : 'Only these colors',
+        };
+      case 'not':
+        return {
+          icon: '🚫',
+          label: language === 'fr' ? 'Exclure' : 'Exclude',
+          bgClass: 'bg-red-500 text-white border-red-500',
+          hint: language === 'fr' ? 'Exclut ces couleurs' : 'Exclude these colors',
+        };
+    }
+  };
+
+  const config = getModeConfig();
+
+  return (
+    <motion.button
+      whileTap={{ scale: 0.95 }}
+      onClick={cycleMode}
+      className={cn(
+        'flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium transition-all',
+        'border focus:outline-none focus:ring-2 focus:ring-primary-500',
+        config.bgClass
+      )}
+      aria-label={config.hint}
+      title={config.hint}
+    >
+      <span className="text-sm">{config.icon}</span>
+      <span className="hidden sm:inline">{config.label}</span>
+    </motion.button>
+  );
+}
+
+// Legacy ExclusiveToggle for backward compatibility (deprecated)
 interface ExclusiveToggleProps {
   isActive: boolean;
   onClick: () => void;

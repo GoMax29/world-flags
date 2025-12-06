@@ -167,6 +167,62 @@ function getCategorySubcategories(categoryId: string): string[] {
   return category ? category.subcategories.map(s => s.id) : [];
 }
 
+// Map of color shades/nuances - defined early for use in matchesFilter
+const colorFamilyMapping: Record<string, string[]> = {
+  // Blue family - aquamarine, turquoise, teal, light_blue, navy all match "blue"
+  'blue': ['blue', 'navy', 'azure', 'light_blue', 'cerulean', 'aquamarine', 'turquoise', 'teal', 'sky_blue', 'cobalt', 'indigo'],
+  'light_blue': ['light_blue', 'azure', 'sky_blue', 'cerulean', 'aquamarine', 'turquoise', 'teal', 'blue'],
+  'aquamarine': ['aquamarine', 'turquoise', 'teal', 'light_blue', 'blue'],
+  
+  // Red family - maroon, crimson, burgundy, scarlet all match "red"
+  'red': ['red', 'crimson', 'maroon', 'burgundy', 'scarlet', 'vermilion', 'carmine'],
+  'maroon': ['maroon', 'burgundy', 'crimson', 'red'],
+  
+  // Yellow/gold family
+  'yellow': ['yellow', 'gold', 'amber', 'golden'],
+  'gold': ['gold', 'yellow', 'amber', 'golden'],
+  
+  // Green family
+  'green': ['green', 'olive', 'lime', 'emerald', 'forest_green'],
+  
+  // Neutral colors
+  'white': ['white', 'silver'],
+  'black': ['black'],
+  
+  // Orange family
+  'orange': ['orange', 'copper', 'tangerine'],
+  'copper': ['copper', 'orange', 'bronze'],
+  
+  // Purple family
+  'purple': ['purple', 'violet', 'magenta', 'lavender'],
+  
+  // Gray family
+  'gray': ['gray', 'grey', 'silver'],
+};
+
+// Check if a flag color matches an expected color (handling nuances/shades)
+function colorMatchesBasic(flagColor: string, expectedColor: string): boolean {
+  const flagLower = flagColor.toLowerCase();
+  const expectedLower = expectedColor.toLowerCase();
+  
+  // Direct match
+  if (flagLower === expectedLower) return true;
+  
+  // Check if flagColor belongs to the same color family as expectedColor
+  const expectedFamily = colorFamilyMapping[expectedLower];
+  if (expectedFamily && expectedFamily.some(fc => flagLower === fc || flagLower.includes(fc) || fc.includes(flagLower))) {
+    return true;
+  }
+  
+  // Check reverse - if expectedColor belongs to the same family as flagColor
+  const flagFamily = colorFamilyMapping[flagLower];
+  if (flagFamily && flagFamily.some(ec => expectedLower === ec || expectedLower.includes(ec) || ec.includes(expectedLower))) {
+    return true;
+  }
+  
+  return false;
+}
+
 // Check if a flag matches a specific filter
 function matchesFilter(countryName: string, countryData: FlagsData[string], filter: ActiveFilter): boolean {
   const { categoryId, elementId } = filter;
@@ -243,10 +299,8 @@ function matchesFilter(countryName: string, countryData: FlagsData[string], filt
 
   // ===== COLORS =====
   if (categoryId === 'colors' || categoryId === 'primary_colors' || categoryId === 'secondary_colors') {
-    return colors.some(c =>
-      c.toLowerCase() === elementId.toLowerCase() ||
-      c.toLowerCase().includes(elementId.toLowerCase())
-    );
+    // Use colorMatchesBasic for inclusive mode (OR) - handles color nuances
+    return colors.some(c => colorMatchesBasic(c, elementId));
   }
 
   // ===== COLOR COUNT =====
@@ -662,27 +716,11 @@ function matchesExclusiveColors(countryData: FlagsData[string], selectedColors: 
   const flagColors = countryData.colors || [];
   
   // Flag must have exactly the selected colors (or subset of them)
+  // Uses colorMatchesBasic to handle color nuances (aquamarine = blue, etc.)
   return flagColors.every(color => 
-    selectedColors.some(sc => 
-      color.toLowerCase() === sc.toLowerCase() || 
-      color.toLowerCase().includes(sc.toLowerCase())
-    )
+    selectedColors.some(sc => colorMatchesBasic(color, sc))
   );
 }
-
-// Map of color IDs to color names that can appear in flag data
-const colorMapping: Record<string, string[]> = {
-  'red': ['red', 'crimson', 'maroon'],
-  'blue': ['blue', 'navy', 'azure', 'light_blue', 'cerulean'],
-  'yellow': ['yellow', 'gold', 'amber'],
-  'green': ['green', 'olive', 'lime'],
-  'white': ['white'],
-  'black': ['black'],
-  'orange': ['orange'],
-  'gold': ['gold', 'yellow', 'amber'],
-  'light_blue': ['light_blue', 'azure', 'sky_blue', 'cerulean'],
-  'maroon': ['maroon', 'burgundy', 'crimson'],
-};
 
 // Extract band colors from flag data for strict position matching
 function extractBandColors(countryData: FlagsData[string], schemaId: string): (string | null)[] {
@@ -724,28 +762,10 @@ function extractBandColors(countryData: FlagsData[string], schemaId: string): (s
   return colors;
 }
 
-// Check if a color matches (considering similar colors)
+// Check if a color matches (considering similar colors) - handles null for pattern matching
 function colorMatches(flagColor: string | null, expectedColor: string): boolean {
   if (!flagColor) return false;
-  const flagColorLower = flagColor.toLowerCase();
-  const expectedLower = expectedColor.toLowerCase();
-  
-  // Direct match
-  if (flagColorLower === expectedLower) return true;
-  
-  // Check if flagColor is in the mapping for expectedColor
-  const mappedColors = colorMapping[expectedLower];
-  if (mappedColors && mappedColors.some(mc => flagColorLower.includes(mc) || mc.includes(flagColorLower))) {
-    return true;
-  }
-  
-  // Check if expectedColor is in the mapping for flagColor
-  const reverseMapped = colorMapping[flagColorLower];
-  if (reverseMapped && reverseMapped.some(mc => expectedLower.includes(mc) || mc.includes(expectedLower))) {
-    return true;
-  }
-  
-  return flagColorLower.includes(expectedLower) || expectedLower.includes(flagColorLower);
+  return colorMatchesBasic(flagColor, expectedColor);
 }
 
 // Check if a flag matches pattern color filter with STRICT position matching
@@ -874,7 +894,7 @@ function matchesPanColorScheme(countryName: string, schemeId: string): boolean {
 }
 
 export function useFlags(activeFilters: ActiveFilter[], searchQuery: string, sortBy: string = 'alphabetical') {
-  const { exclusiveColorMode, patternColorFilter } = useAppStore();
+  const { colorFilterMode, patternColorFilter } = useAppStore();
   
   const filteredFlags = useMemo(() => {
     let result = Object.entries(flags);
@@ -903,17 +923,30 @@ export function useFlags(activeFilters: ActiveFilter[], searchQuery: string, sor
       });
     }
 
-    // Apply exclusive color mode filter
-    if (exclusiveColorMode) {
-      const colorFilters = activeFilters.filter(f => 
-        f.categoryId === 'primary_colors' || f.categoryId === 'secondary_colors'
-      );
-      if (colorFilters.length > 0) {
-        const selectedColors = colorFilters.map(f => f.elementId);
+    // Apply color filter mode (OR / AND / NOT)
+    const colorFilters = activeFilters.filter(f => 
+      f.categoryId === 'primary_colors' || f.categoryId === 'secondary_colors'
+    );
+    
+    if (colorFilters.length > 0) {
+      const selectedColors = colorFilters.map(f => f.elementId);
+      
+      if (colorFilterMode === 'and') {
+        // Exclusive mode: flag must have ONLY these colors (no others)
         result = result.filter(([, countryData]) => 
           matchesExclusiveColors(countryData, selectedColors)
         );
+      } else if (colorFilterMode === 'not') {
+        // Exclusion mode: flag must NOT have any of these colors (including shades/nuances)
+        result = result.filter(([, countryData]) => {
+          const flagColors = countryData.colors || [];
+          // Use colorMatches to detect color nuances (aquamarine = blue, maroon = red, etc.)
+          return !flagColors.some(fc => 
+            selectedColors.some(sc => colorMatches(fc, sc))
+          );
+        });
       }
+      // 'or' mode is handled by the normal activeFilters logic below
     }
 
     // Apply pattern color filter (includes strict position matching and symbol requirement)
@@ -942,9 +975,14 @@ export function useFlags(activeFilters: ActiveFilter[], searchQuery: string, sor
     }
 
     // Apply attribute filters (AND logic)
-    if (activeFilters.length > 0) {
+    // Exclude color filters if they were already processed by colorFilterMode (and/not)
+    const filtersToApply = colorFilterMode === 'or' 
+      ? activeFilters 
+      : activeFilters.filter(f => f.categoryId !== 'primary_colors' && f.categoryId !== 'secondary_colors');
+    
+    if (filtersToApply.length > 0) {
       result = result.filter(([countryName, countryData]) =>
-        activeFilters.every(filter => {
+        filtersToApply.every(filter => {
           // Handle culture region filters
           if (filter.categoryId === 'culture_regions') {
             return matchesCultureRegion(countryName, filter.elementId);
@@ -991,7 +1029,7 @@ export function useFlags(activeFilters: ActiveFilter[], searchQuery: string, sor
     }
 
     return result;
-  }, [activeFilters, searchQuery, sortBy, exclusiveColorMode, patternColorFilter]);
+  }, [activeFilters, searchQuery, sortBy, colorFilterMode, patternColorFilter]);
 
   // Get all countries for availability checking
   const allCountries = useMemo(() => Object.entries(flags), []);

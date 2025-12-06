@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { AppState, ActiveFilter, ZoomLevel, Language, SortOption, MenuMode, PatternColorFilter } from '../types';
+import type { AppState, ActiveFilter, ZoomLevel, Language, SortOption, MenuMode, PatternColorFilter, ColorFilterMode } from '../types';
 
 const initialPatternColorFilter: PatternColorFilter = {
   schemaId: null,
@@ -47,12 +47,12 @@ export const useAppStore = create<AppState>()(
       clearFilters: () => set({ 
         activeFilters: [],
         patternColorFilter: initialPatternColorFilter,
-        exclusiveColorMode: false,
+        colorFilterMode: 'or' as ColorFilterMode,
       }),
 
-      // Exclusive color mode
-      exclusiveColorMode: false,
-      setExclusiveColorMode: (exclusive: boolean) => set({ exclusiveColorMode: exclusive }),
+      // Color filter mode (or/and/not)
+      colorFilterMode: 'or' as ColorFilterMode,
+      setColorFilterMode: (mode: ColorFilterMode) => set({ colorFilterMode: mode }),
 
       // Pattern schema with colors
       patternColorFilter: initialPatternColorFilter,
@@ -131,7 +131,7 @@ export const useAppStore = create<AppState>()(
             searchQuery,
             activeFilters: [],
             patternColorFilter: initialPatternColorFilter,
-            exclusiveColorMode: false,
+            colorFilterMode: 'or' as ColorFilterMode,
           };
         }
         return { searchQuery };

@@ -99,6 +99,9 @@ export interface PatternColorFilter {
 // Menu mode
 export type MenuMode = 'light' | 'advanced';
 
+// Color filter mode (3 states)
+export type ColorFilterMode = 'or' | 'and' | 'not';
+
 // Zoom levels
 export type ZoomLevel = 'small' | 'medium' | 'large';
 
@@ -139,9 +142,9 @@ export interface AppState {
   removeFilter: (filter: ActiveFilter) => void;
   clearFilters: () => void;
 
-  // Exclusive color mode
-  exclusiveColorMode: boolean;
-  setExclusiveColorMode: (exclusive: boolean) => void;
+  // Color filter mode (or/and/not)
+  colorFilterMode: ColorFilterMode;
+  setColorFilterMode: (mode: ColorFilterMode) => void;
 
   // Pattern schema with colors
   patternColorFilter: PatternColorFilter;
