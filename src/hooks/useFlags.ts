@@ -173,29 +173,30 @@ const colorFamilyMapping: Record<string, string[]> = {
   'blue': ['blue', 'navy', 'azure', 'light_blue', 'cerulean', 'aquamarine', 'turquoise', 'teal', 'sky_blue', 'cobalt', 'indigo'],
   'light_blue': ['light_blue', 'azure', 'sky_blue', 'cerulean', 'aquamarine', 'turquoise', 'teal', 'blue'],
   'aquamarine': ['aquamarine', 'turquoise', 'teal', 'light_blue', 'blue'],
-  
-  // Red family - maroon, crimson, burgundy, scarlet all match "red"
-  'red': ['red', 'crimson', 'maroon', 'burgundy', 'scarlet', 'vermilion', 'carmine'],
-  'maroon': ['maroon', 'burgundy', 'crimson', 'red'],
-  
+
+  // Red family - crimson, burgundy, scarlet match "red" (maroon is separate!)
+  'red': ['red', 'crimson', 'burgundy', 'scarlet', 'vermilion', 'carmine'],
+  // Maroon is its own family - NOT matched with red (for Sri Lanka, Qatar, etc.)
+  'maroon': ['maroon'],
+
   // Yellow/gold family
   'yellow': ['yellow', 'gold', 'amber', 'golden'],
   'gold': ['gold', 'yellow', 'amber', 'golden'],
-  
+
   // Green family
   'green': ['green', 'olive', 'lime', 'emerald', 'forest_green'],
-  
+
   // Neutral colors
   'white': ['white', 'silver'],
   'black': ['black'],
-  
+
   // Orange family
   'orange': ['orange', 'copper', 'tangerine'],
   'copper': ['copper', 'orange', 'bronze'],
-  
+
   // Purple family
   'purple': ['purple', 'violet', 'magenta', 'lavender'],
-  
+
   // Gray family
   'gray': ['gray', 'grey', 'silver'],
 };
@@ -204,22 +205,22 @@ const colorFamilyMapping: Record<string, string[]> = {
 function colorMatchesBasic(flagColor: string, expectedColor: string): boolean {
   const flagLower = flagColor.toLowerCase();
   const expectedLower = expectedColor.toLowerCase();
-  
+
   // Direct match
   if (flagLower === expectedLower) return true;
-  
+
   // Check if flagColor belongs to the same color family as expectedColor
   const expectedFamily = colorFamilyMapping[expectedLower];
   if (expectedFamily && expectedFamily.some(fc => flagLower === fc || flagLower.includes(fc) || fc.includes(flagLower))) {
     return true;
   }
-  
+
   // Check reverse - if expectedColor belongs to the same family as flagColor
   const flagFamily = colorFamilyMapping[flagLower];
   if (flagFamily && flagFamily.some(ec => expectedLower === ec || expectedLower.includes(ec) || ec.includes(expectedLower))) {
     return true;
   }
-  
+
   return false;
 }
 
@@ -714,10 +715,10 @@ function matchesKeyword(countryData: FlagsData[string], query: string): boolean 
 // Check if a flag matches the exclusive color mode (only these colors, no others)
 function matchesExclusiveColors(countryData: FlagsData[string], selectedColors: string[]): boolean {
   const flagColors = countryData.colors || [];
-  
+
   // Flag must have exactly the selected colors (or subset of them)
   // Uses colorMatchesBasic to handle color nuances (aquamarine = blue, etc.)
-  return flagColors.every(color => 
+  return flagColors.every(color =>
     selectedColors.some(sc => colorMatchesBasic(color, sc))
   );
 }
@@ -726,39 +727,39 @@ function matchesExclusiveColors(countryData: FlagsData[string], selectedColors: 
 function extractBandColors(countryData: FlagsData[string], schemaId: string): (string | null)[] {
   const colors = countryData.colors || [];
   const attributes = countryData.attributes;
-  
+
   // PRIORITY 1: Use explicit band_colors if defined (most accurate)
   if (countryData.band_colors && countryData.band_colors.length > 0) {
     return countryData.band_colors;
   }
-  
+
   // PRIORITY 2: Try to extract colors from band attribute if specified
-  const bandAttr = attributes.find(a => 
-    a.element === 'horizontal_triband' || 
+  const bandAttr = attributes.find(a =>
+    a.element === 'horizontal_triband' ||
     a.element === 'vertical_triband' ||
     a.element === 'horizontal_biband' ||
     a.element === 'vertical_biband'
   );
-  
+
   if (bandAttr && bandAttr.colors && bandAttr.colors.length > 0) {
     return bandAttr.colors;
   }
-  
+
   // PRIORITY 3: For tribands with exactly 2 colors, assume A/B/A pattern
   if ((schemaId === 'vertical_triband' || schemaId === 'horizontal_triband') && colors.length === 2) {
     return [colors[0], colors[1], colors[0]];
   }
-  
+
   // PRIORITY 4: For tribands with 3+ colors, use first 3
   if ((schemaId === 'vertical_triband' || schemaId === 'horizontal_triband') && colors.length >= 3) {
     return [colors[0], colors[1], colors[2]];
   }
-  
+
   // PRIORITY 5: For bibands, use first 2 colors
   if ((schemaId === 'vertical_biband' || schemaId === 'horizontal_biband') && colors.length >= 2) {
     return [colors[0], colors[1]];
   }
-  
+
   return colors;
 }
 
@@ -771,54 +772,54 @@ function colorMatches(flagColor: string | null, expectedColor: string): boolean 
 // Check if a flag matches pattern color filter with STRICT position matching
 function matchesPatternColors(countryData: FlagsData[string], patternColorFilter: PatternColorFilter): boolean {
   if (!patternColorFilter.schemaId) return true;
-  
+
   const schemaId = patternColorFilter.schemaId;
   const layout = countryData.layout || '';
   const attributes = countryData.attributes;
-  
+
   // For special layouts (diagonal, nordic_cross, canton) - no color matching needed
   if (['diagonal_division', 'nordic_cross', 'canton'].includes(schemaId)) {
     // Just check layout
     if (schemaId === 'diagonal_division') {
       // Check if flag has diagonal layout or diagonal attributes
-      return layout.toLowerCase().includes('diagonal') || 
-             attributes.some(a => a.element === 'diagonal_division' || a.element === 'diagonal_band');
+      return layout.toLowerCase().includes('diagonal') ||
+        attributes.some(a => a.element === 'diagonal_division' || a.element === 'diagonal_band');
     }
     return layout.toLowerCase().includes(schemaId.toLowerCase());
   }
-  
+
   // Check if the flag has the correct layout
   if (!layout.toLowerCase().includes(schemaId.toLowerCase())) {
     return false;
   }
-  
+
   // Get band colors from flag data
   const bandColors = extractBandColors(countryData, schemaId);
-  
+
   // If no colors are selected in the filter, just check layout
   const hasSelectedColors = patternColorFilter.colors.some(c => c !== null);
   if (!hasSelectedColors) return true;
-  
+
   // STRICT POSITION MATCHING
   // Check each band position where a color is selected
   for (let i = 0; i < patternColorFilter.colors.length; i++) {
     const expectedColor = patternColorFilter.colors[i];
-    
+
     // null = "any color" - skip this position
     if (expectedColor === null) continue;
-    
+
     // Get the flag's color at this position
     const flagColorAtPosition = bandColors[i];
-    
+
     // If flag doesn't have enough colors for this position, no match
     if (!flagColorAtPosition) return false;
-    
+
     // Check if colors match at this position
     if (!colorMatches(flagColorAtPosition, expectedColor)) {
       return false;
     }
   }
-  
+
   return true;
 }
 
@@ -834,7 +835,7 @@ function hasSymbolOrCoatOfArms(countryData: FlagsData[string]): boolean {
     'christian_cross', 'crescent_star', 'crescent',
     'human_figure', 'supporters'
   ];
-  
+
   return elements.some(e => symbolElements.some(s => e.includes(s)));
 }
 
@@ -844,12 +845,12 @@ function matchesPatternFilter(countryData: FlagsData[string], patternColorFilter
   if (!matchesPatternColors(countryData, patternColorFilter)) {
     return false;
   }
-  
+
   // Then check symbol requirement
   if (patternColorFilter.requireSymbol) {
     return hasSymbolOrCoatOfArms(countryData);
   }
-  
+
   return true;
 }
 
@@ -866,12 +867,12 @@ const panColorCountries: Record<string, string[]> = {
     'Russia', 'Serbia', 'Slovenia', 'Slovakia', 'Croatia', 'Bulgaria', 'Czech Republic'
   ],
   'pan_african': [
-    'Grenada', 'Guyana', 'Saint Kitts and Nevis', 'Suriname', 'Mauritania', 'Mali', 
-    'Senegal', 'Guinea', 'Cameroon', 'Ethiopia', 'Ghana', 'Congo (Republic)', 
+    'Grenada', 'Guyana', 'Saint Kitts and Nevis', 'Suriname', 'Mauritania', 'Mali',
+    'Senegal', 'Guinea', 'Cameroon', 'Ethiopia', 'Ghana', 'Congo (Republic)',
     'Sao Tome and Principe', 'Burkina Faso', 'Benin', 'Togo', 'Guinea-Bissau'
   ],
   'pan_arab': [
-    'Palestine', 'Yemen', 'Egypt', 'Syria', 'Iraq', 'Libya', 
+    'Palestine', 'Yemen', 'Egypt', 'Syria', 'Iraq', 'Libya',
     'Sudan', 'Jordan', 'United Arab Emirates', 'Kuwait'
   ],
   'communist': [
@@ -895,7 +896,7 @@ function matchesPanColorScheme(countryName: string, schemeId: string): boolean {
 
 export function useFlags(activeFilters: ActiveFilter[], searchQuery: string, sortBy: string = 'alphabetical') {
   const { colorFilterMode, patternColorFilter } = useAppStore();
-  
+
   const filteredFlags = useMemo(() => {
     let result = Object.entries(flags);
 
@@ -924,16 +925,16 @@ export function useFlags(activeFilters: ActiveFilter[], searchQuery: string, sor
     }
 
     // Apply color filter mode (OR / AND / NOT)
-    const colorFilters = activeFilters.filter(f => 
+    const colorFilters = activeFilters.filter(f =>
       f.categoryId === 'primary_colors' || f.categoryId === 'secondary_colors'
     );
-    
+
     if (colorFilters.length > 0) {
       const selectedColors = colorFilters.map(f => f.elementId);
-      
+
       if (colorFilterMode === 'and') {
         // Exclusive mode: flag must have ONLY these colors (no others)
-        result = result.filter(([, countryData]) => 
+        result = result.filter(([, countryData]) =>
           matchesExclusiveColors(countryData, selectedColors)
         );
       } else if (colorFilterMode === 'not') {
@@ -941,7 +942,7 @@ export function useFlags(activeFilters: ActiveFilter[], searchQuery: string, sor
         result = result.filter(([, countryData]) => {
           const flagColors = countryData.colors || [];
           // Use colorMatches to detect color nuances (aquamarine = blue, maroon = red, etc.)
-          return !flagColors.some(fc => 
+          return !flagColors.some(fc =>
             selectedColors.some(sc => colorMatches(fc, sc))
           );
         });
@@ -960,26 +961,26 @@ export function useFlags(activeFilters: ActiveFilter[], searchQuery: string, sor
             'Bosnia and Herzegovina', 'Bhutan', 'Republic of the Congo', 'Philippines'
           ];
           const layout = countryData.layout || '';
-          const isDiagonal = diagonalCountries.includes(countryName) || 
-                           layout.toLowerCase().includes('diagonal');
-          
+          const isDiagonal = diagonalCountries.includes(countryName) ||
+            layout.toLowerCase().includes('diagonal');
+
           // If requireSymbol is on, also check for symbol
           if (patternColorFilter.requireSymbol && isDiagonal) {
             return hasSymbolOrCoatOfArms(countryData);
           }
           return isDiagonal;
         }
-        
+
         return matchesPatternFilter(countryData, patternColorFilter);
       });
     }
 
     // Apply attribute filters (AND logic)
     // Exclude color filters if they were already processed by colorFilterMode (and/not)
-    const filtersToApply = colorFilterMode === 'or' 
-      ? activeFilters 
+    const filtersToApply = colorFilterMode === 'or'
+      ? activeFilters
       : activeFilters.filter(f => f.categoryId !== 'primary_colors' && f.categoryId !== 'secondary_colors');
-    
+
     if (filtersToApply.length > 0) {
       result = result.filter(([countryName, countryData]) =>
         filtersToApply.every(filter => {
