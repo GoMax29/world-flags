@@ -300,4 +300,20 @@ JSON structure and comparison logic are adjusted if necessary to fix structural 
 #   - PC: Click to open full-screen view, click to close, drag to pan
 #   - Mobile: Press and hold to view, drag to pan, release to close
 
+## FIXED (Session 15):
+# - Fixed mobile zoom using proper Touch Events API:
+#   - Reference: https://developer.mozilla.org/en-US/docs/Web/API/Touch_events
+#   - Tap on loupe → opens zoom view
+#   - In zoom view: tap to close, drag to pan (with proper threshold detection)
+#   - Fixed touch-none CSS to prevent browser gestures
+#   - Close button visible on mobile too
+# - Improved mobile search bar UX:
+#   - Modern slide-down overlay design
+#   - Back arrow (←) to close
+#   - Backdrop tap to close
+#   - "Cancel" button to clear and close
+#   - Clear (X) button inside input
+#   - Auto-focus on open
+#   - Search icon highlights when search has text
+
 ## ALL COMPLETED

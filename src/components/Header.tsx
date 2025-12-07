@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
-import { Moon, Sun, Globe, Search, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Moon, Sun, Globe, Search, X, ChevronLeft } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { useAppStore } from '../store/useAppStore';
 import { ZoomSelector } from './ZoomSelector';
@@ -18,6 +18,7 @@ export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [localSearch, setLocalSearch] = useState(searchQuery);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const mobileSearchInputRef = useRef<HTMLInputElement>(null);
   
   // Debounced search update
   const debouncedSearch = useRef(
@@ -35,14 +36,33 @@ export function Header() {
   const clearSearch = () => {
     setLocalSearch('');
     setSearchQuery('');
-    searchInputRef.current?.focus();
+  };
+  
+  // Close search and clear if empty
+  const closeSearch = () => {
+    setIsSearchOpen(false);
+    // If search is empty, fully close. If has text, keep the text but close UI
+  };
+  
+  // Clear and close search
+  const clearAndClose = () => {
+    clearSearch();
+    setIsSearchOpen(false);
   };
   
   useEffect(() => {
-    if (isSearchOpen && searchInputRef.current) {
-      searchInputRef.current.focus();
+    if (isSearchOpen && mobileSearchInputRef.current) {
+      // Small delay to ensure the animation has started
+      setTimeout(() => {
+        mobileSearchInputRef.current?.focus();
+      }, 100);
     }
   }, [isSearchOpen]);
+  
+  // Sync local search with global on mount
+  useEffect(() => {
+    setLocalSearch(searchQuery);
+  }, [searchQuery]);
   
   return (
     <header className="sticky top-0 z-30 h-16 glass border-b border-[var(--color-border)]">
@@ -108,11 +128,16 @@ export function Header() {
         >
           {/* Mobile Search Toggle */}
           <button
-            onClick={() => setIsSearchOpen(!isSearchOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-[var(--color-surface)] transition-colors"
-            aria-label="Toggle search"
+            onClick={() => setIsSearchOpen(true)}
+            className={cn(
+              "md:hidden p-2 rounded-lg transition-colors",
+              localSearch 
+                ? "bg-primary-500 text-white" 
+                : "hover:bg-[var(--color-surface)] text-[var(--color-text-secondary)]"
+            )}
+            aria-label="Open search"
           >
-            <Search className="w-5 h-5 text-[var(--color-text-secondary)]" />
+            <Search className="w-5 h-5" />
           </button>
           
           {/* Zoom Selector */}
@@ -159,35 +184,80 @@ export function Header() {
         </motion.div>
       </div>
       
-      {/* Mobile Search Bar */}
-      <motion.div
-        initial={false}
-        animate={{ 
-          height: isSearchOpen ? 'auto' : 0,
-          opacity: isSearchOpen ? 1 : 0
-        }}
-        className="md:hidden overflow-hidden border-b border-[var(--color-border)]"
-      >
-        <div className="p-4">
-          <div className="flex items-center gap-2 px-4 py-2 bg-[var(--color-surface)] 
-                          border border-[var(--color-border)] rounded-xl">
-            <Search className="w-4 h-4 text-[var(--color-text-secondary)]" />
-            <input
-              type="text"
-              value={localSearch}
-              onChange={handleSearchChange}
-              placeholder={language === 'fr' ? 'Pays, couleur, élément...' : 'Country, color, element...'}
-              className="flex-1 bg-transparent text-sm text-[var(--color-text)] 
-                         placeholder:text-[var(--color-text-secondary)] outline-none"
+      {/* Mobile Search Bar - Full width overlay */}
+      <AnimatePresence>
+        {isSearchOpen && (
+          <>
+            {/* Backdrop to close on tap outside */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeSearch}
+              className="md:hidden fixed inset-0 top-16 bg-black/20 z-20"
             />
-            {localSearch && (
-              <button onClick={clearSearch} className="p-1">
-                <X className="w-4 h-4 text-[var(--color-text-secondary)]" />
-              </button>
-            )}
-          </div>
-        </div>
-      </motion.div>
+            
+            {/* Search bar container */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="md:hidden absolute left-0 right-0 top-16 z-30 
+                         bg-[var(--color-bg)] border-b border-[var(--color-border)] shadow-lg"
+            >
+              <div className="p-3 flex items-center gap-2">
+                {/* Back/Close button */}
+                <button 
+                  onClick={closeSearch}
+                  className="p-2 rounded-lg hover:bg-[var(--color-surface)] transition-colors shrink-0"
+                  aria-label="Close search"
+                >
+                  <ChevronLeft className="w-5 h-5 text-[var(--color-text-secondary)]" />
+                </button>
+                
+                {/* Search input */}
+                <div className="flex-1 flex items-center gap-2 px-3 py-2 
+                                bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl
+                                focus-within:border-primary-500 focus-within:ring-2 focus-within:ring-primary-500/20">
+                  <Search className="w-4 h-4 text-[var(--color-text-secondary)] shrink-0" />
+                  <input
+                    ref={mobileSearchInputRef}
+                    type="text"
+                    value={localSearch}
+                    onChange={handleSearchChange}
+                    placeholder={language === 'fr' ? 'Pays, couleur, élément...' : 'Country, color, element...'}
+                    className="flex-1 bg-transparent text-sm text-[var(--color-text)] 
+                               placeholder:text-[var(--color-text-secondary)] outline-none min-w-0"
+                    autoComplete="off"
+                    autoCorrect="off"
+                    autoCapitalize="off"
+                    spellCheck="false"
+                  />
+                  {localSearch && (
+                    <button 
+                      onClick={clearSearch}
+                      className="p-1 rounded-full hover:bg-[var(--color-border)] transition-colors shrink-0"
+                      aria-label="Clear search"
+                    >
+                      <X className="w-4 h-4 text-[var(--color-text-secondary)]" />
+                    </button>
+                  )}
+                </div>
+                
+                {/* Cancel button */}
+                <button
+                  onClick={clearAndClose}
+                  className="px-3 py-2 text-sm font-medium text-primary-500 
+                             hover:bg-primary-500/10 rounded-lg transition-colors shrink-0"
+                >
+                  {language === 'fr' ? 'Annuler' : 'Cancel'}
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

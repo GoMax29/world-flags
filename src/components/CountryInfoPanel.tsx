@@ -614,20 +614,29 @@ interface ZoomModalProps {
 function ZoomModal({ imageUrl, alt, onClose, needsLightBg }: ZoomModalProps) {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
-  const [isTouching, setIsTouching] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const startPosRef = useRef({ x: 0, y: 0 });
+  const hasDraggedRef = useRef(false);
+  const touchStartTimeRef = useRef(0);
+  
+  // Threshold to consider as drag vs tap (in pixels)
+  const DRAG_THRESHOLD = 10;
   
   // Handle mouse drag for PC
   const handleMouseDown = (e: React.MouseEvent) => {
-    // Don't start drag on close button
     if ((e.target as HTMLElement).closest('button')) return;
     setIsDragging(true);
+    hasDraggedRef.current = false;
     startPosRef.current = { x: e.clientX - position.x, y: e.clientY - position.y };
   };
   
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging) return;
+    const dx = e.clientX - startPosRef.current.x - position.x;
+    const dy = e.clientY - startPosRef.current.y - position.y;
+    if (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD) {
+      hasDraggedRef.current = true;
+    }
     setPosition({
       x: e.clientX - startPosRef.current.x,
       y: e.clientY - startPosRef.current.y,
@@ -636,37 +645,58 @@ function ZoomModal({ imageUrl, alt, onClose, needsLightBg }: ZoomModalProps) {
   
   const handleMouseUp = () => {
     setIsDragging(false);
+    // On PC: close only if it was a click (not a drag)
+    if (!hasDraggedRef.current) {
+      onClose();
+    }
+    hasDraggedRef.current = false;
   };
   
-  // Handle touch for mobile
+  // Handle touch events for mobile - using proper Touch Events API
+  // Reference: https://developer.mozilla.org/en-US/docs/Web/API/Touch_events
   const handleTouchStart = (e: React.TouchEvent) => {
     if ((e.target as HTMLElement).closest('button')) return;
-    setIsTouching(true);
+    e.preventDefault(); // Prevent default to avoid scroll/zoom
+    
     const touch = e.touches[0];
-    startPosRef.current = { x: touch.clientX - position.x, y: touch.clientY - position.y };
+    touchStartTimeRef.current = Date.now();
+    hasDraggedRef.current = false;
+    startPosRef.current = { 
+      x: touch.clientX - position.x, 
+      y: touch.clientY - position.y 
+    };
   };
   
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isTouching) return;
+    e.preventDefault(); // Prevent default scroll behavior
+    
     const touch = e.touches[0];
-    setPosition({
-      x: touch.clientX - startPosRef.current.x,
-      y: touch.clientY - startPosRef.current.y,
-    });
+    const newX = touch.clientX - startPosRef.current.x;
+    const newY = touch.clientY - startPosRef.current.y;
+    
+    // Check if moved beyond threshold
+    const dx = newX - position.x;
+    const dy = newY - position.y;
+    if (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD) {
+      hasDraggedRef.current = true;
+    }
+    
+    setPosition({ x: newX, y: newY });
   };
   
-  const handleTouchEnd = () => {
-    setIsTouching(false);
-    // On mobile, closing on touch end - user releases to close
-    onClose();
-  };
-  
-  // Close on click (PC only, not during drag)
-  const handleClick = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).closest('button')) return;
-    if (!isDragging) {
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    e.preventDefault();
+    
+    // Close only if it was a tap (not a drag)
+    // A tap is: short duration AND no significant movement
+    const touchDuration = Date.now() - touchStartTimeRef.current;
+    const wasTap = touchDuration < 300 && !hasDraggedRef.current;
+    
+    if (wasTap) {
       onClose();
     }
+    
+    hasDraggedRef.current = false;
   };
   
   return (
@@ -675,8 +705,7 @@ function ZoomModal({ imageUrl, alt, onClose, needsLightBg }: ZoomModalProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[60] bg-black/90 flex items-center justify-center cursor-move"
-      onClick={handleClick}
+      className="fixed inset-0 z-[60] bg-black/90 flex items-center justify-center cursor-move touch-none"
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
@@ -685,12 +714,13 @@ function ZoomModal({ imageUrl, alt, onClose, needsLightBg }: ZoomModalProps) {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Close button - PC only */}
+      {/* Close button */}
       <button
-        onClick={onClose}
-        className="absolute top-4 right-4 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20
+        onClick={(e) => { e.stopPropagation(); onClose(); }}
+        onTouchEnd={(e) => { e.stopPropagation(); onClose(); }}
+        className="absolute top-4 right-4 z-10 w-12 h-12 rounded-full bg-white/20 
                    flex items-center justify-center text-white transition-all
-                   backdrop-blur-sm border border-white/20 hidden sm:flex"
+                   backdrop-blur-sm border border-white/30 active:bg-white/30"
         aria-label="Close"
       >
         <X className="w-6 h-6" />
@@ -699,7 +729,7 @@ function ZoomModal({ imageUrl, alt, onClose, needsLightBg }: ZoomModalProps) {
       {/* Instructions */}
       <div className="absolute bottom-4 left-0 right-0 text-center text-white/60 text-sm pointer-events-none">
         <span className="hidden sm:inline">Click to close • Drag to pan</span>
-        <span className="sm:hidden">Release to close • Drag to pan</span>
+        <span className="sm:hidden">Tap to close • Drag to pan</span>
       </div>
       
       {/* Image */}
@@ -713,7 +743,7 @@ function ZoomModal({ imageUrl, alt, onClose, needsLightBg }: ZoomModalProps) {
           maxWidth: '95vw',
           maxHeight: '90vh',
         }}
-        className={`object-contain select-none ${needsLightBg ? 'bg-gray-200 rounded-lg p-4' : ''}`}
+        className={`object-contain select-none pointer-events-none ${needsLightBg ? 'bg-gray-200 rounded-lg p-4' : ''}`}
         draggable={false}
       />
     </motion.div>
