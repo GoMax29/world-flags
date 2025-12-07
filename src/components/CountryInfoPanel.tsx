@@ -39,22 +39,40 @@ const SPECIAL_COAT_OF_ARMS_URLS: Record<string, string> = {
   'Chad': 'https://upload.wikimedia.org/wikipedia/commons/c/c1/Coat_of_arms_of_Chad.svg',
   'Portugal': 'https://upload.wikimedia.org/wikipedia/commons/9/95/Coat_of_arms_of_Portugal_%28lesser%29.svg',
   'Serbia': 'https://upload.wikimedia.org/wikipedia/commons/0/0f/Coat_of_arms_of_Serbia_small.svg',
+  'Cabo Verde': 'https://upload.wikimedia.org/wikipedia/commons/c/ce/Coat_of_arms_of_Cape_Verde.svg',
+  'Congo (Democratic Republic)': 'https://upload.wikimedia.org/wikipedia/commons/6/66/Coat_of_arms_of_the_Democratic_Republic_of_the_Congo_%28grey_spear%29.svg',
+  'Eswatini': 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Coat_of_arms_of_Eswatini.svg',
+  'France': 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Coat_of_arms_of_the_French_Republic.svg',
+  'Gabon': 'https://upload.wikimedia.org/wikipedia/commons/7/77/Coat_of_arms_of_Gabon.svg',
+  'Guinea-Bissau': 'https://upload.wikimedia.org/wikipedia/commons/0/06/Emblem_of_Guinea-Bissau.svg',
+  'Hungary': 'https://upload.wikimedia.org/wikipedia/commons/3/34/Coat_of_arms_of_Hungary.svg',
+  'Malaysia': 'https://upload.wikimedia.org/wikipedia/commons/2/26/Coat_of_arms_of_Malaysia.svg',
+  'Timor-Leste': 'https://upload.wikimedia.org/wikipedia/commons/b/bd/Coat_of_arms_of_East_Timor.svg',
+  'Trinidad and Tobago': 'https://upload.wikimedia.org/wikipedia/commons/3/31/Coat_of_arms_of_Trinidad_and_Tobago.svg',
 };
+
+// Countries that need light background for coat of arms (dark emblems)
+const LIGHT_BG_COAT_OF_ARMS = ['India', 'Pakistan'];
 
 // Generate coat of arms URL - use API for most countries, override only for special cases
 function getCoatOfArmsUrl(countryName: string, apiCoatOfArms?: string): string {
-  // Check special cases FIRST (these 6 countries don't work with API)
+  // Check special cases FIRST
   if (SPECIAL_COAT_OF_ARMS_URLS[countryName]) {
     return SPECIAL_COAT_OF_ARMS_URLS[countryName];
   }
   
-  // Use API coat of arms for all other countries (this worked!)
+  // Use API coat of arms for all other countries
   if (apiCoatOfArms) {
     return apiCoatOfArms;
   }
 
   // Fallback (shouldn't be needed)
   return '';
+}
+
+// Check if country needs light background for coat of arms
+function needsLightBackground(countryName: string): boolean {
+  return LIGHT_BG_COAT_OF_ARMS.includes(countryName);
 }
 
 export function CountryInfoPanel() {
@@ -91,8 +109,8 @@ export function CountryInfoPanel() {
     : { ratio: 1.5, label: "3:2" };
   const locale = language === "fr" ? "fr-FR" : "en-US";
   
-  // Check if country has coat of arms (from API data)
-  const hasCoatOfArms = countryInfo?.coatOfArms || selectedCountry === 'Malta';
+  // Check if country has coat of arms (from API data or special URLs)
+  const hasCoatOfArms = countryInfo?.coatOfArms || (selectedCountry && SPECIAL_COAT_OF_ARMS_URLS[selectedCountry]);
   
   // Get current index and navigation info
   const currentIndex = useMemo(() => {
@@ -239,7 +257,11 @@ export function CountryInfoPanel() {
                         alt={displayMode === 'coatOfArms' 
                           ? `Coat of Arms of ${selectedCountry}` 
                           : `Flag of ${selectedCountry}`}
-                        className="w-full h-full object-contain bg-gray-100 dark:bg-gray-800"
+                        className={`w-full h-full object-contain ${
+                          displayMode === 'coatOfArms' && selectedCountry && needsLightBackground(selectedCountry)
+                            ? 'bg-gray-200'
+                            : 'bg-gray-100 dark:bg-gray-800'
+                        }`}
                         onError={() => {
                           if (displayMode === 'coatOfArms') {
                             setCoatOfArmsError(true);

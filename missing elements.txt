@@ -282,4 +282,13 @@ JSON structure and comparison logic are adjusted if necessary to fix structural 
 #   - Flag images cached separately from app files (cache-first for flagcdn.com)
 #   - PWA still updates correctly (network-first for app files)
 
+## FIXED (Session 13):
+# - Added special coat of arms URLs for:
+#   - Cabo Verde, DR Congo, Eswatini, France, Gabon, Guinea-Bissau
+#   - Hungary, Malaysia, Timor-Leste, Trinidad and Tobago
+# - Fixed hasCoatOfArms check to include countries with special URLs
+#   - Now Timor-Leste and other special countries show the button
+# - Added light background for India and Pakistan coat of arms
+#   - Dark emblems now visible on light grey background
+
 ## ALL COMPLETED
