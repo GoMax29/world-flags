@@ -256,5 +256,11 @@ JSON structure and comparison logic are adjusted if necessary to fix structural 
 # - FIXED: Coat of arms now PRIORITIZES our verified URLs over API URLs
 # - FIXED: Flag/Coat of Arms toggle buttons moved BELOW the flag image
 # - FIXED: Sao Tome and Principe name mapping for correct sorting
+# - FIXED: PWA caching issue - app now always updates on mobile/PC:
+#   - Service worker uses NETWORK-FIRST strategy for app files
+#   - Auto-update detection with immediate reload
+#   - Added _headers file for proper cache control
+#   - SW version timestamp for cache busting
+#   - updateViaCache: 'none' ensures fresh SW on each check
 
 ## ALL COMPLETED
