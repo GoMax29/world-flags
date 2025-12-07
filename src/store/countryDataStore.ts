@@ -37,7 +37,6 @@ const countryNameMapping: Record<string, string> = {
   'Palestine': 'Palestine',
   'Taiwan': 'Taiwan',
   'Micronesia': 'Micronesia',
-  'Timor-Leste': 'Timor-Leste',
   'East Timor': 'Timor-Leste',
 };
 
