@@ -361,16 +361,16 @@ export function TopFiltersMobile() {
     }
     
     if (filter.type === 'multicolor' && filter.colors) {
-      return (
+    return (
         <MultiColorButton
-          key={filter.id}
+        key={filter.id}
           colors={filter.colors}
-          label=""
-          isActive={isFilterActive(filter.categoryId, filter.id)}
-          onClick={() => handleExclusiveRegionClick(filter.categoryId, filter.id)}
-          size="sm"
-        />
-      );
+        label=""
+        isActive={isFilterActive(filter.categoryId, filter.id)}
+        onClick={() => handleExclusiveRegionClick(filter.categoryId, filter.id)}
+        size="sm"
+      />
+    );
     }
     
     return null;

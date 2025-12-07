@@ -26,64 +26,30 @@ import { getFlagByCountry } from "../hooks/useFlags";
 import { getFlagRatio } from "../data/flagRatios";
 import type { ActiveFilter } from "../types";
 
-// Verified coat of arms URLs mapping
-const COAT_OF_ARMS_URLS: Record<string, string> = {
-  // User-specified fixes (PRIORITY)
+// Special coat of arms URLs - ONLY for the 6 countries where API doesn't work
+const SPECIAL_COAT_OF_ARMS_URLS: Record<string, string> = {
   'Afghanistan': 'https://upload.wikimedia.org/wikipedia/commons/e/e3/National_Emblem_of_Afghanistan_001.svg',
   'Spain': 'https://upload.wikimedia.org/wikipedia/commons/5/56/Coat_of_Arms_of_Spain_%28corrections_of_heraldist_requests%29.svg',
   'Iran': 'https://upload.wikimedia.org/wikipedia/commons/7/7b/Emblem_of_Iran_%28red%29.svg',
   'Peru': 'https://upload.wikimedia.org/wikipedia/commons/c/cc/Escudo_nacional_del_Per%C3%BA.svg',
   'Fiji': 'https://upload.wikimedia.org/wikipedia/commons/4/4e/Arms_of_Fiji.svg',
   'Malta': 'https://upload.wikimedia.org/wikipedia/commons/f/f5/George_Cross_of_Malta_737x737.svg',
-  // Other verified special cases
-  'United States': 'https://upload.wikimedia.org/wikipedia/commons/5/5c/Great_Seal_of_the_United_States_%28obverse%29.svg',
-  'United Kingdom': 'https://upload.wikimedia.org/wikipedia/commons/9/98/Royal_Coat_of_Arms_of_the_United_Kingdom.svg',
-  'Vatican City': 'https://upload.wikimedia.org/wikipedia/commons/0/00/Coat_of_arms_of_the_Vatican_City.svg',
-  'Côte d\'Ivoire': 'https://upload.wikimedia.org/wikipedia/commons/c/c8/Coat_of_arms_of_Ivory_Coast.svg',
-  'Czech Republic': 'https://upload.wikimedia.org/wikipedia/commons/e/ed/Coat_of_arms_of_the_Czech_Republic.svg',
-  'South Korea': 'https://upload.wikimedia.org/wikipedia/commons/8/84/Emblem_of_South_Korea.svg',
-  'North Korea': 'https://upload.wikimedia.org/wikipedia/commons/3/35/Emblem_of_North_Korea.svg',
-  'Russia': 'https://upload.wikimedia.org/wikipedia/commons/f/f2/Coat_of_Arms_of_the_Russian_Federation.svg',
-  'Congo (Democratic Republic)': 'https://upload.wikimedia.org/wikipedia/commons/3/39/Coat_of_arms_of_the_Democratic_Republic_of_the_Congo.svg',
-  'Congo (Republic)': 'https://upload.wikimedia.org/wikipedia/commons/c/c4/Coat_of_arms_of_the_Republic_of_the_Congo.svg',
-  'Mexico': 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Coat_of_arms_of_Mexico.svg',
-  'Haiti': 'https://upload.wikimedia.org/wikipedia/commons/7/72/Coat_of_arms_of_Haiti.svg',
-  'Andorra': 'https://upload.wikimedia.org/wikipedia/commons/1/19/Coat_of_arms_of_Andorra.svg',
-  'Ecuador': 'https://upload.wikimedia.org/wikipedia/commons/e/e5/Coat_of_arms_of_Ecuador.svg',
-  'Bolivia': 'https://upload.wikimedia.org/wikipedia/commons/1/1c/Coat_of_arms_of_Bolivia.svg',
-  'Nicaragua': 'https://upload.wikimedia.org/wikipedia/commons/b/b5/Coat_of_arms_of_Nicaragua.svg',
-  'Paraguay': 'https://upload.wikimedia.org/wikipedia/commons/7/71/Coat_of_arms_of_Paraguay.svg',
-  'El Salvador': 'https://upload.wikimedia.org/wikipedia/commons/8/80/Coat_of_arms_of_El_Salvador.svg',
-  'Guatemala': 'https://upload.wikimedia.org/wikipedia/commons/6/64/Coat_of_arms_of_Guatemala.svg',
-  'Dominican Republic': 'https://upload.wikimedia.org/wikipedia/commons/3/36/Coat_of_arms_of_the_Dominican_Republic.svg',
-  'Costa Rica': 'https://upload.wikimedia.org/wikipedia/commons/3/3b/Coat_of_arms_of_Costa_Rica.svg',
-  'Honduras': 'https://upload.wikimedia.org/wikipedia/commons/f/fe/Coat_of_arms_of_Honduras.svg',
-  'Belize': 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Coat_of_arms_of_Belize.svg',
-  'San Marino': 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Coat_of_arms_of_San_Marino.svg',
-  'Serbia': 'https://upload.wikimedia.org/wikipedia/commons/2/2e/Coat_of_arms_of_Serbia.svg',
-  'Croatia': 'https://upload.wikimedia.org/wikipedia/commons/7/72/Coat_of_arms_of_Croatia.svg',
-  'Slovenia': 'https://upload.wikimedia.org/wikipedia/commons/8/8c/Coat_of_arms_of_Slovenia.svg',
-  'Slovakia': 'https://upload.wikimedia.org/wikipedia/commons/c/cf/Coat_of_arms_of_Slovakia.svg',
-  'Montenegro': 'https://upload.wikimedia.org/wikipedia/commons/b/b6/Coat_of_arms_of_Montenegro.svg',
-  'Moldova': 'https://upload.wikimedia.org/wikipedia/commons/5/56/Coat_of_arms_of_Moldova.svg',
-  'Equatorial Guinea': 'https://upload.wikimedia.org/wikipedia/commons/e/ef/Coat_of_arms_of_Equatorial_Guinea.svg',
 };
 
-// Generate coat of arms URL - check special cases first, then fallback to API
+// Generate coat of arms URL - use API for most countries, override only for special cases
 function getCoatOfArmsUrl(countryName: string, apiCoatOfArms?: string): string {
-  // ALWAYS check our verified URLs first
-  if (COAT_OF_ARMS_URLS[countryName]) {
-    return COAT_OF_ARMS_URLS[countryName];
+  // Check special cases FIRST (these 6 countries don't work with API)
+  if (SPECIAL_COAT_OF_ARMS_URLS[countryName]) {
+    return SPECIAL_COAT_OF_ARMS_URLS[countryName];
   }
   
-  // Fall back to API coat of arms if available
+  // Use API coat of arms for all other countries (this worked!)
   if (apiCoatOfArms) {
     return apiCoatOfArms;
   }
 
-  // Last resort: try standard pattern
-  const formattedName = countryName.replace(/ /g, '_');
-  return `https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Coat_of_arms_of_${formattedName}.svg/500px-Coat_of_arms_of_${formattedName}.svg.png`;
+  // Fallback (shouldn't be needed)
+  return '';
 }
 
 export function CountryInfoPanel() {

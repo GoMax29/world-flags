@@ -96,47 +96,47 @@ export function SortSelector() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--color-surface)] 
-                     border border-[var(--color-border)] hover:border-primary-500/50 transition-colors"
-          aria-label="Sort options"
-        >
+                   border border-[var(--color-border)] hover:border-primary-500/50 transition-colors"
+        aria-label="Sort options"
+      >
           {currentSort.icon}
-          <span className="text-sm font-medium text-[var(--color-text)]">{label}</span>
+        <span className="text-sm font-medium text-[var(--color-text)]">{label}</span>
           {currentSort.direction === 'asc' ? (
             <ArrowUp className="w-3.5 h-3.5 text-primary-500" />
           ) : (
             <ArrowDown className="w-3.5 h-3.5 text-primary-500" />
           )}
-        </motion.button>
-        
-        {/* Dropdown */}
-        <div className="absolute top-full right-0 mt-1 opacity-0 invisible 
-                        group-hover:opacity-100 group-hover:visible transition-all duration-200 z-20">
-          <div className="bg-[var(--color-surface)] border border-[var(--color-border)] 
+      </motion.button>
+      
+      {/* Dropdown */}
+      <div className="absolute top-full right-0 mt-1 opacity-0 invisible 
+                      group-hover:opacity-100 group-hover:visible transition-all duration-200 z-20">
+        <div className="bg-[var(--color-surface)] border border-[var(--color-border)] 
                           rounded-lg shadow-xl p-1 min-w-[160px]">
-            {sortOptions.map((option) => (
-              <button
-                key={option.value}
-                onClick={() => setSortBy(option.value)}
-                className={`
+          {sortOptions.map((option) => (
+            <button
+              key={option.value}
+              onClick={() => setSortBy(option.value)}
+              className={`
                   w-full flex items-center justify-between gap-2 px-3 py-2 rounded-md text-sm
-                  transition-colors
-                  ${sortBy === option.value 
-                    ? 'bg-primary-500 text-white' 
-                    : 'hover:bg-[var(--color-border)] text-[var(--color-text)]'
-                  }
-                `}
-              >
+                transition-colors
+                ${sortBy === option.value 
+                  ? 'bg-primary-500 text-white' 
+                  : 'hover:bg-[var(--color-border)] text-[var(--color-text)]'
+                }
+              `}
+            >
                 <div className="flex items-center gap-2">
-                  {option.icon}
-                  <span>{language === 'fr' ? option.label_fr : option.label_en}</span>
+              {option.icon}
+              <span>{language === 'fr' ? option.label_fr : option.label_en}</span>
                 </div>
                 {option.direction === 'asc' ? (
                   <ArrowUp className="w-3.5 h-3.5" />
                 ) : (
                   <ArrowDown className="w-3.5 h-3.5" />
                 )}
-              </button>
-            ))}
+            </button>
+          ))}
           </div>
         </div>
       </div>

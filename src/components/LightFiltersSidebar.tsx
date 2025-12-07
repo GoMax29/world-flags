@@ -391,28 +391,28 @@ export function LightFiltersSidebar() {
       {/* Main content */}
       <div className="space-y-1.5">
               {/* Continents - Text labels only, no emojis */}
-              <FilterRow 
-                title={filterCategories.continents[lang]}
-                clickable={false}
-              >
-                {filterCategories.continents.filters.map((filter) => (
+            <FilterRow 
+              title={filterCategories.continents[lang]}
+              clickable={false}
+            >
+              {filterCategories.continents.filters.map((filter) => (
                   <TextFilterButton
-                    key={filter.id}
-                    label={filter[language === 'fr' ? 'label_fr' : 'label_en']}
-                    isActive={isFilterActive(filter.categoryId, filter.id)}
-                    isDisabled={!isFilterActive(filter.categoryId, filter.id) && !getAvailableFilters(filter.categoryId, filter.id)}
-                    onClick={() => handleExclusiveContinentClick(filter.categoryId, filter.id)}
-                    size="sm"
-                  />
-                ))}
-              </FilterRow>
+                  key={filter.id}
+                  label={filter[language === 'fr' ? 'label_fr' : 'label_en']}
+                  isActive={isFilterActive(filter.categoryId, filter.id)}
+                  isDisabled={!isFilterActive(filter.categoryId, filter.id) && !getAvailableFilters(filter.categoryId, filter.id)}
+                  onClick={() => handleExclusiveContinentClick(filter.categoryId, filter.id)}
+                  size="sm"
+                />
+              ))}
+            </FilterRow>
 
               {/* Regions/Cultures - removed Nordic and Caribbean */}
-              <FilterRow 
-                title={filterCategories.regions[lang]}
-                clickable={false}
-              >
-                {filterCategories.regions.filters.map((filter) => {
+            <FilterRow 
+              title={filterCategories.regions[lang]}
+              clickable={false}
+            >
+              {filterCategories.regions.filters.map((filter) => {
                   const filterWithType = filter as typeof filter & { type?: string; colors?: string[]; label_en?: string; label_fr?: string };
                   
                   if (filterWithType.type === 'text') {
@@ -426,213 +426,213 @@ export function LightFiltersSidebar() {
                       />
                     );
                   }
-                  
-                  if (filterWithType.type === 'communist') {
-                    return (
-                      <CommunistButton
-                        key={filter.id}
-                        label=""
-                        isActive={isFilterActive(filter.categoryId, filter.id)}
-                        onClick={() => handleExclusiveRegionClick(filter.categoryId, filter.id)}
-                        size="sm"
-                      />
-                    );
-                  }
-                  
-                  if (filterWithType.type === 'multicolor' && filterWithType.colors) {
-                    return (
-                      <MultiColorButton
-                        key={filter.id}
-                        colors={filterWithType.colors}
-                        label=""
-                        isActive={isFilterActive(filter.categoryId, filter.id)}
-                        onClick={() => handleExclusiveRegionClick(filter.categoryId, filter.id)}
-                        size="sm"
-                      />
-                    );
-                  }
-                  
+                
+                if (filterWithType.type === 'communist') {
+                  return (
+                    <CommunistButton
+                      key={filter.id}
+                      label=""
+                      isActive={isFilterActive(filter.categoryId, filter.id)}
+                      onClick={() => handleExclusiveRegionClick(filter.categoryId, filter.id)}
+                      size="sm"
+                    />
+                  );
+                }
+                
+                if (filterWithType.type === 'multicolor' && filterWithType.colors) {
+                  return (
+                    <MultiColorButton
+                      key={filter.id}
+                      colors={filterWithType.colors}
+                      label=""
+                      isActive={isFilterActive(filter.categoryId, filter.id)}
+                      onClick={() => handleExclusiveRegionClick(filter.categoryId, filter.id)}
+                      size="sm"
+                    />
+                  );
+                }
+                
                   return null;
-                })}
-              </FilterRow>
+              })}
+            </FilterRow>
 
               {/* Colors with 3-button mode selector */}
-              <FilterRow 
-                title={filterCategories.colors[lang]}
-                clickable={false}
-              >
-                {filterCategories.colors.filters.map((filter) => (
-                  <ColorButton
-                    key={filter.id}
-                    color={filter.id}
-                    colorHex={filter.hex!}
-                    label=""
-                    isActive={isFilterActive(filter.categoryId, filter.id)}
-                    isDisabled={!isFilterActive(filter.categoryId, filter.id) && !getAvailableFilters(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                    size="sm"
-                  />
-                ))}
+            <FilterRow 
+              title={filterCategories.colors[lang]}
+              clickable={false}
+            >
+              {filterCategories.colors.filters.map((filter) => (
+                <ColorButton
+                  key={filter.id}
+                  color={filter.id}
+                  colorHex={filter.hex!}
+                  label=""
+                  isActive={isFilterActive(filter.categoryId, filter.id)}
+                  isDisabled={!isFilterActive(filter.categoryId, filter.id) && !getAvailableFilters(filter.categoryId, filter.id)}
+                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                  size="sm"
+                />
+              ))}
                 <ColorModeSelector />
-              </FilterRow>
+            </FilterRow>
 
-              {/* Layout/Disposition */}
-              <FilterRow 
-                title={language === 'fr' ? 'Disposition' : 'Layout'}
-                clickable={false}
-              >
-                <div className="flex-1">
-                  <PatternSchemaSelector compact />
-                </div>
-              </FilterRow>
+            {/* Layout/Disposition */}
+            <FilterRow 
+              title={language === 'fr' ? 'Disposition' : 'Layout'}
+              clickable={false}
+            >
+              <div className="flex-1">
+                <PatternSchemaSelector compact />
+              </div>
+            </FilterRow>
 
-              {/* Shapes | Celestial */}
-              <FilterRow 
-                title={`${filterCategories.shapes[lang]} | ${filterCategories.celestial[lang]}`}
-                clickable={false}
-              >
-                {filterCategories.shapes.filters.map((filter) => (
-                  <IconFilterButton
-                    key={filter.id}
-                    icon={filter.icon}
-                    label=""
-                    isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                    size="sm"
-                  />
-                ))}
-                <Separator />
-                {filterCategories.celestial.filters.map((filter) => (
-                  <IconFilterButton
-                    key={filter.id}
-                    icon={filter.icon}
-                    label=""
-                    isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                    size="sm"
-                  />
-                ))}
-              </FilterRow>
+            {/* Shapes | Celestial */}
+            <FilterRow 
+              title={`${filterCategories.shapes[lang]} | ${filterCategories.celestial[lang]}`}
+              clickable={false}
+            >
+              {filterCategories.shapes.filters.map((filter) => (
+                <IconFilterButton
+                  key={filter.id}
+                  icon={filter.icon}
+                  label=""
+                  isActive={isFilterActive(filter.categoryId, filter.id)}
+                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                  size="sm"
+                />
+              ))}
+              <Separator />
+              {filterCategories.celestial.filters.map((filter) => (
+                <IconFilterButton
+                  key={filter.id}
+                  icon={filter.icon}
+                  label=""
+                  isActive={isFilterActive(filter.categoryId, filter.id)}
+                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                  size="sm"
+                />
+              ))}
+            </FilterRow>
 
-              {/* Animals | Nature */}
-              <FilterRow 
-                title={`${filterCategories.animals[lang]} | ${filterCategories.nature[lang]}`}
-                clickable={true}
-                mainCategory="animals"
-                onCategoryClick={handleCategoryClick}
-                isActive={isFilterActive('main_category', 'animals')}
-              >
-                {filterCategories.animals.filters.map((filter) => (
-                  <IconFilterButton
-                    key={filter.id}
-                    icon={filter.icon}
-                    label=""
-                    isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                    size="sm"
-                  />
-                ))}
-                <Separator />
-                {filterCategories.nature.filters.map((filter) => (
-                  <IconFilterButton
-                    key={filter.id}
-                    icon={filter.icon}
-                    label=""
-                    isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                    size="sm"
-                  />
-                ))}
-              </FilterRow>
+            {/* Animals | Nature */}
+            <FilterRow 
+              title={`${filterCategories.animals[lang]} | ${filterCategories.nature[lang]}`}
+              clickable={true}
+              mainCategory="animals"
+              onCategoryClick={handleCategoryClick}
+              isActive={isFilterActive('main_category', 'animals')}
+            >
+              {filterCategories.animals.filters.map((filter) => (
+                <IconFilterButton
+                  key={filter.id}
+                  icon={filter.icon}
+                  label=""
+                  isActive={isFilterActive(filter.categoryId, filter.id)}
+                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                  size="sm"
+                />
+              ))}
+              <Separator />
+              {filterCategories.nature.filters.map((filter) => (
+                <IconFilterButton
+                  key={filter.id}
+                  icon={filter.icon}
+                  label=""
+                  isActive={isFilterActive(filter.categoryId, filter.id)}
+                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                  size="sm"
+                />
+              ))}
+            </FilterRow>
 
-              {/* Buildings | Religious | Heraldry */}
-              <FilterRow 
-                title={`${filterCategories.buildings[lang]} | ${filterCategories.religious[lang]} | ${filterCategories.heraldry[lang]}`}
-                clickable={false}
-              >
-                {filterCategories.buildings.filters.map((filter) => (
-                  <IconFilterButton
-                    key={filter.id}
-                    icon={filter.icon}
-                    label=""
-                    isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                    size="sm"
-                  />
-                ))}
-                <Separator />
-                {filterCategories.religious.filters.map((filter) => (
-                  <IconFilterButton
-                    key={filter.id}
-                    icon={filter.icon}
-                    label=""
-                    isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                    size="sm"
-                  />
-                ))}
-                <Separator />
-                {filterCategories.heraldry.filters.map((filter) => (
-                  <IconFilterButton
-                    key={filter.id}
-                    icon={filter.icon}
-                    label=""
-                    isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                    size="sm"
-                  />
-                ))}
-              </FilterRow>
+            {/* Buildings | Religious | Heraldry */}
+            <FilterRow 
+              title={`${filterCategories.buildings[lang]} | ${filterCategories.religious[lang]} | ${filterCategories.heraldry[lang]}`}
+              clickable={false}
+            >
+              {filterCategories.buildings.filters.map((filter) => (
+                <IconFilterButton
+                  key={filter.id}
+                  icon={filter.icon}
+                  label=""
+                  isActive={isFilterActive(filter.categoryId, filter.id)}
+                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                  size="sm"
+                />
+              ))}
+              <Separator />
+              {filterCategories.religious.filters.map((filter) => (
+                <IconFilterButton
+                  key={filter.id}
+                  icon={filter.icon}
+                  label=""
+                  isActive={isFilterActive(filter.categoryId, filter.id)}
+                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                  size="sm"
+                />
+              ))}
+              <Separator />
+              {filterCategories.heraldry.filters.map((filter) => (
+                <IconFilterButton
+                  key={filter.id}
+                  icon={filter.icon}
+                  label=""
+                  isActive={isFilterActive(filter.categoryId, filter.id)}
+                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                  size="sm"
+                />
+              ))}
+            </FilterRow>
 
-              {/* Weapons | Humans | Inscriptions | Local */}
-              <FilterRow 
-                title={`${filterCategories.weapons[lang]} | ${filterCategories.humans[lang]} | ${filterCategories.inscriptions[lang]} | ${filterCategories.localSymbols[lang]}`}
-                clickable={false}
-              >
-                {filterCategories.weapons.filters.map((filter) => (
-                  <IconFilterButton
-                    key={filter.id}
-                    icon={filter.icon}
-                    label=""
-                    isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                    size="sm"
-                  />
-                ))}
-                <Separator />
-                {filterCategories.humans.filters.map((filter) => (
-                  <IconFilterButton
-                    key={filter.id}
-                    icon={filter.icon}
-                    label=""
-                    isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                    size="sm"
-                  />
-                ))}
-                <Separator />
-                {filterCategories.inscriptions.filters.map((filter) => (
-                  <IconFilterButton
-                    key={filter.id}
-                    icon={filter.icon}
-                    label=""
-                    isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                    size="sm"
-                  />
-                ))}
-                <Separator />
-                {filterCategories.localSymbols.filters.map((filter) => (
-                  <IconFilterButton
-                    key={filter.id}
-                    icon={filter.icon}
-                    label=""
-                    isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                    size="sm"
-                  />
-                ))}
-              </FilterRow>
+            {/* Weapons | Humans | Inscriptions | Local */}
+            <FilterRow 
+              title={`${filterCategories.weapons[lang]} | ${filterCategories.humans[lang]} | ${filterCategories.inscriptions[lang]} | ${filterCategories.localSymbols[lang]}`}
+              clickable={false}
+            >
+              {filterCategories.weapons.filters.map((filter) => (
+                <IconFilterButton
+                  key={filter.id}
+                  icon={filter.icon}
+                  label=""
+                  isActive={isFilterActive(filter.categoryId, filter.id)}
+                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                  size="sm"
+                />
+              ))}
+              <Separator />
+              {filterCategories.humans.filters.map((filter) => (
+                <IconFilterButton
+                  key={filter.id}
+                  icon={filter.icon}
+                  label=""
+                  isActive={isFilterActive(filter.categoryId, filter.id)}
+                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                  size="sm"
+                />
+              ))}
+              <Separator />
+              {filterCategories.inscriptions.filters.map((filter) => (
+                <IconFilterButton
+                  key={filter.id}
+                  icon={filter.icon}
+                  label=""
+                  isActive={isFilterActive(filter.categoryId, filter.id)}
+                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                  size="sm"
+                />
+              ))}
+              <Separator />
+              {filterCategories.localSymbols.filters.map((filter) => (
+                <IconFilterButton
+                  key={filter.id}
+                  icon={filter.icon}
+                  label=""
+                  isActive={isFilterActive(filter.categoryId, filter.id)}
+                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                  size="sm"
+                />
+              ))}
+            </FilterRow>
       </div>
     </div>
   );

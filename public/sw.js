@@ -67,10 +67,10 @@ self.addEventListener("fetch", (event) => {
             return cachedResponse;
           }
           return fetch(event.request).then((response) => {
-            if (response.ok) {
-              cache.put(event.request, response.clone());
-            }
-            return response;
+              if (response.ok) {
+                cache.put(event.request, response.clone());
+              }
+              return response;
           }).catch(() => {
             return new Response("", { status: 503 });
           });
@@ -95,7 +95,7 @@ self.addEventListener("fetch", (event) => {
             return response;
           }).catch(() => {
             return new Response("", { status: 503 });
-          });
+            });
         });
       })
     );
@@ -125,17 +125,17 @@ self.addEventListener("fetch", (event) => {
   // App files (HTML, JS, CSS): NETWORK-FIRST - Always get fresh content
   // This is the key change that ensures updates are always fetched
   if (url.origin === self.location.origin) {
-    event.respondWith(
+  event.respondWith(
       fetch(event.request)
         .then((response) => {
           // Got fresh response - cache it
-          if (response.ok) {
-            const responseClone = response.clone();
+        if (response.ok) {
+          const responseClone = response.clone();
             caches.open(CACHE_NAME).then((cache) => {
-              cache.put(event.request, responseClone);
-            });
-          }
-          return response;
+            cache.put(event.request, responseClone);
+          });
+        }
+        return response;
         })
         .catch(() => {
           // Network failed - serve from cache (offline support)
@@ -148,8 +148,8 @@ self.addEventListener("fetch", (event) => {
               return caches.match("/index.html");
             }
             return new Response("Offline", { status: 503 });
-          });
-        })
+      });
+    })
     );
     return;
   }

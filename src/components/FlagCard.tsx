@@ -77,14 +77,14 @@ export function FlagCard({ countryName, countryCode, index }: FlagCardProps) {
         
         {/* Hover Overlay (only when showNames is false) */}
         {!showNames && (
-          <div
-            className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent 
-                       flex items-end justify-center p-1.5 opacity-0 group-hover:opacity-100 transition-opacity"
-          >
-            <span className="text-white text-[10px] sm:text-xs font-medium text-center line-clamp-2 drop-shadow-lg">
-              {t.country(countryName)}
-            </span>
-          </div>
+        <div
+          className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent 
+                     flex items-end justify-center p-1.5 opacity-0 group-hover:opacity-100 transition-opacity"
+        >
+          <span className="text-white text-[10px] sm:text-xs font-medium text-center line-clamp-2 drop-shadow-lg">
+            {t.country(countryName)}
+          </span>
+        </div>
         )}
         
         {/* Selection Indicator */}
