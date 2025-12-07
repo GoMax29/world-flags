@@ -55,18 +55,18 @@ export function FlagGrid() {
   
   return (
     <div className="w-full">
-      {/* Results Counter + Sort */}
+      {/* Results Counter + Sort - Desktop only, mobile has its own toolbar */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="mb-3 px-1 flex items-center justify-between"
+        className="mb-3 px-1 hidden lg:flex items-center justify-between"
       >
         <p className="text-sm text-[var(--color-text-secondary)]">
           <span className="font-semibold text-[var(--color-text)]">{filteredCount}</span>
-          {' '}/{' '}{totalCount} drapeaux
+          {' '}/{' '}{totalCount}
           {activeFilters.length > 0 && (
             <span className="ml-2 text-primary-500">
-              ({activeFilters.length} filtre{activeFilters.length > 1 ? 's' : ''} actif{activeFilters.length > 1 ? 's' : ''})
+              ({activeFilters.length} filtre{activeFilters.length > 1 ? 's' : ''})
             </span>
           )}
         </p>

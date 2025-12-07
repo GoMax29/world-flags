@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowDownAZ, ArrowUpAZ, Users, Map, ArrowUp, ArrowDown, Eye, EyeOff } from 'lucide-react';
+import { SortAsc, SortDesc, Users, Map, ArrowUp, ArrowDown, Eye, EyeOff } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
 import type { SortOption } from '../types';
 
@@ -11,19 +11,20 @@ interface SortOptionItem {
   direction: 'asc' | 'desc';
 }
 
+// Icons now match arrow direction: SortAsc (A→Z with ↑) for ascending, SortDesc (Z→A with ↓) for descending
 const sortOptions: SortOptionItem[] = [
   { 
     value: 'name_asc', 
     label_en: 'Name', 
     label_fr: 'Nom', 
-    icon: <ArrowDownAZ className="w-4 h-4" />,
+    icon: <SortAsc className="w-4 h-4" />,
     direction: 'asc'
   },
   { 
     value: 'name_desc', 
     label_en: 'Name', 
     label_fr: 'Nom', 
-    icon: <ArrowUpAZ className="w-4 h-4" />,
+    icon: <SortDesc className="w-4 h-4" />,
     direction: 'desc'
   },
   { 
@@ -138,6 +139,62 @@ export function SortSelector() {
             </button>
           ))}
           </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Compact sort selector for mobile toolbar
+export function SortSelectorCompact() {
+  const { sortBy, setSortBy, language } = useAppStore();
+  
+  const currentSort = sortOptions.find(opt => opt.value === sortBy) || sortOptions[0];
+  
+  return (
+    <div className="relative group">
+      <button
+        className="flex items-center gap-1 px-2 py-1 rounded-md bg-[var(--color-surface)] 
+                   border border-[var(--color-border)] text-[var(--color-text)]"
+        aria-label="Sort"
+      >
+        {currentSort.icon}
+        {currentSort.direction === 'asc' ? (
+          <ArrowUp className="w-3 h-3 text-primary-500" />
+        ) : (
+          <ArrowDown className="w-3 h-3 text-primary-500" />
+        )}
+      </button>
+      
+      {/* Dropdown */}
+      <div className="absolute top-full right-0 mt-1 opacity-0 invisible 
+                      group-hover:opacity-100 group-hover:visible transition-all duration-200 z-30">
+        <div className="bg-[var(--color-surface)] border border-[var(--color-border)] 
+                        rounded-lg shadow-xl p-1 min-w-[140px]">
+          {sortOptions.map((option) => (
+            <button
+              key={option.value}
+              onClick={() => setSortBy(option.value)}
+              className={`
+                w-full flex items-center justify-between gap-2 px-2 py-1.5 rounded-md text-xs
+                transition-colors
+                ${sortBy === option.value 
+                  ? 'bg-primary-500 text-white' 
+                  : 'hover:bg-[var(--color-border)] text-[var(--color-text)]'
+                }
+              `}
+            >
+              <div className="flex items-center gap-1.5">
+                {option.icon}
+                <span>{language === 'fr' ? option.label_fr : option.label_en}</span>
+              </div>
+              {option.direction === 'asc' ? (
+                <ArrowUp className="w-3 h-3" />
+              ) : (
+                <ArrowDown className="w-3 h-3" />
+              )}
+            </button>
+          ))}
         </div>
       </div>
     </div>

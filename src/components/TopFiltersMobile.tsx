@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Sparkles, Settings2, RotateCcw, Plus, Minus } from "lucide-react";
+import { X, Sparkles, Settings2, RotateCcw, Plus, Minus, Eye, EyeOff, Grid2X2, Grid3X3, LayoutGrid } from "lucide-react";
 import { useAppStore } from "../store/useAppStore";
 import { useFlags } from "../hooks/useFlags";
+import { SortSelectorCompact } from "./SortSelector";
 import { FilterButton } from "./FilterButton";
 import { IconFilterButton, ColorButton, MultiColorButton, CommunistButton } from "./IconFilterButton";
 import { ColorModeSelector } from "./ColorModeSelector";
@@ -226,8 +227,12 @@ export function TopFiltersMobile() {
     setFilterNotification,
   } = useAppStore();
 
-  // Single toggle for the entire filter menu
-  const [isMenuExpanded, setIsMenuExpanded] = useState(true);
+  // Single toggle for the entire filter menu - closed by default on mobile
+  const [isMenuExpanded, setIsMenuExpanded] = useState(false);
+  
+  // Get flags count for toolbar
+  const { filteredCount, totalCount } = useFlags(activeFilters, '', 'name_asc');
+  const { showNames, setShowNames, zoomLevel, setZoomLevel } = useAppStore();
 
   const lang = language === 'fr' ? 'title_fr' : 'title_en';
 
@@ -378,44 +383,63 @@ export function TopFiltersMobile() {
 
   return (
     <div className="lg:hidden sticky top-16 z-20 bg-[var(--color-bg)] border-b border-[var(--color-border)]">
-      {/* TOP: Header with Light/Advanced toggle + filter count + clear */}
-      <div className="flex items-center justify-between px-2 py-1.5 border-b border-[var(--color-border)]">
-        {/* Light / Advanced tabs */}
-        <div className="flex rounded-lg bg-[var(--color-surface)] p-0.5">
+      {/* ROW 1: Simple/Advanced tabs + Menu toggle + filter count */}
+      <div className="flex items-center justify-between px-2 py-1">
+        {/* Left: Simple / Advanced tabs + Menu toggle */}
+        <div className="flex items-center gap-1.5">
+          {/* Simple / Advanced tabs */}
+          <div className="flex rounded-md bg-[var(--color-surface)] p-0.5">
+            <button
+              onClick={() => setMenuMode('light')}
+              className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium transition-all
+                ${menuMode === 'light' 
+                  ? 'bg-primary-500 text-white' 
+                  : 'text-[var(--color-text-secondary)]'
+                }`}
+            >
+              <Sparkles className="w-2.5 h-2.5" />
+              {language === 'fr' ? 'Simple' : 'Light'}
+            </button>
+            <button
+              onClick={() => setMenuMode('advanced')}
+              className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium transition-all
+                ${menuMode === 'advanced' 
+                  ? 'bg-primary-500 text-white' 
+                  : 'text-[var(--color-text-secondary)]'
+                }`}
+            >
+              <Settings2 className="w-2.5 h-2.5" />
+              {language === 'fr' ? 'Avancé' : 'Adv'}
+            </button>
+          </div>
+
+          {/* Menu toggle button */}
           <button
-            onClick={() => setMenuMode('light')}
-            className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all
-              ${menuMode === 'light' 
-                ? 'bg-primary-500 text-white shadow-sm' 
-                : 'text-[var(--color-text-secondary)]'
-              }`}
+            onClick={() => setIsMenuExpanded(!isMenuExpanded)}
+            className={`
+              w-5 h-5 rounded-full flex items-center justify-center text-white
+              ${isMenuExpanded ? 'bg-red-500' : 'bg-green-500'}
+            `}
+            aria-label={isMenuExpanded ? "Collapse" : "Expand"}
           >
-            <Sparkles className="w-3 h-3" />
-            Light
-          </button>
-          <button
-            onClick={() => setMenuMode('advanced')}
-            className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all
-              ${menuMode === 'advanced' 
-                ? 'bg-primary-500 text-white shadow-sm' 
-                : 'text-[var(--color-text-secondary)]'
-              }`}
-          >
-            <Settings2 className="w-3 h-3" />
-            {language === 'fr' ? 'Avancé' : 'Advanced'}
+            {isMenuExpanded ? (
+              <Minus className="w-3 h-3" strokeWidth={3} />
+            ) : (
+              <Plus className="w-3 h-3" strokeWidth={3} />
+            )}
           </button>
         </div>
 
-        {/* Right side: filter count + clear */}
+        {/* Right: filter count + clear */}
         <div className="flex items-center gap-1">
           {activeFilters.length > 0 && (
             <>
-              <span className="px-1.5 py-0.5 text-[10px] font-medium bg-primary-500 text-white rounded-full">
+              <span className="px-1 py-0.5 text-[9px] font-medium bg-primary-500 text-white rounded-full min-w-[16px] text-center">
                 {activeFilters.length}
               </span>
               <button
                 onClick={clearFilters}
-                className="p-1 rounded-lg hover:bg-[var(--color-surface)] text-red-500"
+                className="p-0.5 rounded hover:bg-[var(--color-surface)] text-red-500"
                 aria-label="Clear filters"
               >
                 <RotateCcw className="w-3 h-3" />
@@ -423,6 +447,56 @@ export function TopFiltersMobile() {
             </>
           )}
         </div>
+      </div>
+
+      {/* ROW 2: Toolbar - Count + Show names + Size buttons + Sort */}
+      <div className="flex items-center justify-between px-2 py-1 border-t border-[var(--color-border)]/50">
+        {/* Left: Count + Show names */}
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] text-[var(--color-text-secondary)]">
+            <span className="font-semibold text-[var(--color-text)]">{filteredCount}</span>/{totalCount}
+          </span>
+          
+          {/* Show names toggle */}
+          <button
+            onClick={() => setShowNames(!showNames)}
+            className={`
+              p-1 rounded transition-all
+              ${showNames 
+                ? 'bg-primary-500 text-white' 
+                : 'bg-[var(--color-surface)] text-[var(--color-text-secondary)]'
+              }
+            `}
+            title={language === 'fr' ? 'Noms' : 'Names'}
+          >
+            {showNames ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+          </button>
+        </div>
+
+        {/* Center: Size buttons */}
+        <div className="flex items-center gap-0.5 p-0.5 bg-[var(--color-surface)] rounded-md border border-[var(--color-border)]">
+          <button
+            onClick={() => setZoomLevel('small')}
+            className={`p-1 rounded transition-colors ${zoomLevel === 'small' ? 'bg-primary-500/20 text-primary-500' : 'text-[var(--color-text-secondary)]'}`}
+          >
+            <Grid3X3 className="w-3.5 h-3.5" />
+          </button>
+          <button
+            onClick={() => setZoomLevel('medium')}
+            className={`p-1 rounded transition-colors ${zoomLevel === 'medium' ? 'bg-primary-500/20 text-primary-500' : 'text-[var(--color-text-secondary)]'}`}
+          >
+            <Grid2X2 className="w-3.5 h-3.5" />
+          </button>
+          <button
+            onClick={() => setZoomLevel('large')}
+            className={`p-1 rounded transition-colors ${zoomLevel === 'large' ? 'bg-primary-500/20 text-primary-500' : 'text-[var(--color-text-secondary)]'}`}
+          >
+            <LayoutGrid className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
+        {/* Right: Sort */}
+        <SortSelectorCompact />
       </div>
 
       {/* Collapsible filter content - Light Mode */}
@@ -688,32 +762,6 @@ export function TopFiltersMobile() {
         )}
       </AnimatePresence>
 
-      {/* BOTTOM: Small centered toggle button blending into border */}
-      <div className="relative h-0">
-        <div className="absolute left-1/2 -translate-x-1/2 -top-3 z-10">
-          <motion.button
-            whileHover={{ scale: 1.15 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setIsMenuExpanded(!isMenuExpanded)}
-            className={`
-              w-6 h-6 rounded-full flex items-center justify-center
-              shadow-md transition-all duration-200 border-2 border-[var(--color-bg)]
-              focus:outline-none
-              ${isMenuExpanded 
-                ? 'bg-red-500 hover:bg-red-600 text-white' 
-                : 'bg-green-500 hover:bg-green-600 text-white'
-              }
-            `}
-            aria-label={isMenuExpanded ? "Collapse filters" : "Expand filters"}
-          >
-            {isMenuExpanded ? (
-              <Minus className="w-4 h-4" strokeWidth={3} />
-            ) : (
-              <Plus className="w-4 h-4" strokeWidth={3} />
-            )}
-          </motion.button>
-        </div>
-      </div>
     </div>
   );
 }

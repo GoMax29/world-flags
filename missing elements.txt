@@ -316,4 +316,15 @@ JSON structure and comparison logic are adjusted if necessary to fix structural 
 #   - Auto-focus on open
 #   - Search icon highlights when search has text
 
+## FIXED (Session 16):
+# - Compact mobile menu layout:
+#   - Menu closed by default on mobile
+#   - Row 1: Simple/Adv tabs + +/- toggle + filter count + clear
+#   - Row 2: Count + Show names + Size buttons (centered) + Sort
+# - Renamed "Light" to "Simple" in French
+# - Removed "drapeaux" label - just shows x/n count
+# - Moved +/- menu toggle to first row (removed separate bottom row)
+# - Fixed sort icons: SortAsc/SortDesc match arrow direction
+# - Desktop results bar hidden on mobile (uses toolbar instead)
+
 ## ALL COMPLETED
