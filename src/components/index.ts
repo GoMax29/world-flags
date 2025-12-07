@@ -6,12 +6,7 @@ export { FiltersSidebar } from './FiltersSidebar';
 export { TopFiltersMobile } from './TopFiltersMobile';
 export { ZoomSelector } from './ZoomSelector';
 export { Header } from './Header';
-
-
-
-
-
-
-
-
-
+export { SortSelector } from './SortSelector';
+export { LightFiltersSidebar } from './LightFiltersSidebar';
+export { ColorModeSelector } from './ColorModeSelector';
+export { FilterNotification } from './FilterNotification';

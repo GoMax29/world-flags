@@ -5,6 +5,7 @@ import { FiltersSidebar } from './components/FiltersSidebar';
 import { TopFiltersMobile } from './components/TopFiltersMobile';
 import { CountryInfoPanel } from './components/CountryInfoPanel';
 import { ZoomSelector } from './components/ZoomSelector';
+import { FilterNotification } from './components/FilterNotification';
 
 // Create a client
 const queryClient = new QueryClient({
@@ -50,6 +51,9 @@ function App() {
         
         {/* Country Info Panel */}
         <CountryInfoPanel />
+        
+        {/* Filter Notification Popup */}
+        <FilterNotification />
       </div>
     </QueryClientProvider>
   );

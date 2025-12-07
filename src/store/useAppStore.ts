@@ -114,9 +114,13 @@ export const useAppStore = create<AppState>()(
       menuMode: 'light' as MenuMode,
       setMenuMode: (menuMode: MenuMode) => set({ menuMode }),
 
-      // Sorting
-      sortBy: 'alphabetical' as SortOption,
+      // Sorting - default to name ascending
+      sortBy: 'name_asc' as SortOption,
       setSortBy: (sortBy: SortOption) => set({ sortBy }),
+
+      // Show names on flags
+      showNames: false,
+      setShowNames: (showNames: boolean) => set({ showNames }),
 
       // Selected country
       selectedCountry: null as string | null,
@@ -140,6 +144,10 @@ export const useAppStore = create<AppState>()(
       // Mobile filters panel
       isFiltersPanelOpen: false,
       setFiltersPanelOpen: (isFiltersPanelOpen: boolean) => set({ isFiltersPanelOpen }),
+
+      // Filter notification
+      filterNotification: null as string | null,
+      setFilterNotification: (filterNotification: string | null) => set({ filterNotification }),
     }),
     {
       name: 'world-flags-storage',
@@ -148,6 +156,7 @@ export const useAppStore = create<AppState>()(
         language: state.language,
         zoomLevel: state.zoomLevel,
         menuMode: state.menuMode,
+        showNames: state.showNames,
       }),
     }
   )
@@ -165,5 +174,3 @@ if (typeof window !== 'undefined') {
     document.documentElement.classList.add('dark');
   }
 }
-
-

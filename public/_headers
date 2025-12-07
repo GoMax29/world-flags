@@ -1,0 +1,34 @@
+# Headers for PWA cache control - ensures updates are always fetched
+
+# HTML files - never cache, always fetch fresh
+/*.html
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
+/index.html
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
+# Service worker - never cache, always check for updates
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+  Service-Worker-Allowed: /
+
+# Manifest - short cache, check for updates
+/manifest.json
+  Cache-Control: no-cache, no-store, must-revalidate
+
+# JS and CSS with hash in filename - cache for 1 year (hash changes on update)
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Icons and images - cache for 1 week
+/icons/*
+  Cache-Control: public, max-age=604800
+
+# Root - no cache
+/
+  Cache-Control: no-cache, no-store, must-revalidate
+

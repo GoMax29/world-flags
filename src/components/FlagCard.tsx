@@ -10,7 +10,7 @@ interface FlagCardProps {
 }
 
 export function FlagCard({ countryName, countryCode, index }: FlagCardProps) {
-  const { selectedCountry, setSelectedCountry } = useAppStore();
+  const { selectedCountry, setSelectedCountry, showNames } = useAppStore();
   const { t } = useTranslation();
   
   const isSelected = selectedCountry === countryName;
@@ -63,15 +63,29 @@ export function FlagCard({ countryName, countryCode, index }: FlagCardProps) {
           decoding="async"
         />
         
-        {/* Hover Overlay */}
-        <div
-          className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent 
-                     flex items-end justify-center p-1.5 opacity-0 group-hover:opacity-100 transition-opacity"
-        >
-          <span className="text-white text-[10px] sm:text-xs font-medium text-center line-clamp-2 drop-shadow-lg">
-            {t.country(countryName)}
-          </span>
-        </div>
+        {/* Persistent Name Overlay (when showNames is true) */}
+        {showNames && (
+          <div
+            className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent 
+                       flex items-end justify-center p-1.5 pointer-events-none"
+          >
+            <span className="text-white text-[9px] sm:text-[10px] font-medium text-center line-clamp-1 drop-shadow-lg">
+              {t.country(countryName)}
+            </span>
+          </div>
+        )}
+        
+        {/* Hover Overlay (only when showNames is false) */}
+        {!showNames && (
+          <div
+            className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent 
+                       flex items-end justify-center p-1.5 opacity-0 group-hover:opacity-100 transition-opacity"
+          >
+            <span className="text-white text-[10px] sm:text-xs font-medium text-center line-clamp-2 drop-shadow-lg">
+              {t.country(countryName)}
+            </span>
+          </div>
+        )}
         
         {/* Selection Indicator */}
         {isSelected && (

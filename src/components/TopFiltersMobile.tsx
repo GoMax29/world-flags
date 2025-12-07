@@ -1,29 +1,60 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Sparkles, Settings2, RotateCcw, ChevronDown, ChevronUp } from "lucide-react";
+import { X, Sparkles, Settings2, RotateCcw, Plus, Minus } from "lucide-react";
 import { useAppStore } from "../store/useAppStore";
 import { useFlags } from "../hooks/useFlags";
 import { FilterButton } from "./FilterButton";
-import { IconFilterButton, ColorButton, ColorModeToggle, MultiColorButton, CommunistButton } from "./IconFilterButton";
+import { IconFilterButton, ColorButton, MultiColorButton, CommunistButton } from "./IconFilterButton";
+import { ColorModeSelector } from "./ColorModeSelector";
 import { PatternSchemaSelector } from "./PatternSchemaSelector";
 import taxonomy from "../data/taxonomy.json";
 import type { Taxonomy, ActiveFilter } from "../types";
 
 const taxonomyData = taxonomy as Taxonomy;
 
-// Compact mobile filter definitions
+// Filter name translations for notification
+const filterNames: Record<string, { en: string; fr: string }> = {
+  'Africa': { en: 'Africa', fr: 'Afrique' },
+  'Europe': { en: 'Europe', fr: 'Europe' },
+  'North America': { en: 'North America', fr: 'Amérique du Nord' },
+  'South America': { en: 'South America', fr: 'Amérique du Sud' },
+  'Asia': { en: 'Asia', fr: 'Asie' },
+  'Oceania': { en: 'Oceania', fr: 'Océanie' },
+  'central_america': { en: 'Central America', fr: 'Amérique centrale' },
+  'communist': { en: 'Communist', fr: 'Communiste' },
+  'pan_slavic': { en: 'Pan-Slavic', fr: 'Panslave' },
+  'pan_african': { en: 'Pan-African', fr: 'Panafricain' },
+  'pan_arab': { en: 'Pan-Arab', fr: 'Panarabe' },
+  'red': { en: 'Red', fr: 'Rouge' },
+  'blue': { en: 'Blue', fr: 'Bleu' },
+  'yellow': { en: 'Yellow', fr: 'Jaune' },
+  'green': { en: 'Green', fr: 'Vert' },
+  'white': { en: 'White', fr: 'Blanc' },
+  'black': { en: 'Black', fr: 'Noir' },
+  'orange': { en: 'Orange', fr: 'Orange' },
+  'gold': { en: 'Gold', fr: 'Or' },
+  'disk': { en: 'Circle', fr: 'Cercle' },
+  'sun': { en: 'Sun', fr: 'Soleil' },
+  'crescent': { en: 'Crescent', fr: 'Croissant' },
+  'multiple_stars': { en: 'Stars', fr: 'Étoiles' },
+  'eagle': { en: 'Eagle', fr: 'Aigle' },
+  'lion': { en: 'Lion', fr: 'Lion' },
+  'coat_of_arms': { en: 'Coat of Arms', fr: 'Armoiries' },
+};
+
+// Compact mobile filter definitions - updated with text labels
 const mobileFilters = {
   continents: {
     title_en: 'Continents',
     title_fr: 'Continents',
     clickable: false,
     filters: [
-      { id: 'Africa', icon: '🦁', categoryId: 'regions' },
-      { id: 'Europe', icon: '🐮', categoryId: 'regions' },
-      { id: 'North America', icon: '🗽', categoryId: 'regions' },
-      { id: 'South America', icon: '🗿', categoryId: 'regions' },
-      { id: 'Asia', icon: '🐲', categoryId: 'regions' },
-      { id: 'Oceania', icon: '🦘', categoryId: 'regions' },
+      { id: 'Africa', label_en: 'AF', label_fr: 'AF', categoryId: 'regions' },
+      { id: 'Europe', label_en: 'EU', label_fr: 'EU', categoryId: 'regions' },
+      { id: 'North America', label_en: 'N.A', label_fr: 'A.N', categoryId: 'regions' },
+      { id: 'South America', label_en: 'S.A', label_fr: 'A.S', categoryId: 'regions' },
+      { id: 'Asia', label_en: 'AS', label_fr: 'AS', categoryId: 'regions' },
+      { id: 'Oceania', label_en: 'OC', label_fr: 'OC', categoryId: 'regions' },
     ],
   },
   regions: {
@@ -31,9 +62,7 @@ const mobileFilters = {
     title_fr: 'Régions / Cultures',
     clickable: false,
     filters: [
-      { id: 'central_america', icon: '🌴', categoryId: 'culture_regions', type: 'icon' },
-      { id: 'caribbean', icon: '🏝️', categoryId: 'culture_regions', type: 'icon' },
-      { id: 'scandinavia', icon: '❄️', categoryId: 'culture_regions', type: 'icon' },
+      { id: 'central_america', label_en: 'C.A', label_fr: 'A.C', categoryId: 'culture_regions', type: 'text' },
       { id: 'communist', colors: ['#DC2626'], categoryId: 'color_schemes', type: 'communist' },
       { id: 'pan_slavic', colors: ['#2563EB', '#FFFFFF', '#DC2626'], categoryId: 'color_schemes', type: 'multicolor' },
       { id: 'pan_african', colors: ['#DC2626', '#16A34A', '#FCD34D'], categoryId: 'color_schemes', type: 'multicolor' },
@@ -194,8 +223,7 @@ export function TopFiltersMobile() {
     clearFilters,
     menuMode,
     setMenuMode,
-    colorFilterMode,
-    setColorFilterMode,
+    setFilterNotification,
   } = useAppStore();
 
   // Single toggle for the entire filter menu
@@ -209,12 +237,28 @@ export function TopFiltersMobile() {
     );
   };
 
+  // Show filter notification - universal for all filters
+  const showNotification = (filterId: string) => {
+    const filterName = filterNames[filterId];
+    if (filterName) {
+      const name = language === 'fr' ? filterName.fr : filterName.en;
+      setFilterNotification(name);
+      setTimeout(() => setFilterNotification(null), 1000);
+    } else {
+      // Fallback: show the ID formatted nicely
+      const name = filterId.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      setFilterNotification(name);
+      setTimeout(() => setFilterNotification(null), 1000);
+    }
+  };
+
   const handleFilterClick = (categoryId: string, elementId: string) => {
     const filter: ActiveFilter = { categoryId, elementId };
     if (isFilterActive(categoryId, elementId)) {
       removeFilter(filter);
     } else {
       addFilter(filter);
+      showNotification(elementId);
     }
   };
 
@@ -228,31 +272,22 @@ export function TopFiltersMobile() {
     }
   };
 
-  // Exclusive continent handler
+  // Exclusive continent handler - also clears region/culture filters
   const handleExclusiveContinentClick = (elementId: string) => {
     const filter: ActiveFilter = { categoryId: 'regions', elementId };
     if (isFilterActive('regions', elementId)) {
       removeFilter(filter);
     } else {
+      // Clear all continents
       const continentIds = ['Africa', 'North America', 'South America', 'Europe', 'Asia', 'Oceania'];
       continentIds.forEach(id => {
         if (isFilterActive('regions', id)) {
           removeFilter({ categoryId: 'regions', elementId: id });
         }
       });
-      addFilter(filter);
-    }
-  };
-
-  // Exclusive region/culture handler
-  const handleExclusiveRegionClick = (categoryId: string, elementId: string) => {
-    const filter: ActiveFilter = { categoryId, elementId };
-    if (isFilterActive(categoryId, elementId)) {
-      removeFilter(filter);
-    } else {
-      const regionIds = ['central_america', 'caribbean', 'scandinavia'];
+      // Clear all regions/cultures too
+      const regionIds = ['central_america'];
       const colorSchemeIds = ['pan_slavic', 'pan_african', 'pan_arab', 'communist'];
-      
       regionIds.forEach(id => {
         if (isFilterActive('culture_regions', id)) {
           removeFilter({ categoryId: 'culture_regions', elementId: id });
@@ -264,11 +299,55 @@ export function TopFiltersMobile() {
         }
       });
       addFilter(filter);
+      showNotification(elementId);
+    }
+  };
+
+  // Exclusive region/culture handler - also clears continent filters
+  const handleExclusiveRegionClick = (categoryId: string, elementId: string) => {
+    const filter: ActiveFilter = { categoryId, elementId };
+    if (isFilterActive(categoryId, elementId)) {
+      removeFilter(filter);
+    } else {
+      // Clear all continents
+      const continentIds = ['Africa', 'North America', 'South America', 'Europe', 'Asia', 'Oceania'];
+      continentIds.forEach(id => {
+        if (isFilterActive('regions', id)) {
+          removeFilter({ categoryId: 'regions', elementId: id });
+        }
+      });
+      // Clear all regions/cultures
+      const regionIds = ['central_america'];
+      const colorSchemeIds = ['pan_slavic', 'pan_african', 'pan_arab', 'communist'];
+      regionIds.forEach(id => {
+        if (isFilterActive('culture_regions', id)) {
+          removeFilter({ categoryId: 'culture_regions', elementId: id });
+        }
+      });
+      colorSchemeIds.forEach(id => {
+        if (isFilterActive('color_schemes', id)) {
+          removeFilter({ categoryId: 'color_schemes', elementId: id });
+        }
+      });
+      addFilter(filter);
+      showNotification(elementId);
     }
   };
 
   // Render region button based on type
   const renderRegionButton = (filter: typeof mobileFilters.regions.filters[0]) => {
+    if (filter.type === 'text') {
+      return (
+        <TextFilterButton
+          key={filter.id}
+          label={filter[language === 'fr' ? 'label_fr' : 'label_en'] || ''}
+          isActive={isFilterActive(filter.categoryId, filter.id)}
+          onClick={() => handleExclusiveRegionClick(filter.categoryId, filter.id)}
+          size="sm"
+        />
+      );
+    }
+    
     if (filter.type === 'communist') {
       return (
         <CommunistButton
@@ -294,22 +373,13 @@ export function TopFiltersMobile() {
       );
     }
     
-    return (
-      <IconFilterButton
-        key={filter.id}
-        icon={filter.icon || ''}
-        label=""
-        isActive={isFilterActive(filter.categoryId, filter.id)}
-        onClick={() => handleExclusiveRegionClick(filter.categoryId, filter.id)}
-        size="sm"
-      />
-    );
+    return null;
   };
 
   return (
     <div className="lg:hidden sticky top-16 z-20 bg-[var(--color-bg)] border-b border-[var(--color-border)]">
-      {/* Header with Light/Advanced toggle + Expand/Collapse */}
-      <div className="flex items-center justify-between px-2 py-1 border-b border-[var(--color-border)]">
+      {/* TOP: Header with Light/Advanced toggle + filter count + clear */}
+      <div className="flex items-center justify-between px-2 py-1.5 border-b border-[var(--color-border)]">
         {/* Light / Advanced tabs */}
         <div className="flex rounded-lg bg-[var(--color-surface)] p-0.5">
           <button
@@ -336,7 +406,7 @@ export function TopFiltersMobile() {
           </button>
         </div>
 
-        {/* Right side: filter count + clear + expand/collapse toggle */}
+        {/* Right side: filter count + clear */}
         <div className="flex items-center gap-1">
           {activeFilters.length > 0 && (
             <>
@@ -352,13 +422,6 @@ export function TopFiltersMobile() {
               </button>
             </>
           )}
-          <button
-            onClick={() => setIsMenuExpanded(!isMenuExpanded)}
-            className="p-1 rounded-lg bg-[var(--color-surface)] hover:bg-[var(--color-border)]"
-            aria-label={isMenuExpanded ? "Collapse filters" : "Expand filters"}
-          >
-            {isMenuExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-          </button>
         </div>
       </div>
 
@@ -373,16 +436,15 @@ export function TopFiltersMobile() {
             className="overflow-hidden"
           >
             <div className="px-2 py-1.5 space-y-1">
-              {/* Continents */}
+              {/* Continents - Text labels only */}
               <FilterRow 
                 title={mobileFilters.continents[lang]} 
                 clickable={false}
               >
                 {mobileFilters.continents.filters.map((filter) => (
-                  <IconFilterButton
+                  <TextFilterButton
                     key={filter.id}
-                    icon={filter.icon}
-                    label=""
+                    label={filter[language === 'fr' ? 'label_fr' : 'label_en']}
                     isActive={isFilterActive("regions", filter.id)}
                     onClick={() => handleExclusiveContinentClick(filter.id)}
                     size="sm"
@@ -398,7 +460,7 @@ export function TopFiltersMobile() {
                 {mobileFilters.regions.filters.map((filter) => renderRegionButton(filter))}
               </FilterRow>
 
-              {/* Colors */}
+              {/* Colors with 3-button mode selector */}
               <FilterRow 
                 title={mobileFilters.colors[lang]}
                 clickable={false}
@@ -414,11 +476,7 @@ export function TopFiltersMobile() {
                     size="sm"
                   />
                 ))}
-                <ColorModeToggle
-                  mode={colorFilterMode}
-                  onModeChange={setColorFilterMode}
-                  language={language}
-                />
+                <ColorModeSelector />
               </FilterRow>
 
               {/* Shapes | Celestial */}
@@ -629,7 +687,77 @@ export function TopFiltersMobile() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* BOTTOM: Small centered toggle button blending into border */}
+      <div className="relative h-0">
+        <div className="absolute left-1/2 -translate-x-1/2 -top-3 z-10">
+          <motion.button
+            whileHover={{ scale: 1.15 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => setIsMenuExpanded(!isMenuExpanded)}
+            className={`
+              w-6 h-6 rounded-full flex items-center justify-center
+              shadow-md transition-all duration-200 border-2 border-[var(--color-bg)]
+              focus:outline-none
+              ${isMenuExpanded 
+                ? 'bg-red-500 hover:bg-red-600 text-white' 
+                : 'bg-green-500 hover:bg-green-600 text-white'
+              }
+            `}
+            aria-label={isMenuExpanded ? "Collapse filters" : "Expand filters"}
+          >
+            {isMenuExpanded ? (
+              <Minus className="w-4 h-4" strokeWidth={3} />
+            ) : (
+              <Plus className="w-4 h-4" strokeWidth={3} />
+            )}
+          </motion.button>
+        </div>
+      </div>
     </div>
+  );
+}
+
+// Text-based filter button (for continents and regions)
+interface TextFilterButtonProps {
+  label: string;
+  isActive: boolean;
+  isDisabled?: boolean;
+  onClick: () => void;
+  size?: 'sm' | 'md';
+}
+
+function TextFilterButton({
+  label,
+  isActive,
+  isDisabled = false,
+  onClick,
+  size = 'md',
+}: TextFilterButtonProps) {
+  return (
+    <motion.button
+      whileHover={!isDisabled ? { scale: 1.05 } : undefined}
+      whileTap={!isDisabled ? { scale: 0.95 } : undefined}
+      onClick={onClick}
+      disabled={isDisabled}
+      className={`
+        flex items-center justify-center rounded-lg transition-all duration-200
+        border focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-1
+        font-bold
+        ${size === 'sm' ? 'px-2 h-8 text-[10px]' : 'px-3 h-10 text-xs'}
+        ${isActive 
+          ? 'bg-primary-500 border-primary-500 text-white shadow-md' 
+          : !isDisabled 
+            ? 'bg-[var(--color-surface)] border-[var(--color-border)] hover:border-primary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 text-[var(--color-text)]'
+            : 'bg-gray-100 dark:bg-gray-800 border-transparent cursor-not-allowed opacity-40 text-[var(--color-text-secondary)]'
+        }
+      `}
+      aria-pressed={isActive}
+      aria-label={label}
+      title={label}
+    >
+      {label}
+    </motion.button>
   );
 }
 

@@ -1,10 +1,11 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import flagsData from '../data/flags_en.json';
 import translationsData from '../data/translations.json';
 import { FLAG_RATIOS, type AspectRatioCategory } from '../data/flagRatios';
 import taxonomy from '../data/taxonomy.json';
 import type { FlagsData, ActiveFilter, FlagAttribute, Taxonomy, PatternColorFilter } from '../types';
 import { useAppStore } from '../store/useAppStore';
+import { useCountryDataStore } from '../store/countryDataStore';
 
 const flags = flagsData as FlagsData;
 const taxonomyData = taxonomy as Taxonomy;
@@ -894,8 +895,23 @@ function matchesPanColorScheme(countryName: string, schemeId: string): boolean {
   return countries.includes(countryName);
 }
 
-export function useFlags(activeFilters: ActiveFilter[], searchQuery: string, sortBy: string = 'alphabetical') {
-  const { colorFilterMode, patternColorFilter } = useAppStore();
+export function useFlags(activeFilters: ActiveFilter[], searchQuery: string, sortBy: string = 'name_asc') {
+  const { colorFilterMode, patternColorFilter, language } = useAppStore();
+  const { fetchAllCountryData, getPopulation, getArea, isLoaded } = useCountryDataStore();
+
+  // Fetch country data on first use
+  useEffect(() => {
+    fetchAllCountryData();
+  }, [fetchAllCountryData]);
+
+  // Helper to get display name in current language
+  const getDisplayName = (countryName: string): string => {
+    const trans = translations.countries[countryName];
+    if (trans) {
+      return language === 'fr' ? trans.fr : trans.en;
+    }
+    return countryName;
+  };
 
   const filteredFlags = useMemo(() => {
     let result = Object.entries(flags);
@@ -997,40 +1013,55 @@ export function useFlags(activeFilters: ActiveFilter[], searchQuery: string, sor
       );
     }
 
-    // Apply sorting
+    // Apply sorting - language-aware for names, use store data for population/area
     switch (sortBy) {
-      case 'stars_desc':
-        result.sort(([, aData], [, bData]) => {
-          const starsA = countStars(aData.attributes);
-          const starsB = countStars(bData.attributes);
-          return starsB - starsA;
+      case 'name_asc':
+        result.sort(([aName], [bName]) => {
+          const aDisplay = getDisplayName(aName);
+          const bDisplay = getDisplayName(bName);
+          return aDisplay.localeCompare(bDisplay, language === 'fr' ? 'fr' : 'en');
         });
         break;
-      case 'stars_asc':
-        result.sort(([, aData], [, bData]) => {
-          const starsA = countStars(aData.attributes);
-          const starsB = countStars(bData.attributes);
-          return starsA - starsB;
+      case 'name_desc':
+        result.sort(([aName], [bName]) => {
+          const aDisplay = getDisplayName(aName);
+          const bDisplay = getDisplayName(bName);
+          return bDisplay.localeCompare(aDisplay, language === 'fr' ? 'fr' : 'en');
         });
         break;
-      case 'colors_desc':
-        result.sort(([, aData], [, bData]) => {
-          return (bData.color_count || 0) - (aData.color_count || 0);
+      case 'population_desc':
+        // Use data from RestCountries API (fetched via countryDataStore)
+        result.sort(([aName], [bName]) => {
+          return getPopulation(bName) - getPopulation(aName);
         });
         break;
-      case 'colors_asc':
-        result.sort(([, aData], [, bData]) => {
-          return (aData.color_count || 0) - (bData.color_count || 0);
+      case 'population_asc':
+        result.sort(([aName], [bName]) => {
+          return getPopulation(aName) - getPopulation(bName);
         });
         break;
-      case 'alphabetical':
+      case 'area_desc':
+        // Use data from RestCountries API (fetched via countryDataStore)
+        result.sort(([aName], [bName]) => {
+          return getArea(bName) - getArea(aName);
+        });
+        break;
+      case 'area_asc':
+        result.sort(([aName], [bName]) => {
+          return getArea(aName) - getArea(bName);
+        });
+        break;
       default:
-        result.sort(([aName], [bName]) => aName.localeCompare(bName));
+        result.sort(([aName], [bName]) => {
+          const aDisplay = getDisplayName(aName);
+          const bDisplay = getDisplayName(bName);
+          return aDisplay.localeCompare(bDisplay, language === 'fr' ? 'fr' : 'en');
+        });
         break;
     }
 
     return result;
-  }, [activeFilters, searchQuery, sortBy, colorFilterMode, patternColorFilter]);
+  }, [activeFilters, searchQuery, sortBy, colorFilterMode, patternColorFilter, language, getDisplayName, getPopulation, getArea, isLoaded]);
 
   // Get all countries for availability checking
   const allCountries = useMemo(() => Object.entries(flags), []);

@@ -31,6 +31,8 @@ export interface FlagData {
   layout: string;
   attributes: FlagAttribute[];
   band_colors?: string[]; // Explicit band colors in order (1st, 2nd, 3rd band) for triband/biband flags
+  population?: number; // Country population
+  area?: number; // Country area in km²
 }
 
 export interface FlagsData {
@@ -119,8 +121,14 @@ export const ZOOM_CONFIGS: Record<ZoomLevel, ZoomConfig> = {
 // Language
 export type Language = 'en' | 'fr';
 
-// Sort options
-export type SortOption = 'alphabetical' | 'stars_desc' | 'stars_asc' | 'colors_desc' | 'colors_asc';
+// Sort options - Updated: removed stars/colors, added population/area
+export type SortOption = 
+  | 'name_asc' 
+  | 'name_desc' 
+  | 'population_desc' 
+  | 'population_asc' 
+  | 'area_desc' 
+  | 'area_asc';
 
 // App state
 export interface AppState {
@@ -161,6 +169,10 @@ export interface AppState {
   sortBy: SortOption;
   setSortBy: (sort: SortOption) => void;
 
+  // Show names on flags
+  showNames: boolean;
+  setShowNames: (show: boolean) => void;
+
   // Selected country
   selectedCountry: string | null;
   setSelectedCountry: (country: string | null) => void;
@@ -172,6 +184,8 @@ export interface AppState {
   // Mobile filters panel
   isFiltersPanelOpen: boolean;
   setFiltersPanelOpen: (open: boolean) => void;
+
+  // Filter notification (shows filter name for 1 sec)
+  filterNotification: string | null;
+  setFilterNotification: (name: string | null) => void;
 }
-
-

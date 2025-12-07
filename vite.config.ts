@@ -8,6 +8,10 @@ export default defineConfig({
     // Optimize chunk splitting
     rollupOptions: {
       output: {
+        // Ensure unique filenames with content hash for cache busting
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]',
         manualChunks: {
           'vendor-react': ['react', 'react-dom'],
           'vendor-motion': ['framer-motion'],
@@ -25,6 +29,13 @@ export default defineConfig({
   server: {
     port: 5173,
     host: true,
+  },
+  // Preview server headers (for testing builds locally)
+  preview: {
+    headers: {
+      // Don't cache HTML - always fetch fresh
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+    },
   },
   // Enable JSON imports
   json: {

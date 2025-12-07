@@ -1,9 +1,9 @@
-import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { RotateCcw, X, ChevronUp, ChevronDown } from 'lucide-react';
+import { RotateCcw, X } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
 import { useFlags } from '../hooks/useFlags';
-import { IconFilterButton, ColorButton, ColorModeToggle, MultiColorButton, CommunistButton } from './IconFilterButton';
+import { IconFilterButton, ColorButton, MultiColorButton, CommunistButton } from './IconFilterButton';
+import { ColorModeSelector } from './ColorModeSelector';
 import { PatternSchemaSelector } from './PatternSchemaSelector';
 import type { ActiveFilter } from '../types';
 
@@ -14,12 +14,12 @@ const filterCategories = {
     title_fr: 'Continents',
     clickable: false,
     filters: [
-      { id: 'Africa', icon: '🦁', label_en: 'AF', label_fr: 'AF', categoryId: 'regions' },
-      { id: 'Europe', icon: '🐮', label_en: 'EU', label_fr: 'EU', categoryId: 'regions' },
-      { id: 'North America', icon: '🗽', label_en: 'N-A', label_fr: 'N-A', categoryId: 'regions' },
-      { id: 'South America', icon: '🗿', label_en: 'S-A', label_fr: 'S-A', categoryId: 'regions' },
-      { id: 'Asia', icon: '🐲', label_en: 'AS', label_fr: 'AS', categoryId: 'regions' },
-      { id: 'Oceania', icon: '🦘', label_en: 'OC', label_fr: 'OC', categoryId: 'regions' },
+      { id: 'Africa', label_en: 'AF', label_fr: 'AF', categoryId: 'regions' },
+      { id: 'Europe', label_en: 'EU', label_fr: 'EU', categoryId: 'regions' },
+      { id: 'North America', label_en: 'N.A', label_fr: 'A.N', categoryId: 'regions' },
+      { id: 'South America', label_en: 'S.A', label_fr: 'A.S', categoryId: 'regions' },
+      { id: 'Asia', label_en: 'AS', label_fr: 'AS', categoryId: 'regions' },
+      { id: 'Oceania', label_en: 'OC', label_fr: 'OC', categoryId: 'regions' },
     ],
   },
   regions: {
@@ -27,9 +27,7 @@ const filterCategories = {
     title_fr: 'Régions / Cultures',
     clickable: false,
     filters: [
-      { id: 'central_america', icon: '🌴', categoryId: 'culture_regions', type: 'icon' },
-      { id: 'caribbean', icon: '🏝️', categoryId: 'culture_regions', type: 'icon' },
-      { id: 'scandinavia', icon: '❄️', categoryId: 'culture_regions', type: 'icon' },
+      { id: 'central_america', label_en: 'C.A', label_fr: 'A.C', categoryId: 'culture_regions', type: 'text' },
       { id: 'communist', colors: ['#DC2626'], categoryId: 'color_schemes', type: 'communist' },
       { id: 'pan_slavic', colors: ['#2563EB', '#FFFFFF', '#DC2626'], categoryId: 'color_schemes', type: 'multicolor' },
       { id: 'pan_african', colors: ['#DC2626', '#16A34A', '#FCD34D'], categoryId: 'color_schemes', type: 'multicolor' },
@@ -175,6 +173,63 @@ const filterCategories = {
   },
 };
 
+// Filter name translations for notification
+const filterNames: Record<string, { en: string; fr: string }> = {
+  'Africa': { en: 'Africa', fr: 'Afrique' },
+  'Europe': { en: 'Europe', fr: 'Europe' },
+  'North America': { en: 'North America', fr: 'Amérique du Nord' },
+  'South America': { en: 'South America', fr: 'Amérique du Sud' },
+  'Asia': { en: 'Asia', fr: 'Asie' },
+  'Oceania': { en: 'Oceania', fr: 'Océanie' },
+  'central_america': { en: 'Central America', fr: 'Amérique centrale' },
+  'communist': { en: 'Communist', fr: 'Communiste' },
+  'pan_slavic': { en: 'Pan-Slavic', fr: 'Panslave' },
+  'pan_african': { en: 'Pan-African', fr: 'Panafricain' },
+  'pan_arab': { en: 'Pan-Arab', fr: 'Panarabe' },
+  'red': { en: 'Red', fr: 'Rouge' },
+  'blue': { en: 'Blue', fr: 'Bleu' },
+  'yellow': { en: 'Yellow', fr: 'Jaune' },
+  'green': { en: 'Green', fr: 'Vert' },
+  'white': { en: 'White', fr: 'Blanc' },
+  'black': { en: 'Black', fr: 'Noir' },
+  'orange': { en: 'Orange', fr: 'Orange' },
+  'gold': { en: 'Gold', fr: 'Or' },
+  'disk': { en: 'Circle', fr: 'Cercle' },
+  'rectangle': { en: 'Rectangle', fr: 'Rectangle' },
+  'triangle': { en: 'Triangle', fr: 'Triangle' },
+  'diamond': { en: 'Diamond', fr: 'Losange' },
+  'sun': { en: 'Sun', fr: 'Soleil' },
+  'crescent': { en: 'Crescent', fr: 'Croissant' },
+  'multiple_stars': { en: 'Stars', fr: 'Étoiles' },
+  'eagle': { en: 'Eagle', fr: 'Aigle' },
+  'birds': { en: 'Birds', fr: 'Oiseaux' },
+  'lion': { en: 'Lion', fr: 'Lion' },
+  'horse': { en: 'Horse', fr: 'Cheval' },
+  'dragon': { en: 'Dragon', fr: 'Dragon' },
+  'trees': { en: 'Trees', fr: 'Arbres' },
+  'leaves_flowers': { en: 'Leaves & Flowers', fr: 'Feuilles & Fleurs' },
+  'mountain': { en: 'Mountain', fr: 'Montagne' },
+  'sea': { en: 'Sea', fr: 'Mer' },
+  'rainbow': { en: 'Rainbow', fr: 'Arc-en-ciel' },
+  'buildings': { en: 'Buildings', fr: 'Bâtiments' },
+  'castle': { en: 'Castle', fr: 'Château' },
+  'mosque': { en: 'Mosque', fr: 'Mosquée' },
+  'christian_cross': { en: 'Christian Cross', fr: 'Croix chrétienne' },
+  'crescent_star': { en: 'Crescent & Star', fr: 'Croissant & Étoile' },
+  'coat_of_arms': { en: 'Coat of Arms', fr: 'Armoiries' },
+  'crown': { en: 'Crown', fr: 'Couronne' },
+  'motto': { en: 'Motto', fr: 'Devise' },
+  'text': { en: 'Text', fr: 'Texte' },
+  'sword': { en: 'Sword', fr: 'Épée' },
+  'rifle': { en: 'Rifle', fr: 'Fusil' },
+  'spear': { en: 'Spear', fr: 'Lance' },
+  'cannon': { en: 'Cannon', fr: 'Canon' },
+  'human_figure': { en: 'Human Figure', fr: 'Figure humaine' },
+  'hands': { en: 'Hands', fr: 'Mains' },
+  'phrygian_cap': { en: 'Phrygian Cap', fr: 'Bonnet phrygien' },
+  'local_symbols': { en: 'Local Symbols', fr: 'Symboles locaux' },
+};
+
 export function LightFiltersSidebar() {
   const {
     language,
@@ -182,13 +237,9 @@ export function LightFiltersSidebar() {
     addFilter,
     removeFilter,
     clearFilters,
-    colorFilterMode,
-    setColorFilterMode,
+    setFilterNotification,
   } = useAppStore();
   const { getAvailableFilters } = useFlags(activeFilters, '');
-
-  // Single toggle for the entire filter panel
-  const [isExpanded, setIsExpanded] = useState(true);
 
   const lang = language === 'fr' ? 'title_fr' : 'title_en';
 
@@ -198,12 +249,28 @@ export function LightFiltersSidebar() {
     );
   };
 
+  // Show filter notification - universal for all filters
+  const showNotification = (filterId: string) => {
+    const filterName = filterNames[filterId];
+    if (filterName) {
+      const name = language === 'fr' ? filterName.fr : filterName.en;
+      setFilterNotification(name);
+      setTimeout(() => setFilterNotification(null), 1000);
+    } else {
+      // Fallback: show the ID formatted nicely
+      const name = filterId.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      setFilterNotification(name);
+      setTimeout(() => setFilterNotification(null), 1000);
+    }
+  };
+
   const handleFilterClick = (categoryId: string, elementId: string) => {
     const filter: ActiveFilter = { categoryId, elementId };
     if (isFilterActive(categoryId, elementId)) {
       removeFilter(filter);
     } else {
       addFilter(filter);
+      showNotification(elementId);
     }
   };
 
@@ -214,34 +281,26 @@ export function LightFiltersSidebar() {
       removeFilter(filter);
     } else {
       addFilter(filter);
+      showNotification(mainCategory);
     }
   };
 
-  // Exclusive continent handler
+  // Exclusive continent handler - also clears region/culture filters
   const handleExclusiveContinentClick = (categoryId: string, elementId: string) => {
     const filter: ActiveFilter = { categoryId, elementId };
     if (isFilterActive(categoryId, elementId)) {
       removeFilter(filter);
     } else {
+      // Clear all continents
       const continentIds = ['Africa', 'North America', 'South America', 'Europe', 'Asia', 'Oceania'];
       continentIds.forEach(id => {
         if (isFilterActive('regions', id)) {
           removeFilter({ categoryId: 'regions', elementId: id });
         }
       });
-      addFilter(filter);
-    }
-  };
-
-  // Exclusive region/culture handler
-  const handleExclusiveRegionClick = (categoryId: string, elementId: string) => {
-    const filter: ActiveFilter = { categoryId, elementId };
-    if (isFilterActive(categoryId, elementId)) {
-      removeFilter(filter);
-    } else {
-      const regionIds = ['central_america', 'caribbean', 'scandinavia'];
+      // Clear all regions/cultures too
+      const regionIds = ['central_america'];
       const colorSchemeIds = ['pan_slavic', 'pan_african', 'pan_arab', 'communist'];
-      
       regionIds.forEach(id => {
         if (isFilterActive('culture_regions', id)) {
           removeFilter({ categoryId: 'culture_regions', elementId: id });
@@ -253,11 +312,43 @@ export function LightFiltersSidebar() {
         }
       });
       addFilter(filter);
+      showNotification(elementId);
+    }
+  };
+
+  // Exclusive region/culture handler - also clears continent filters
+  const handleExclusiveRegionClick = (categoryId: string, elementId: string) => {
+    const filter: ActiveFilter = { categoryId, elementId };
+    if (isFilterActive(categoryId, elementId)) {
+      removeFilter(filter);
+    } else {
+      // Clear all continents
+      const continentIds = ['Africa', 'North America', 'South America', 'Europe', 'Asia', 'Oceania'];
+      continentIds.forEach(id => {
+        if (isFilterActive('regions', id)) {
+          removeFilter({ categoryId: 'regions', elementId: id });
+        }
+      });
+      // Clear all regions/cultures
+      const regionIds = ['central_america'];
+      const colorSchemeIds = ['pan_slavic', 'pan_african', 'pan_arab', 'communist'];
+      regionIds.forEach(id => {
+        if (isFilterActive('culture_regions', id)) {
+          removeFilter({ categoryId: 'culture_regions', elementId: id });
+        }
+      });
+      colorSchemeIds.forEach(id => {
+        if (isFilterActive('color_schemes', id)) {
+          removeFilter({ categoryId: 'color_schemes', elementId: id });
+        }
+      });
+      addFilter(filter);
+      showNotification(elementId);
     }
   };
 
   return (
-    <div className="h-full overflow-y-auto custom-scrollbar pb-4 px-2">
+    <div className="h-full overflow-y-auto custom-scrollbar pb-4 px-2 flex flex-col">
       {/* Active filters badge */}
       <AnimatePresence>
         {activeFilters.length > 0 && (
@@ -297,278 +388,296 @@ export function LightFiltersSidebar() {
         )}
       </AnimatePresence>
 
-      {/* Collapse/Expand toggle for entire menu */}
-      <button
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between py-1.5 px-2 mb-2 rounded-lg bg-[var(--color-surface)] hover:bg-[var(--color-border)] transition-colors"
-      >
-        <span className="text-xs font-medium text-[var(--color-text)]">
-          {isExpanded 
-            ? (language === 'fr' ? '▼ Masquer' : '▼ Hide')
-            : (language === 'fr' ? '▶ Afficher' : '▶ Show')
-          }
-        </span>
-        {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-      </button>
-
-      <AnimatePresence>
-        {isExpanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="overflow-hidden space-y-1.5"
-          >
-            {/* Continents */}
-            <FilterRow 
-              title={filterCategories.continents[lang]}
-              clickable={false}
-            >
-              {filterCategories.continents.filters.map((filter) => (
-                <IconFilterButton
-                  key={filter.id}
-                  icon={filter.icon}
-                  label={filter[language === 'fr' ? 'label_fr' : 'label_en']}
-                  isActive={isFilterActive(filter.categoryId, filter.id)}
-                  isDisabled={!isFilterActive(filter.categoryId, filter.id) && !getAvailableFilters(filter.categoryId, filter.id)}
-                  onClick={() => handleExclusiveContinentClick(filter.categoryId, filter.id)}
-                  size="sm"
-                />
-              ))}
-            </FilterRow>
-
-            {/* Regions/Cultures */}
-            <FilterRow 
-              title={filterCategories.regions[lang]}
-              clickable={false}
-            >
-              {filterCategories.regions.filters.map((filter) => {
-                const filterWithType = filter as typeof filter & { type?: string; colors?: string[] };
-                
-                if (filterWithType.type === 'communist') {
-                  return (
-                    <CommunistButton
-                      key={filter.id}
-                      label=""
-                      isActive={isFilterActive(filter.categoryId, filter.id)}
-                      onClick={() => handleExclusiveRegionClick(filter.categoryId, filter.id)}
-                      size="sm"
-                    />
-                  );
-                }
-                
-                if (filterWithType.type === 'multicolor' && filterWithType.colors) {
-                  return (
-                    <MultiColorButton
-                      key={filter.id}
-                      colors={filterWithType.colors}
-                      label=""
-                      isActive={isFilterActive(filter.categoryId, filter.id)}
-                      onClick={() => handleExclusiveRegionClick(filter.categoryId, filter.id)}
-                      size="sm"
-                    />
-                  );
-                }
-                
-                return (
-                  <IconFilterButton
+      {/* Main content */}
+      <div className="space-y-1.5">
+              {/* Continents - Text labels only, no emojis */}
+              <FilterRow 
+                title={filterCategories.continents[lang]}
+                clickable={false}
+              >
+                {filterCategories.continents.filters.map((filter) => (
+                  <TextFilterButton
                     key={filter.id}
-                    icon={(filter as typeof filter & { icon: string }).icon}
-                    label=""
+                    label={filter[language === 'fr' ? 'label_fr' : 'label_en']}
                     isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleExclusiveRegionClick(filter.categoryId, filter.id)}
+                    isDisabled={!isFilterActive(filter.categoryId, filter.id) && !getAvailableFilters(filter.categoryId, filter.id)}
+                    onClick={() => handleExclusiveContinentClick(filter.categoryId, filter.id)}
                     size="sm"
                   />
-                );
-              })}
-            </FilterRow>
+                ))}
+              </FilterRow>
 
-            {/* Colors */}
-            <FilterRow 
-              title={filterCategories.colors[lang]}
-              clickable={false}
-            >
-              {filterCategories.colors.filters.map((filter) => (
-                <ColorButton
-                  key={filter.id}
-                  color={filter.id}
-                  colorHex={filter.hex!}
-                  label=""
-                  isActive={isFilterActive(filter.categoryId, filter.id)}
-                  isDisabled={!isFilterActive(filter.categoryId, filter.id) && !getAvailableFilters(filter.categoryId, filter.id)}
-                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                  size="sm"
-                />
-              ))}
-              <ColorModeToggle
-                mode={colorFilterMode}
-                onModeChange={setColorFilterMode}
-                language={language}
-              />
-            </FilterRow>
+              {/* Regions/Cultures - removed Nordic and Caribbean */}
+              <FilterRow 
+                title={filterCategories.regions[lang]}
+                clickable={false}
+              >
+                {filterCategories.regions.filters.map((filter) => {
+                  const filterWithType = filter as typeof filter & { type?: string; colors?: string[]; label_en?: string; label_fr?: string };
+                  
+                  if (filterWithType.type === 'text') {
+                    return (
+                      <TextFilterButton
+                        key={filter.id}
+                        label={filterWithType[language === 'fr' ? 'label_fr' : 'label_en'] || ''}
+                        isActive={isFilterActive(filter.categoryId, filter.id)}
+                        onClick={() => handleExclusiveRegionClick(filter.categoryId, filter.id)}
+                        size="sm"
+                      />
+                    );
+                  }
+                  
+                  if (filterWithType.type === 'communist') {
+                    return (
+                      <CommunistButton
+                        key={filter.id}
+                        label=""
+                        isActive={isFilterActive(filter.categoryId, filter.id)}
+                        onClick={() => handleExclusiveRegionClick(filter.categoryId, filter.id)}
+                        size="sm"
+                      />
+                    );
+                  }
+                  
+                  if (filterWithType.type === 'multicolor' && filterWithType.colors) {
+                    return (
+                      <MultiColorButton
+                        key={filter.id}
+                        colors={filterWithType.colors}
+                        label=""
+                        isActive={isFilterActive(filter.categoryId, filter.id)}
+                        onClick={() => handleExclusiveRegionClick(filter.categoryId, filter.id)}
+                        size="sm"
+                      />
+                    );
+                  }
+                  
+                  return null;
+                })}
+              </FilterRow>
 
-            {/* Layout/Disposition */}
-            <FilterRow 
-              title={language === 'fr' ? 'Disposition' : 'Layout'}
-              clickable={false}
-            >
-              <div className="flex-1">
-                <PatternSchemaSelector compact />
-              </div>
-            </FilterRow>
+              {/* Colors with 3-button mode selector */}
+              <FilterRow 
+                title={filterCategories.colors[lang]}
+                clickable={false}
+              >
+                {filterCategories.colors.filters.map((filter) => (
+                  <ColorButton
+                    key={filter.id}
+                    color={filter.id}
+                    colorHex={filter.hex!}
+                    label=""
+                    isActive={isFilterActive(filter.categoryId, filter.id)}
+                    isDisabled={!isFilterActive(filter.categoryId, filter.id) && !getAvailableFilters(filter.categoryId, filter.id)}
+                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    size="sm"
+                  />
+                ))}
+                <ColorModeSelector />
+              </FilterRow>
 
-            {/* Shapes | Celestial */}
-            <FilterRow 
-              title={`${filterCategories.shapes[lang]} | ${filterCategories.celestial[lang]}`}
-              clickable={false}
-            >
-              {filterCategories.shapes.filters.map((filter) => (
-                <IconFilterButton
-                  key={filter.id}
-                  icon={filter.icon}
-                  label=""
-                  isActive={isFilterActive(filter.categoryId, filter.id)}
-                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                  size="sm"
-                />
-              ))}
-              <Separator />
-              {filterCategories.celestial.filters.map((filter) => (
-                <IconFilterButton
-                  key={filter.id}
-                  icon={filter.icon}
-                  label=""
-                  isActive={isFilterActive(filter.categoryId, filter.id)}
-                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                  size="sm"
-                />
-              ))}
-            </FilterRow>
+              {/* Layout/Disposition */}
+              <FilterRow 
+                title={language === 'fr' ? 'Disposition' : 'Layout'}
+                clickable={false}
+              >
+                <div className="flex-1">
+                  <PatternSchemaSelector compact />
+                </div>
+              </FilterRow>
 
-            {/* Animals | Nature */}
-            <FilterRow 
-              title={`${filterCategories.animals[lang]} | ${filterCategories.nature[lang]}`}
-              clickable={true}
-              mainCategory="animals"
-              onCategoryClick={handleCategoryClick}
-              isActive={isFilterActive('main_category', 'animals')}
-            >
-              {filterCategories.animals.filters.map((filter) => (
-                <IconFilterButton
-                  key={filter.id}
-                  icon={filter.icon}
-                  label=""
-                  isActive={isFilterActive(filter.categoryId, filter.id)}
-                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                  size="sm"
-                />
-              ))}
-              <Separator />
-              {filterCategories.nature.filters.map((filter) => (
-                <IconFilterButton
-                  key={filter.id}
-                  icon={filter.icon}
-                  label=""
-                  isActive={isFilterActive(filter.categoryId, filter.id)}
-                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                  size="sm"
-                />
-              ))}
-            </FilterRow>
+              {/* Shapes | Celestial */}
+              <FilterRow 
+                title={`${filterCategories.shapes[lang]} | ${filterCategories.celestial[lang]}`}
+                clickable={false}
+              >
+                {filterCategories.shapes.filters.map((filter) => (
+                  <IconFilterButton
+                    key={filter.id}
+                    icon={filter.icon}
+                    label=""
+                    isActive={isFilterActive(filter.categoryId, filter.id)}
+                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    size="sm"
+                  />
+                ))}
+                <Separator />
+                {filterCategories.celestial.filters.map((filter) => (
+                  <IconFilterButton
+                    key={filter.id}
+                    icon={filter.icon}
+                    label=""
+                    isActive={isFilterActive(filter.categoryId, filter.id)}
+                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    size="sm"
+                  />
+                ))}
+              </FilterRow>
 
-            {/* Buildings | Religious | Heraldry */}
-            <FilterRow 
-              title={`${filterCategories.buildings[lang]} | ${filterCategories.religious[lang]} | ${filterCategories.heraldry[lang]}`}
-              clickable={false}
-            >
-              {filterCategories.buildings.filters.map((filter) => (
-                <IconFilterButton
-                  key={filter.id}
-                  icon={filter.icon}
-                  label=""
-                  isActive={isFilterActive(filter.categoryId, filter.id)}
-                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                  size="sm"
-                />
-              ))}
-              <Separator />
-              {filterCategories.religious.filters.map((filter) => (
-                <IconFilterButton
-                  key={filter.id}
-                  icon={filter.icon}
-                  label=""
-                  isActive={isFilterActive(filter.categoryId, filter.id)}
-                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                  size="sm"
-                />
-              ))}
-              <Separator />
-              {filterCategories.heraldry.filters.map((filter) => (
-                <IconFilterButton
-                  key={filter.id}
-                  icon={filter.icon}
-                  label=""
-                  isActive={isFilterActive(filter.categoryId, filter.id)}
-                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                  size="sm"
-                />
-              ))}
-            </FilterRow>
+              {/* Animals | Nature */}
+              <FilterRow 
+                title={`${filterCategories.animals[lang]} | ${filterCategories.nature[lang]}`}
+                clickable={true}
+                mainCategory="animals"
+                onCategoryClick={handleCategoryClick}
+                isActive={isFilterActive('main_category', 'animals')}
+              >
+                {filterCategories.animals.filters.map((filter) => (
+                  <IconFilterButton
+                    key={filter.id}
+                    icon={filter.icon}
+                    label=""
+                    isActive={isFilterActive(filter.categoryId, filter.id)}
+                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    size="sm"
+                  />
+                ))}
+                <Separator />
+                {filterCategories.nature.filters.map((filter) => (
+                  <IconFilterButton
+                    key={filter.id}
+                    icon={filter.icon}
+                    label=""
+                    isActive={isFilterActive(filter.categoryId, filter.id)}
+                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    size="sm"
+                  />
+                ))}
+              </FilterRow>
 
-            {/* Weapons | Humans | Inscriptions | Local */}
-            <FilterRow 
-              title={`${filterCategories.weapons[lang]} | ${filterCategories.humans[lang]} | ${filterCategories.inscriptions[lang]} | ${filterCategories.localSymbols[lang]}`}
-              clickable={false}
-            >
-              {filterCategories.weapons.filters.map((filter) => (
-                <IconFilterButton
-                  key={filter.id}
-                  icon={filter.icon}
-                  label=""
-                  isActive={isFilterActive(filter.categoryId, filter.id)}
-                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                  size="sm"
-                />
-              ))}
-              <Separator />
-              {filterCategories.humans.filters.map((filter) => (
-                <IconFilterButton
-                  key={filter.id}
-                  icon={filter.icon}
-                  label=""
-                  isActive={isFilterActive(filter.categoryId, filter.id)}
-                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                  size="sm"
-                />
-              ))}
-              <Separator />
-              {filterCategories.inscriptions.filters.map((filter) => (
-                <IconFilterButton
-                  key={filter.id}
-                  icon={filter.icon}
-                  label=""
-                  isActive={isFilterActive(filter.categoryId, filter.id)}
-                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                  size="sm"
-                />
-              ))}
-              <Separator />
-              {filterCategories.localSymbols.filters.map((filter) => (
-                <IconFilterButton
-                  key={filter.id}
-                  icon={filter.icon}
-                  label=""
-                  isActive={isFilterActive(filter.categoryId, filter.id)}
-                  onClick={() => handleFilterClick(filter.categoryId, filter.id)}
-                  size="sm"
-                />
-              ))}
-            </FilterRow>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              {/* Buildings | Religious | Heraldry */}
+              <FilterRow 
+                title={`${filterCategories.buildings[lang]} | ${filterCategories.religious[lang]} | ${filterCategories.heraldry[lang]}`}
+                clickable={false}
+              >
+                {filterCategories.buildings.filters.map((filter) => (
+                  <IconFilterButton
+                    key={filter.id}
+                    icon={filter.icon}
+                    label=""
+                    isActive={isFilterActive(filter.categoryId, filter.id)}
+                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    size="sm"
+                  />
+                ))}
+                <Separator />
+                {filterCategories.religious.filters.map((filter) => (
+                  <IconFilterButton
+                    key={filter.id}
+                    icon={filter.icon}
+                    label=""
+                    isActive={isFilterActive(filter.categoryId, filter.id)}
+                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    size="sm"
+                  />
+                ))}
+                <Separator />
+                {filterCategories.heraldry.filters.map((filter) => (
+                  <IconFilterButton
+                    key={filter.id}
+                    icon={filter.icon}
+                    label=""
+                    isActive={isFilterActive(filter.categoryId, filter.id)}
+                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    size="sm"
+                  />
+                ))}
+              </FilterRow>
+
+              {/* Weapons | Humans | Inscriptions | Local */}
+              <FilterRow 
+                title={`${filterCategories.weapons[lang]} | ${filterCategories.humans[lang]} | ${filterCategories.inscriptions[lang]} | ${filterCategories.localSymbols[lang]}`}
+                clickable={false}
+              >
+                {filterCategories.weapons.filters.map((filter) => (
+                  <IconFilterButton
+                    key={filter.id}
+                    icon={filter.icon}
+                    label=""
+                    isActive={isFilterActive(filter.categoryId, filter.id)}
+                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    size="sm"
+                  />
+                ))}
+                <Separator />
+                {filterCategories.humans.filters.map((filter) => (
+                  <IconFilterButton
+                    key={filter.id}
+                    icon={filter.icon}
+                    label=""
+                    isActive={isFilterActive(filter.categoryId, filter.id)}
+                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    size="sm"
+                  />
+                ))}
+                <Separator />
+                {filterCategories.inscriptions.filters.map((filter) => (
+                  <IconFilterButton
+                    key={filter.id}
+                    icon={filter.icon}
+                    label=""
+                    isActive={isFilterActive(filter.categoryId, filter.id)}
+                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    size="sm"
+                  />
+                ))}
+                <Separator />
+                {filterCategories.localSymbols.filters.map((filter) => (
+                  <IconFilterButton
+                    key={filter.id}
+                    icon={filter.icon}
+                    label=""
+                    isActive={isFilterActive(filter.categoryId, filter.id)}
+                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    size="sm"
+                  />
+                ))}
+              </FilterRow>
+      </div>
     </div>
+  );
+}
+
+// Text-based filter button (for continents and regions)
+interface TextFilterButtonProps {
+  label: string;
+  isActive: boolean;
+  isDisabled?: boolean;
+  onClick: () => void;
+  size?: 'sm' | 'md';
+}
+
+function TextFilterButton({
+  label,
+  isActive,
+  isDisabled = false,
+  onClick,
+  size = 'md',
+}: TextFilterButtonProps) {
+  return (
+    <motion.button
+      whileHover={!isDisabled ? { scale: 1.05 } : undefined}
+      whileTap={!isDisabled ? { scale: 0.95 } : undefined}
+      onClick={onClick}
+      disabled={isDisabled}
+      className={`
+        flex items-center justify-center rounded-lg transition-all duration-200
+        border focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-1
+        font-bold
+        ${size === 'sm' ? 'px-2 h-8 text-[10px]' : 'px-3 h-10 text-xs'}
+        ${isActive 
+          ? 'bg-primary-500 border-primary-500 text-white shadow-md' 
+          : !isDisabled 
+            ? 'bg-[var(--color-surface)] border-[var(--color-border)] hover:border-primary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 text-[var(--color-text)]'
+            : 'bg-gray-100 dark:bg-gray-800 border-transparent cursor-not-allowed opacity-40 text-[var(--color-text-secondary)]'
+        }
+      `}
+      aria-pressed={isActive}
+      aria-label={label}
+      title={label}
+    >
+      {label}
+    </motion.button>
   );
 }
 

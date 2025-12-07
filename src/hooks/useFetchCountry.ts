@@ -106,15 +106,46 @@ export function useFetchCountry(countryName: string | null) {
   });
 }
 
-// Utility function to format numbers
+// Utility function to format numbers with smart formatting
+// Billions → 2 decimals, Millions → 2 decimals, Otherwise → integer with space separator
 export function formatNumber(num: number, locale: string = 'fr-FR'): string {
-  return new Intl.NumberFormat(locale).format(num);
+  const isFr = locale.startsWith('fr');
+  
+  if (num >= 1_000_000_000) {
+    // Billions
+    const value = num / 1_000_000_000;
+    const formatted = value.toFixed(2).replace('.', isFr ? ',' : '.');
+    return `${formatted} ${isFr ? 'Mrd' : 'B'}`;
+  } else if (num >= 1_000_000) {
+    // Millions
+    const value = num / 1_000_000;
+    const formatted = value.toFixed(2).replace('.', isFr ? ',' : '.');
+    return `${formatted} M`;
+  } else {
+    // Regular number with space as thousand separator
+    return num.toLocaleString(locale).replace(/,/g, ' ').replace(/\./g, ' ');
+  }
 }
 
-// Utility function to format area
+// Utility function to format area with smart formatting
 export function formatArea(area: number, locale: string = 'fr-FR'): string {
-  return `${formatNumber(area, locale)} km²`;
+  const isFr = locale.startsWith('fr');
+  
+  if (area >= 1_000_000) {
+    // Millions km²
+    const value = area / 1_000_000;
+    const formatted = value.toFixed(2).replace('.', isFr ? ',' : '.');
+    return `${formatted} M km²`;
+  } else {
+    // Regular number with space separator
+    const formatted = area.toLocaleString(locale).replace(/,/g, ' ').replace(/\./g, ' ');
+    return `${formatted} km²`;
+  }
 }
+
+
+
+
 
 
 

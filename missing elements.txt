@@ -186,3 +186,75 @@ Updated comparison logic correctly filters flags in all band configurations.
 UI interactions behave correctly on desktop and mobile.
 
 JSON structure and comparison logic are adjusted if necessary to fix structural problems.
+
+## FIXED (Session 8):
+# - Sorting tool: now shows ascending/descending arrows (↑/↓) next to sort options
+# - Sort by name: now properly uses French translation for French mode (Allemagne sorts alphabetically by "A")
+# - Removed sort by stars and colors
+# - Added sort by population and area (ascending and descending)
+# - Added "Show Names" toggle button near sorting tool - displays country name below flag like hover
+# - Continent labels changed from emojis to text abbreviations:
+#   - English: EU, N.A, S.A, AS, AF, OC
+#   - French: EU, A.N, A.S, AS, AF, OC
+# - Removed "Pays Nordique" (Nordic Countries) button from Regions/Cultures
+# - Removed Caribbean button from Regions/Cultures
+# - Central America now shows as "C.A" (English) / "A.C" (French) instead of palm tree emoji
+# - Color filter mode: 3 exclusive buttons with tooltips:
+#   - OR/OU: "Show flags with ANY of the selected colors (union)"
+#   - AND/ET: "Show flags with ONLY these colors (exact match)"
+#   - NOT/NON: "Exclude flags with ANY of these colors"
+# - Filter notification: when clicking a filter, full name appears in center of screen for 1 second
+# - Mobile toggle button moved to BOTTOM of menu with +/- characters
+# - Flag image in CountryInfoPanel modal enlarged (now takes ~85% viewport width, max 680px)
+
+## FIXED (Session 9):
+# - Removed "Masquer/Afficher" (Hide/Show) toggle button from desktop sidebar
+# - Mobile toggle button: smaller (w-6 h-6), blends into bottom border, centered
+# - Mobile toggle button: red for collapse (-), green for expand (+)
+# - Light/Advanced menu tabs remain at TOP on mobile (not moved to bottom)
+# - Color filter mode: re-added 🔓 🔒 🚫 emojis with hover tooltips:
+#   - 🔓 OR/OU: "Flags containing these colors (among others)"
+#   - 🔒 AND/ET: "Flags containing ONLY these colors"
+#   - 🚫 NOT/NON: "Flags NOT containing these colors"
+# - Filter notification: now universal for ALL filters (colors, shapes, animals, etc.)
+# - "Noms/Names" label always visible next to eye icon (mobile & desktop)
+# - Continent buttons now mutually exclusive WITH Region/Culture buttons
+# - Number formatting improved:
+#   - Billions: X.XX Mrd (FR) / X.XX B (EN)
+#   - Millions: X.XX M
+#   - Regular: space as thousand separator
+
+## FIXED (Session 10):
+# - Eye icon logic INVERTED: EyeOff = names visible, Eye = names hidden
+# - Replaced chevrons with proper up/down arrows in sort selector
+# - Desktop flag image in CountryInfoPanel: reduced to 300px max height
+# - Added Flag/Coat of Arms toggle buttons in CountryInfoPanel:
+#   - Two buttons appear when coat of arms is available
+#   - Flag (default), Armoiries/Coat of Arms
+#   - Smooth animation when switching
+# - Coat of arms images loaded from Wikimedia Commons:
+#   - Uses API coat of arms URL if available
+#   - Falls back to generated Wikimedia URL pattern
+#   - Special cases for Malta (George Cross), USA, UK, Russia, etc.
+#   - Error handling when coat of arms not available
+
+## FIXED (Session 11):
+# - Updated coat of arms URLs for:
+#   - Afghanistan: National_Emblem_of_Afghanistan_001.svg
+#   - Spain: Coat_of_Arms_of_Spain_(corrections_of_heraldist_requests).svg
+#   - Iran: Emblem_of_Iran_(red).svg
+#   - Peru: Escudo_nacional_del_Peru.svg
+#   - Fiji: Arms_of_Fiji.svg
+#   - Malta: George_Cross_of_Malta_737x737.svg
+#   - Added 20+ more verified URLs (Mexico, Haiti, Andorra, Ecuador, Bolivia, etc.)
+# - Population/Area sorting NOW WORKS:
+#   - Created countryDataStore.ts to fetch data from RestCountries API
+#   - Data source: https://restcountries.com/v3.1/all (population & area fields)
+#   - Data is fetched once at app startup and cached
+#   - Sorting uses this cached data (not hardcoded)
+#   - Handles country name mapping between our names and API names
+# - FIXED: Coat of arms now PRIORITIZES our verified URLs over API URLs
+# - FIXED: Flag/Coat of Arms toggle buttons moved BELOW the flag image
+# - FIXED: Sao Tome and Principe name mapping for correct sorting
+
+## ALL COMPLETED
