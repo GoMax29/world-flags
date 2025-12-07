@@ -854,14 +854,12 @@ function AdvancedFiltersInline() {
         <div className="flex flex-wrap gap-1.5">
           {continents.map((continent) => {
             const isActive = isFilterActive("regions", continent.id);
-            const isAvailable = getAvailableFilters("regions", continent.id);
 
             return (
               <FilterButton
                 key={continent.id}
                 label={continent[lang]}
                 isActive={isActive}
-                isDisabled={!isActive && !isAvailable}
                 onClick={() => handleFilterClick("regions", continent.id)}
               />
             );

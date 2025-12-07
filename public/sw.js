@@ -1,6 +1,6 @@
 // Service Worker with Network-First strategy for guaranteed updates
 // Version timestamp ensures browser detects changes
-const SW_VERSION = "2024-12-07-v5";
+const SW_VERSION = "2024-12-07-v6";
 const CACHE_NAME = `world-flags-app-${SW_VERSION}`;
 const FLAG_CACHE = "world-flags-images-v1"; // Keep flag images cached longer
 

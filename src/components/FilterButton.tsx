@@ -4,12 +4,12 @@ import { cn } from '../lib/utils';
 interface FilterButtonProps {
   label: string;
   isActive: boolean;
-  isDisabled: boolean;
+  isDisabled?: boolean;
   onClick: () => void;
   icon?: React.ReactNode;
 }
 
-export function FilterButton({ label, isActive, isDisabled, onClick, icon }: FilterButtonProps) {
+export function FilterButton({ label, isActive, isDisabled = false, onClick, icon }: FilterButtonProps) {
   return (
     <motion.button
       whileHover={!isDisabled ? { scale: 1.02 } : undefined}

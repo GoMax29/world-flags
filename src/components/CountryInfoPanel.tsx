@@ -15,6 +15,7 @@ import {
   Shield,
   ChevronLeft,
   ChevronRight,
+  Search,
 } from "lucide-react";
 import { useAppStore } from "../store/useAppStore";
 import {
@@ -48,7 +49,7 @@ const SPECIAL_COAT_OF_ARMS_URLS: Record<string, string> = {
   'Hungary': 'https://upload.wikimedia.org/wikipedia/commons/3/34/Coat_of_arms_of_Hungary.svg',
   'Malaysia': 'https://upload.wikimedia.org/wikipedia/commons/2/26/Coat_of_arms_of_Malaysia.svg',
   'Timor-Leste': 'https://upload.wikimedia.org/wikipedia/commons/b/bd/Coat_of_arms_of_East_Timor.svg',
-  'Trinidad and Tobago': 'https://upload.wikimedia.org/wikipedia/commons/3/31/Coat_of_arms_of_Trinidad_and_Tobago.svg',
+  'Trinidad and Tobago': 'https://upload.wikimedia.org/wikipedia/commons/d/d2/Coat_of_arms_of_Trinidad_and_Tobago_%282025%29.svg',
 };
 
 // Countries that need light background for coat of arms (dark emblems)
@@ -99,6 +100,7 @@ export function CountryInfoPanel() {
   // Toggle between flag and coat of arms
   const [displayMode, setDisplayMode] = useState<'flag' | 'coatOfArms'>('flag');
   const [coatOfArmsError, setCoatOfArmsError] = useState(false);
+  const [isZoomOpen, setIsZoomOpen] = useState(false);
   
   // Store displayMode in ref to preserve across navigation
   const displayModeRef = useRef<'flag' | 'coatOfArms'>('flag');
@@ -276,6 +278,17 @@ export function CountryInfoPanel() {
                         </p>
                       </div>
                     )}
+                    
+                    {/* Zoom Button */}
+                    <button
+                      onClick={() => setIsZoomOpen(true)}
+                      className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-black/50 hover:bg-black/70 
+                                 flex items-center justify-center text-white transition-all
+                                 backdrop-blur-sm border border-white/20"
+                      title={language === 'fr' ? 'Agrandir' : 'Zoom'}
+                    >
+                      <Search className="w-4 h-4" />
+                    </button>
                   </motion.div>
 
                   {/* Navigation & Toggle Buttons - BELOW the flag */}
@@ -570,9 +583,140 @@ export function CountryInfoPanel() {
               </div>
             </div>
           </motion.div>
+          
+          {/* Zoom Modal */}
+          <AnimatePresence>
+            {isZoomOpen && (
+              <ZoomModal
+                imageUrl={getDisplayImageUrl()}
+                alt={displayMode === 'coatOfArms' 
+                  ? `Coat of Arms of ${selectedCountry}` 
+                  : `Flag of ${selectedCountry}`}
+                onClose={() => setIsZoomOpen(false)}
+                needsLightBg={displayMode === 'coatOfArms' && selectedCountry ? needsLightBackground(selectedCountry) : false}
+              />
+            )}
+          </AnimatePresence>
         </>
       )}
     </AnimatePresence>
+  );
+}
+
+// Zoom Modal Component - Full screen image viewer
+interface ZoomModalProps {
+  imageUrl: string;
+  alt: string;
+  onClose: () => void;
+  needsLightBg: boolean;
+}
+
+function ZoomModal({ imageUrl, alt, onClose, needsLightBg }: ZoomModalProps) {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [isTouching, setIsTouching] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const startPosRef = useRef({ x: 0, y: 0 });
+  
+  // Handle mouse drag for PC
+  const handleMouseDown = (e: React.MouseEvent) => {
+    // Don't start drag on close button
+    if ((e.target as HTMLElement).closest('button')) return;
+    setIsDragging(true);
+    startPosRef.current = { x: e.clientX - position.x, y: e.clientY - position.y };
+  };
+  
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    setPosition({
+      x: e.clientX - startPosRef.current.x,
+      y: e.clientY - startPosRef.current.y,
+    });
+  };
+  
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+  
+  // Handle touch for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if ((e.target as HTMLElement).closest('button')) return;
+    setIsTouching(true);
+    const touch = e.touches[0];
+    startPosRef.current = { x: touch.clientX - position.x, y: touch.clientY - position.y };
+  };
+  
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isTouching) return;
+    const touch = e.touches[0];
+    setPosition({
+      x: touch.clientX - startPosRef.current.x,
+      y: touch.clientY - startPosRef.current.y,
+    });
+  };
+  
+  const handleTouchEnd = () => {
+    setIsTouching(false);
+    // On mobile, closing on touch end - user releases to close
+    onClose();
+  };
+  
+  // Close on click (PC only, not during drag)
+  const handleClick = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest('button')) return;
+    if (!isDragging) {
+      onClose();
+    }
+  };
+  
+  return (
+    <motion.div
+      ref={containerRef}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[60] bg-black/90 flex items-center justify-center cursor-move"
+      onClick={handleClick}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Close button - PC only */}
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20
+                   flex items-center justify-center text-white transition-all
+                   backdrop-blur-sm border border-white/20 hidden sm:flex"
+        aria-label="Close"
+      >
+        <X className="w-6 h-6" />
+      </button>
+      
+      {/* Instructions */}
+      <div className="absolute bottom-4 left-0 right-0 text-center text-white/60 text-sm pointer-events-none">
+        <span className="hidden sm:inline">Click to close • Drag to pan</span>
+        <span className="sm:hidden">Release to close • Drag to pan</span>
+      </div>
+      
+      {/* Image */}
+      <motion.img
+        src={imageUrl}
+        alt={alt}
+        initial={{ scale: 0.8 }}
+        animate={{ scale: 1 }}
+        style={{
+          transform: `translate(${position.x}px, ${position.y}px)`,
+          maxWidth: '95vw',
+          maxHeight: '90vh',
+        }}
+        className={`object-contain select-none ${needsLightBg ? 'bg-gray-200 rounded-lg p-4' : ''}`}
+        draggable={false}
+      />
+    </motion.div>
   );
 }
 

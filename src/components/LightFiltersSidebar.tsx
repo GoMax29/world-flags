@@ -400,7 +400,6 @@ export function LightFiltersSidebar() {
                   key={filter.id}
                   label={filter[language === 'fr' ? 'label_fr' : 'label_en']}
                   isActive={isFilterActive(filter.categoryId, filter.id)}
-                  isDisabled={!isFilterActive(filter.categoryId, filter.id) && !getAvailableFilters(filter.categoryId, filter.id)}
                   onClick={() => handleExclusiveContinentClick(filter.categoryId, filter.id)}
                   size="sm"
                 />

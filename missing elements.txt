@@ -291,4 +291,13 @@ JSON structure and comparison logic are adjusted if necessary to fix structural 
 # - Added light background for India and Pakistan coat of arms
 #   - Dark emblems now visible on light grey background
 
+## FIXED (Session 14):
+# - Fixed Trinidad and Tobago coat of arms URL (2025 version)
+# - Continent buttons no longer greyed out when one is selected
+#   - Now behave like Region/Culture buttons (exclusive but all visible)
+# - Added zoom/magnifying glass feature for flag and coat of arms:
+#   - Loupe icon on bottom-right of image
+#   - PC: Click to open full-screen view, click to close, drag to pan
+#   - Mobile: Press and hold to view, drag to pan, release to close
+
 ## ALL COMPLETED
