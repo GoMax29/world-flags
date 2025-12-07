@@ -1,11 +1,27 @@
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Sparkles, Settings2, RotateCcw, Plus, Minus, Eye, EyeOff, Grid2X2, Grid3X3, LayoutGrid } from "lucide-react";
+import {
+  X,
+  RotateCcw,
+  Eye,
+  EyeOff,
+  Grid2X2,
+  Grid3X3,
+  Square,
+  Plus,
+  Minus,
+  Sparkles,
+  Settings2,
+} from "lucide-react";
 import { useAppStore } from "../store/useAppStore";
 import { useFlags } from "../hooks/useFlags";
 import { SortSelectorCompact } from "./SortSelector";
 import { FilterButton } from "./FilterButton";
-import { IconFilterButton, ColorButton, MultiColorButton, CommunistButton } from "./IconFilterButton";
+import {
+  IconFilterButton,
+  ColorButton,
+  MultiColorButton,
+  CommunistButton,
+} from "./IconFilterButton";
 import { ColorModeSelector } from "./ColorModeSelector";
 import { PatternSchemaSelector } from "./PatternSchemaSelector";
 import taxonomy from "../data/taxonomy.json";
@@ -15,201 +31,235 @@ const taxonomyData = taxonomy as Taxonomy;
 
 // Filter name translations for notification
 const filterNames: Record<string, { en: string; fr: string }> = {
-  'Africa': { en: 'Africa', fr: 'Afrique' },
-  'Europe': { en: 'Europe', fr: 'Europe' },
-  'North America': { en: 'North America', fr: 'Amérique du Nord' },
-  'South America': { en: 'South America', fr: 'Amérique du Sud' },
-  'Asia': { en: 'Asia', fr: 'Asie' },
-  'Oceania': { en: 'Oceania', fr: 'Océanie' },
-  'central_america': { en: 'Central America', fr: 'Amérique centrale' },
-  'communist': { en: 'Communist', fr: 'Communiste' },
-  'pan_slavic': { en: 'Pan-Slavic', fr: 'Panslave' },
-  'pan_african': { en: 'Pan-African', fr: 'Panafricain' },
-  'pan_arab': { en: 'Pan-Arab', fr: 'Panarabe' },
-  'red': { en: 'Red', fr: 'Rouge' },
-  'blue': { en: 'Blue', fr: 'Bleu' },
-  'yellow': { en: 'Yellow', fr: 'Jaune' },
-  'green': { en: 'Green', fr: 'Vert' },
-  'white': { en: 'White', fr: 'Blanc' },
-  'black': { en: 'Black', fr: 'Noir' },
-  'orange': { en: 'Orange', fr: 'Orange' },
-  'gold': { en: 'Gold', fr: 'Or' },
-  'disk': { en: 'Circle', fr: 'Cercle' },
-  'sun': { en: 'Sun', fr: 'Soleil' },
-  'crescent': { en: 'Crescent', fr: 'Croissant' },
-  'multiple_stars': { en: 'Stars', fr: 'Étoiles' },
-  'eagle': { en: 'Eagle', fr: 'Aigle' },
-  'lion': { en: 'Lion', fr: 'Lion' },
-  'coat_of_arms': { en: 'Coat of Arms', fr: 'Armoiries' },
+  Africa: { en: "Africa", fr: "Afrique" },
+  Europe: { en: "Europe", fr: "Europe" },
+  "North America": { en: "North America", fr: "Amérique du Nord" },
+  "South America": { en: "South America", fr: "Amérique du Sud" },
+  Asia: { en: "Asia", fr: "Asie" },
+  Oceania: { en: "Oceania", fr: "Océanie" },
+  central_america: { en: "Central America", fr: "Amérique centrale" },
+  communist: { en: "Communist", fr: "Communiste" },
+  pan_slavic: { en: "Pan-Slavic", fr: "Panslave" },
+  pan_african: { en: "Pan-African", fr: "Panafricain" },
+  pan_arab: { en: "Pan-Arab", fr: "Panarabe" },
+  red: { en: "Red", fr: "Rouge" },
+  blue: { en: "Blue", fr: "Bleu" },
+  yellow: { en: "Yellow", fr: "Jaune" },
+  green: { en: "Green", fr: "Vert" },
+  white: { en: "White", fr: "Blanc" },
+  black: { en: "Black", fr: "Noir" },
+  orange: { en: "Orange", fr: "Orange" },
+  gold: { en: "Gold", fr: "Or" },
+  disk: { en: "Circle", fr: "Cercle" },
+  sun: { en: "Sun", fr: "Soleil" },
+  crescent: { en: "Crescent", fr: "Croissant" },
+  multiple_stars: { en: "Stars", fr: "Étoiles" },
+  eagle: { en: "Eagle", fr: "Aigle" },
+  lion: { en: "Lion", fr: "Lion" },
+  coat_of_arms: { en: "Coat of Arms", fr: "Armoiries" },
 };
 
 // Compact mobile filter definitions - updated with text labels
 const mobileFilters = {
   continents: {
-    title_en: 'Continents',
-    title_fr: 'Continents',
+    title_en: "Continents",
+    title_fr: "Continents",
     clickable: false,
     filters: [
-      { id: 'Africa', label_en: 'AF', label_fr: 'AF', categoryId: 'regions' },
-      { id: 'Europe', label_en: 'EU', label_fr: 'EU', categoryId: 'regions' },
-      { id: 'North America', label_en: 'N.A', label_fr: 'A.N', categoryId: 'regions' },
-      { id: 'South America', label_en: 'S.A', label_fr: 'A.S', categoryId: 'regions' },
-      { id: 'Asia', label_en: 'AS', label_fr: 'AS', categoryId: 'regions' },
-      { id: 'Oceania', label_en: 'OC', label_fr: 'OC', categoryId: 'regions' },
+      { id: "Africa", label_en: "AF", label_fr: "AF", categoryId: "regions" },
+      { id: "Europe", label_en: "EU", label_fr: "EU", categoryId: "regions" },
+      {
+        id: "North America",
+        label_en: "N.A",
+        label_fr: "A.N",
+        categoryId: "regions",
+      },
+      {
+        id: "South America",
+        label_en: "S.A",
+        label_fr: "A.S",
+        categoryId: "regions",
+      },
+      { id: "Asia", label_en: "AS", label_fr: "AS", categoryId: "regions" },
+      { id: "Oceania", label_en: "OC", label_fr: "OC", categoryId: "regions" },
     ],
   },
   regions: {
-    title_en: 'Regions / Cultures',
-    title_fr: 'Régions / Cultures',
+    title_en: "Regions / Cultures",
+    title_fr: "Régions / Cultures",
     clickable: false,
     filters: [
-      { id: 'central_america', label_en: 'C.A', label_fr: 'A.C', categoryId: 'culture_regions', type: 'text' },
-      { id: 'communist', colors: ['#DC2626'], categoryId: 'color_schemes', type: 'communist' },
-      { id: 'pan_slavic', colors: ['#2563EB', '#FFFFFF', '#DC2626'], categoryId: 'color_schemes', type: 'multicolor' },
-      { id: 'pan_african', colors: ['#DC2626', '#16A34A', '#FCD34D'], categoryId: 'color_schemes', type: 'multicolor' },
-      { id: 'pan_arab', colors: ['#DC2626', '#16A34A', '#FFFFFF', '#1F2937'], categoryId: 'color_schemes', type: 'multicolor' },
+      {
+        id: "central_america",
+        label_en: "C.A",
+        label_fr: "A.C",
+        categoryId: "culture_regions",
+        type: "text",
+      },
+      {
+        id: "communist",
+        colors: ["#DC2626"],
+        categoryId: "color_schemes",
+        type: "communist",
+      },
+      {
+        id: "pan_slavic",
+        colors: ["#2563EB", "#FFFFFF", "#DC2626"],
+        categoryId: "color_schemes",
+        type: "multicolor",
+      },
+      {
+        id: "pan_african",
+        colors: ["#DC2626", "#16A34A", "#FCD34D"],
+        categoryId: "color_schemes",
+        type: "multicolor",
+      },
+      {
+        id: "pan_arab",
+        colors: ["#DC2626", "#16A34A", "#FFFFFF", "#1F2937"],
+        categoryId: "color_schemes",
+        type: "multicolor",
+      },
     ],
   },
   colors: {
-    title_en: 'Colors',
-    title_fr: 'Couleurs',
+    title_en: "Colors",
+    title_fr: "Couleurs",
     clickable: false,
     filters: [
-      { id: 'red', hex: '#DC2626', categoryId: 'primary_colors' },
-      { id: 'blue', hex: '#2563EB', categoryId: 'primary_colors' },
-      { id: 'yellow', hex: '#FCD34D', categoryId: 'primary_colors' },
-      { id: 'green', hex: '#16A34A', categoryId: 'primary_colors' },
-      { id: 'white', hex: '#FFFFFF', categoryId: 'primary_colors' },
-      { id: 'black', hex: '#1F2937', categoryId: 'primary_colors' },
-      { id: 'orange', hex: '#F97316', categoryId: 'secondary_colors' },
-      { id: 'gold', hex: '#D97706', categoryId: 'secondary_colors' },
+      { id: "red", hex: "#DC2626", categoryId: "primary_colors" },
+      { id: "blue", hex: "#2563EB", categoryId: "primary_colors" },
+      { id: "yellow", hex: "#FCD34D", categoryId: "primary_colors" },
+      { id: "green", hex: "#16A34A", categoryId: "primary_colors" },
+      { id: "white", hex: "#FFFFFF", categoryId: "primary_colors" },
+      { id: "black", hex: "#1F2937", categoryId: "primary_colors" },
+      { id: "orange", hex: "#F97316", categoryId: "secondary_colors" },
+      { id: "gold", hex: "#D97706", categoryId: "secondary_colors" },
     ],
   },
   shapes: {
-    title_en: 'Shapes',
-    title_fr: 'Formes',
+    title_en: "Shapes",
+    title_fr: "Formes",
     clickable: true,
-    mainCategory: 'geometric',
+    mainCategory: "geometric",
     filters: [
-      { id: 'disk', icon: '⭕', categoryId: 'shapes' },
-      { id: 'rectangle', icon: '⬛', categoryId: 'shapes' },
-      { id: 'triangle', icon: '🔺', categoryId: 'shapes' },
-      { id: 'diamond', icon: '🔷', categoryId: 'shapes' },
+      { id: "disk", icon: "⭕", categoryId: "shapes" },
+      { id: "rectangle", icon: "⬛", categoryId: "shapes" },
+      { id: "triangle", icon: "🔺", categoryId: "shapes" },
+      { id: "diamond", icon: "🔷", categoryId: "shapes" },
     ],
   },
   celestial: {
-    title_en: 'Celestial',
-    title_fr: 'Astres',
+    title_en: "Celestial",
+    title_fr: "Astres",
     clickable: true,
-    mainCategory: 'celestial',
+    mainCategory: "celestial",
     filters: [
-      { id: 'sun', icon: '☀️', categoryId: 'sun_moon' },
-      { id: 'crescent', icon: '🌙', categoryId: 'sun_moon' },
-      { id: 'multiple_stars', icon: '✨', categoryId: 'stars' },
+      { id: "sun", icon: "☀️", categoryId: "sun_moon" },
+      { id: "crescent", icon: "🌙", categoryId: "sun_moon" },
+      { id: "multiple_stars", icon: "✨", categoryId: "stars" },
     ],
   },
   animals: {
-    title_en: 'Animals',
-    title_fr: 'Animaux',
+    title_en: "Animals",
+    title_fr: "Animaux",
     clickable: true,
-    mainCategory: 'animals',
+    mainCategory: "animals",
     filters: [
-      { id: 'eagle', icon: '🦅', categoryId: 'birds' },
-      { id: 'birds', icon: '🐦', categoryId: 'subcategory' },
-      { id: 'lion', icon: '🦁', categoryId: 'mammals' },
-      { id: 'horse', icon: '🐎', categoryId: 'mammals' },
-      { id: 'dragon', icon: '🐉', categoryId: 'mythical' },
+      { id: "eagle", icon: "🦅", categoryId: "birds" },
+      { id: "birds", icon: "🐦", categoryId: "subcategory" },
+      { id: "lion", icon: "🦁", categoryId: "mammals" },
+      { id: "horse", icon: "🐎", categoryId: "mammals" },
+      { id: "dragon", icon: "🐉", categoryId: "mythical" },
     ],
   },
   nature: {
-    title_en: 'Nature',
-    title_fr: 'Nature',
+    title_en: "Nature",
+    title_fr: "Nature",
     clickable: true,
-    mainCategory: 'flora',
+    mainCategory: "flora",
     filters: [
-      { id: 'trees', icon: '🌳', categoryId: 'subcategory' },
-      { id: 'leaves_flowers', icon: '🍃', categoryId: 'subcategory' },
-      { id: 'mountain', icon: '⛰️', categoryId: 'terrain' },
-      { id: 'sea', icon: '💧', categoryId: 'water_elements' },
-      { id: 'rainbow', icon: '🌈', categoryId: 'other_symbols' },
+      { id: "trees", icon: "🌳", categoryId: "subcategory" },
+      { id: "leaves_flowers", icon: "🍃", categoryId: "subcategory" },
+      { id: "mountain", icon: "⛰️", categoryId: "terrain" },
+      { id: "sea", icon: "💧", categoryId: "water_elements" },
+      { id: "rainbow", icon: "🌈", categoryId: "other_symbols" },
     ],
   },
   buildings: {
-    title_en: 'Buildings',
-    title_fr: 'Bâtiments',
+    title_en: "Buildings",
+    title_fr: "Bâtiments",
     clickable: true,
-    mainCategory: 'architecture',
+    mainCategory: "architecture",
     filters: [
-      { id: 'buildings', icon: '🏛️', categoryId: 'subcategory' },
-      { id: 'castle', icon: '🏰', categoryId: 'buildings' },
-      { id: 'mosque', icon: '🕌', categoryId: 'buildings' },
+      { id: "buildings", icon: "🏛️", categoryId: "subcategory" },
+      { id: "castle", icon: "🏰", categoryId: "buildings" },
+      { id: "mosque", icon: "🕌", categoryId: "buildings" },
     ],
   },
   religious: {
-    title_en: 'Religious',
-    title_fr: 'Religieux',
+    title_en: "Religious",
+    title_fr: "Religieux",
     clickable: true,
-    mainCategory: 'religious',
+    mainCategory: "religious",
     filters: [
-      { id: 'christian_cross', icon: '✝️', categoryId: 'crosses' },
-      { id: 'crescent_star', icon: '☪️', categoryId: 'islamic' },
+      { id: "christian_cross", icon: "✝️", categoryId: "crosses" },
+      { id: "crescent_star", icon: "☪️", categoryId: "islamic" },
     ],
   },
   heraldry: {
-    title_en: 'Heraldry',
-    title_fr: 'Armoiries',
+    title_en: "Heraldry",
+    title_fr: "Armoiries",
     clickable: true,
-    mainCategory: 'heraldry',
+    mainCategory: "heraldry",
     filters: [
-      { id: 'coat_of_arms', icon: '🛡️', categoryId: 'heraldic_elements' },
-      { id: 'crown', icon: '👑', categoryId: 'heraldic_elements' },
+      { id: "coat_of_arms", icon: "🛡️", categoryId: "heraldic_elements" },
+      { id: "crown", icon: "👑", categoryId: "heraldic_elements" },
     ],
   },
   inscriptions: {
-    title_en: 'Inscriptions',
-    title_fr: 'Inscriptions',
+    title_en: "Inscriptions",
+    title_fr: "Inscriptions",
     clickable: true,
-    mainCategory: 'text',
+    mainCategory: "text",
     filters: [
-      { id: 'motto', icon: '📜', categoryId: 'inscriptions' },
-      { id: 'text', icon: '✒️', categoryId: 'main_category' },
+      { id: "motto", icon: "📜", categoryId: "inscriptions" },
+      { id: "text", icon: "✒️", categoryId: "main_category" },
     ],
   },
   weapons: {
-    title_en: 'Weapons',
-    title_fr: 'Armes',
+    title_en: "Weapons",
+    title_fr: "Armes",
     clickable: true,
-    mainCategory: 'weapons',
+    mainCategory: "weapons",
     filters: [
-      { id: 'sword', icon: '🗡️', categoryId: 'bladed' },
-      { id: 'rifle', icon: '🔫', categoryId: 'ranged' },
-      { id: 'spear', icon: '🏹', categoryId: 'ranged' },
-      { id: 'cannon', icon: '💣', categoryId: 'ranged' },
+      { id: "sword", icon: "🗡️", categoryId: "bladed" },
+      { id: "rifle", icon: "🔫", categoryId: "ranged" },
+      { id: "spear", icon: "🏹", categoryId: "ranged" },
+      { id: "cannon", icon: "💣", categoryId: "ranged" },
     ],
   },
   humans: {
-    title_en: 'Humans',
-    title_fr: 'Humains',
+    title_en: "Humans",
+    title_fr: "Humains",
     clickable: true,
-    mainCategory: 'human',
+    mainCategory: "human",
     filters: [
-      { id: 'human_figure', icon: '👤', categoryId: 'people' },
-      { id: 'hands', icon: '✋', categoryId: 'people' },
-      { id: 'phrygian_cap', icon: '🎅', categoryId: 'people' },
+      { id: "human_figure", icon: "👤", categoryId: "people" },
+      { id: "hands", icon: "✋", categoryId: "people" },
+      { id: "phrygian_cap", icon: "🎅", categoryId: "people" },
     ],
   },
   localSymbols: {
-    title_en: 'Local',
-    title_fr: 'Locaux',
+    title_en: "Local",
+    title_fr: "Locaux",
     clickable: true,
-    mainCategory: 'local_symbols',
-    filters: [
-      { id: 'local_symbols', icon: '🗿', categoryId: 'main_category' },
-    ],
+    mainCategory: "local_symbols",
+    filters: [{ id: "local_symbols", icon: "🗿", categoryId: "main_category" }],
   },
   disposition: {
-    title_en: 'Layout',
-    title_fr: 'Disposition',
+    title_en: "Layout",
+    title_fr: "Disposition",
     clickable: false,
     filters: [],
   },
@@ -225,16 +275,18 @@ export function TopFiltersMobile() {
     menuMode,
     setMenuMode,
     setFilterNotification,
+    isFiltersPanelOpen,
+    setFiltersPanelOpen,
+    showNames,
+    setShowNames,
+    zoomLevel,
+    setZoomLevel,
   } = useAppStore();
 
-  // Single toggle for the entire filter menu - closed by default on mobile
-  const [isMenuExpanded, setIsMenuExpanded] = useState(false);
-  
   // Get flags count for toolbar
-  const { filteredCount, totalCount } = useFlags(activeFilters, '', 'name_asc');
-  const { showNames, setShowNames, zoomLevel, setZoomLevel } = useAppStore();
+  const { filteredCount, totalCount } = useFlags(activeFilters, "", "name_asc");
 
-  const lang = language === 'fr' ? 'title_fr' : 'title_en';
+  const lang = language === "fr" ? "title_fr" : "title_en";
 
   const isFilterActive = (categoryId: string, elementId: string) => {
     return activeFilters.some(
@@ -246,12 +298,14 @@ export function TopFiltersMobile() {
   const showNotification = (filterId: string) => {
     const filterName = filterNames[filterId];
     if (filterName) {
-      const name = language === 'fr' ? filterName.fr : filterName.en;
+      const name = language === "fr" ? filterName.fr : filterName.en;
       setFilterNotification(name);
       setTimeout(() => setFilterNotification(null), 1000);
     } else {
       // Fallback: show the ID formatted nicely
-      const name = filterId.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      const name = filterId
+        .replace(/_/g, " ")
+        .replace(/\b\w/g, (c) => c.toUpperCase());
       setFilterNotification(name);
       setTimeout(() => setFilterNotification(null), 1000);
     }
@@ -269,8 +323,11 @@ export function TopFiltersMobile() {
 
   // Handle clicking on category title to filter all flags in that category
   const handleCategoryClick = (mainCategory: string) => {
-    const filter: ActiveFilter = { categoryId: 'main_category', elementId: mainCategory };
-    if (isFilterActive('main_category', mainCategory)) {
+    const filter: ActiveFilter = {
+      categoryId: "main_category",
+      elementId: mainCategory,
+    };
+    if (isFilterActive("main_category", mainCategory)) {
       removeFilter(filter);
     } else {
       addFilter(filter);
@@ -279,28 +336,40 @@ export function TopFiltersMobile() {
 
   // Exclusive continent handler - also clears region/culture filters
   const handleExclusiveContinentClick = (elementId: string) => {
-    const filter: ActiveFilter = { categoryId: 'regions', elementId };
-    if (isFilterActive('regions', elementId)) {
+    const filter: ActiveFilter = { categoryId: "regions", elementId };
+    if (isFilterActive("regions", elementId)) {
       removeFilter(filter);
     } else {
       // Clear all continents
-      const continentIds = ['Africa', 'North America', 'South America', 'Europe', 'Asia', 'Oceania'];
-      continentIds.forEach(id => {
-        if (isFilterActive('regions', id)) {
-          removeFilter({ categoryId: 'regions', elementId: id });
+      const continentIds = [
+        "Africa",
+        "North America",
+        "South America",
+        "Europe",
+        "Asia",
+        "Oceania",
+      ];
+      continentIds.forEach((id) => {
+        if (isFilterActive("regions", id)) {
+          removeFilter({ categoryId: "regions", elementId: id });
         }
       });
       // Clear all regions/cultures too
-      const regionIds = ['central_america'];
-      const colorSchemeIds = ['pan_slavic', 'pan_african', 'pan_arab', 'communist'];
-      regionIds.forEach(id => {
-        if (isFilterActive('culture_regions', id)) {
-          removeFilter({ categoryId: 'culture_regions', elementId: id });
+      const regionIds = ["central_america"];
+      const colorSchemeIds = [
+        "pan_slavic",
+        "pan_african",
+        "pan_arab",
+        "communist",
+      ];
+      regionIds.forEach((id) => {
+        if (isFilterActive("culture_regions", id)) {
+          removeFilter({ categoryId: "culture_regions", elementId: id });
         }
       });
-      colorSchemeIds.forEach(id => {
-        if (isFilterActive('color_schemes', id)) {
-          removeFilter({ categoryId: 'color_schemes', elementId: id });
+      colorSchemeIds.forEach((id) => {
+        if (isFilterActive("color_schemes", id)) {
+          removeFilter({ categoryId: "color_schemes", elementId: id });
         }
       });
       addFilter(filter);
@@ -309,29 +378,44 @@ export function TopFiltersMobile() {
   };
 
   // Exclusive region/culture handler - also clears continent filters
-  const handleExclusiveRegionClick = (categoryId: string, elementId: string) => {
+  const handleExclusiveRegionClick = (
+    categoryId: string,
+    elementId: string
+  ) => {
     const filter: ActiveFilter = { categoryId, elementId };
     if (isFilterActive(categoryId, elementId)) {
       removeFilter(filter);
     } else {
       // Clear all continents
-      const continentIds = ['Africa', 'North America', 'South America', 'Europe', 'Asia', 'Oceania'];
-      continentIds.forEach(id => {
-        if (isFilterActive('regions', id)) {
-          removeFilter({ categoryId: 'regions', elementId: id });
+      const continentIds = [
+        "Africa",
+        "North America",
+        "South America",
+        "Europe",
+        "Asia",
+        "Oceania",
+      ];
+      continentIds.forEach((id) => {
+        if (isFilterActive("regions", id)) {
+          removeFilter({ categoryId: "regions", elementId: id });
         }
       });
       // Clear all regions/cultures
-      const regionIds = ['central_america'];
-      const colorSchemeIds = ['pan_slavic', 'pan_african', 'pan_arab', 'communist'];
-      regionIds.forEach(id => {
-        if (isFilterActive('culture_regions', id)) {
-          removeFilter({ categoryId: 'culture_regions', elementId: id });
+      const regionIds = ["central_america"];
+      const colorSchemeIds = [
+        "pan_slavic",
+        "pan_african",
+        "pan_arab",
+        "communist",
+      ];
+      regionIds.forEach((id) => {
+        if (isFilterActive("culture_regions", id)) {
+          removeFilter({ categoryId: "culture_regions", elementId: id });
         }
       });
-      colorSchemeIds.forEach(id => {
-        if (isFilterActive('color_schemes', id)) {
-          removeFilter({ categoryId: 'color_schemes', elementId: id });
+      colorSchemeIds.forEach((id) => {
+        if (isFilterActive("color_schemes", id)) {
+          removeFilter({ categoryId: "color_schemes", elementId: id });
         }
       });
       addFilter(filter);
@@ -340,185 +424,130 @@ export function TopFiltersMobile() {
   };
 
   // Render region button based on type
-  const renderRegionButton = (filter: typeof mobileFilters.regions.filters[0]) => {
-    if (filter.type === 'text') {
+  const renderRegionButton = (
+    filter: (typeof mobileFilters.regions.filters)[0]
+  ) => {
+    if (filter.type === "text") {
       return (
         <TextFilterButton
           key={filter.id}
-          label={filter[language === 'fr' ? 'label_fr' : 'label_en'] || ''}
+          label={filter[language === "fr" ? "label_fr" : "label_en"] || ""}
           isActive={isFilterActive(filter.categoryId, filter.id)}
-          onClick={() => handleExclusiveRegionClick(filter.categoryId, filter.id)}
+          onClick={() =>
+            handleExclusiveRegionClick(filter.categoryId, filter.id)
+          }
           size="sm"
         />
       );
     }
-    
-    if (filter.type === 'communist') {
+
+    if (filter.type === "communist") {
       return (
         <CommunistButton
           key={filter.id}
           label=""
           isActive={isFilterActive(filter.categoryId, filter.id)}
-          onClick={() => handleExclusiveRegionClick(filter.categoryId, filter.id)}
+          onClick={() =>
+            handleExclusiveRegionClick(filter.categoryId, filter.id)
+          }
           size="sm"
         />
       );
     }
-    
-    if (filter.type === 'multicolor' && filter.colors) {
-    return (
+
+    if (filter.type === "multicolor" && filter.colors) {
+      return (
         <MultiColorButton
-        key={filter.id}
+          key={filter.id}
           colors={filter.colors}
-        label=""
-        isActive={isFilterActive(filter.categoryId, filter.id)}
-        onClick={() => handleExclusiveRegionClick(filter.categoryId, filter.id)}
-        size="sm"
-      />
-    );
+          label=""
+          isActive={isFilterActive(filter.categoryId, filter.id)}
+          onClick={() =>
+            handleExclusiveRegionClick(filter.categoryId, filter.id)
+          }
+          size="sm"
+        />
+      );
     }
-    
+
     return null;
   };
 
   return (
-    <div className="lg:hidden sticky top-16 z-20 bg-[var(--color-bg)] border-b border-[var(--color-border)]">
-      {/* ROW 1: Simple/Advanced tabs + Menu toggle + filter count */}
-      <div className="flex items-center justify-between px-2 py-1">
-        {/* Left: Simple / Advanced tabs + Menu toggle */}
-        <div className="flex items-center gap-1.5">
-          {/* Simple / Advanced tabs */}
-          <div className="flex rounded-md bg-[var(--color-surface)] p-0.5">
+    <div className="lg:hidden sticky top-16 z-20 bg-[var(--color-surface)] border-b border-[var(--color-border)] relative">
+      {/* Filter Menu Header with Simple/Advanced tabs */}
+      <div className="flex items-center justify-between px-3 py-1.5 border-b border-[var(--color-border)]/50 relative">
+        <span className="text-xs font-medium text-[var(--color-text-secondary)]">
+          {language === "fr" ? "Menu de Filtres" : "Filtering Menu"}
+        </span>
+        <div className="flex rounded-md bg-[var(--color-surface)] p-0.5 border border-[var(--color-border)]">
+          <button
+            onClick={() => setMenuMode("light")}
+            className={`flex items-center gap-1 px-2 py-1 rounded text-[10px] font-medium transition-all
+              ${
+                menuMode === "light"
+                  ? "bg-primary-500 text-white"
+                  : "text-[var(--color-text-secondary)]"
+              }`}
+          >
+            <Sparkles className="w-3 h-3" />
+            {language === "fr" ? "Simple" : "Light"}
+          </button>
+          <button
+            onClick={() => setMenuMode("advanced")}
+            className={`flex items-center gap-1 px-2 py-1 rounded text-[10px] font-medium transition-all
+              ${
+                menuMode === "advanced"
+                  ? "bg-primary-500 text-white"
+                  : "text-[var(--color-text-secondary)]"
+              }`}
+          >
+            <Settings2 className="w-3 h-3" />
+            {language === "fr" ? "Avancé" : "Advanced"}
+          </button>
+        </div>
+
+        {/* Toggle Button - positioned over the separator below header */}
+        {!isFiltersPanelOpen && (
+          <div
+            className="absolute left-1/2 -translate-x-1/2 -bottom-3"
+            style={{ zIndex: 9999 }}
+          >
             <button
-              onClick={() => setMenuMode('light')}
-              className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium transition-all
-                ${menuMode === 'light' 
-                  ? 'bg-primary-500 text-white' 
-                  : 'text-[var(--color-text-secondary)]'
-                }`}
+              onClick={() => setFiltersPanelOpen(true)}
+              className="w-6 h-6 rounded-full flex items-center justify-center text-white
+                         bg-green-500 shadow-lg border-2 border-[var(--color-bg)]"
+              aria-label="Expand filters"
             >
-              <Sparkles className="w-2.5 h-2.5" />
-              {language === 'fr' ? 'Simple' : 'Light'}
-            </button>
-            <button
-              onClick={() => setMenuMode('advanced')}
-              className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium transition-all
-                ${menuMode === 'advanced' 
-                  ? 'bg-primary-500 text-white' 
-                  : 'text-[var(--color-text-secondary)]'
-                }`}
-            >
-              <Settings2 className="w-2.5 h-2.5" />
-              {language === 'fr' ? 'Avancé' : 'Adv'}
+              <Plus className="w-3.5 h-3.5" strokeWidth={3} />
             </button>
           </div>
-
-          {/* Menu toggle button */}
-          <button
-            onClick={() => setIsMenuExpanded(!isMenuExpanded)}
-            className={`
-              w-5 h-5 rounded-full flex items-center justify-center text-white
-              ${isMenuExpanded ? 'bg-red-500' : 'bg-green-500'}
-            `}
-            aria-label={isMenuExpanded ? "Collapse" : "Expand"}
-          >
-            {isMenuExpanded ? (
-              <Minus className="w-3 h-3" strokeWidth={3} />
-            ) : (
-              <Plus className="w-3 h-3" strokeWidth={3} />
-            )}
-          </button>
-        </div>
-
-        {/* Right: filter count + clear */}
-        <div className="flex items-center gap-1">
-          {activeFilters.length > 0 && (
-            <>
-              <span className="px-1 py-0.5 text-[9px] font-medium bg-primary-500 text-white rounded-full min-w-[16px] text-center">
-                {activeFilters.length}
-              </span>
-              <button
-                onClick={clearFilters}
-                className="p-0.5 rounded hover:bg-[var(--color-surface)] text-red-500"
-                aria-label="Clear filters"
-              >
-                <RotateCcw className="w-3 h-3" />
-              </button>
-            </>
-          )}
-        </div>
+        )}
       </div>
 
-      {/* ROW 2: Toolbar - Count + Show names + Size buttons + Sort */}
-      <div className="flex items-center justify-between px-2 py-1 border-t border-[var(--color-border)]/50">
-        {/* Left: Count + Show names */}
-        <div className="flex items-center gap-2">
-          <span className="text-[10px] text-[var(--color-text-secondary)]">
-            <span className="font-semibold text-[var(--color-text)]">{filteredCount}</span>/{totalCount}
-          </span>
-          
-          {/* Show names toggle */}
-          <button
-            onClick={() => setShowNames(!showNames)}
-            className={`
-              p-1 rounded transition-all
-              ${showNames 
-                ? 'bg-primary-500 text-white' 
-                : 'bg-[var(--color-surface)] text-[var(--color-text-secondary)]'
-              }
-            `}
-            title={language === 'fr' ? 'Noms' : 'Names'}
-          >
-            {showNames ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
-          </button>
-        </div>
-
-        {/* Center: Size buttons */}
-        <div className="flex items-center gap-0.5 p-0.5 bg-[var(--color-surface)] rounded-md border border-[var(--color-border)]">
-          <button
-            onClick={() => setZoomLevel('small')}
-            className={`p-1 rounded transition-colors ${zoomLevel === 'small' ? 'bg-primary-500/20 text-primary-500' : 'text-[var(--color-text-secondary)]'}`}
-          >
-            <Grid3X3 className="w-3.5 h-3.5" />
-          </button>
-          <button
-            onClick={() => setZoomLevel('medium')}
-            className={`p-1 rounded transition-colors ${zoomLevel === 'medium' ? 'bg-primary-500/20 text-primary-500' : 'text-[var(--color-text-secondary)]'}`}
-          >
-            <Grid2X2 className="w-3.5 h-3.5" />
-          </button>
-          <button
-            onClick={() => setZoomLevel('large')}
-            className={`p-1 rounded transition-colors ${zoomLevel === 'large' ? 'bg-primary-500/20 text-primary-500' : 'text-[var(--color-text-secondary)]'}`}
-          >
-            <LayoutGrid className="w-3.5 h-3.5" />
-          </button>
-        </div>
-
-        {/* Right: Sort */}
-        <SortSelectorCompact />
-      </div>
+      {/* Spacer when collapsed to prevent green + button overlap */}
+      {!isFiltersPanelOpen && <div className="h-1.5" />}
 
       {/* Collapsible filter content - Light Mode */}
       <AnimatePresence>
-        {isMenuExpanded && menuMode === 'light' && (
+        {isFiltersPanelOpen && menuMode === "light" && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
+            animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
             <div className="px-2 py-1.5 space-y-1">
               {/* Continents - Text labels only */}
-              <FilterRow 
-                title={mobileFilters.continents[lang]} 
+              <FilterRow
+                title={mobileFilters.continents[lang]}
                 clickable={false}
               >
                 {mobileFilters.continents.filters.map((filter) => (
                   <TextFilterButton
                     key={filter.id}
-                    label={filter[language === 'fr' ? 'label_fr' : 'label_en']}
+                    label={filter[language === "fr" ? "label_fr" : "label_en"]}
                     isActive={isFilterActive("regions", filter.id)}
                     onClick={() => handleExclusiveContinentClick(filter.id)}
                     size="sm"
@@ -527,26 +556,32 @@ export function TopFiltersMobile() {
               </FilterRow>
 
               {/* Regions/Cultures */}
-              <FilterRow 
-                title={mobileFilters.regions[lang]}
-                clickable={false}
-              >
-                {mobileFilters.regions.filters.map((filter) => renderRegionButton(filter))}
+              <FilterRow title={mobileFilters.regions[lang]} clickable={false}>
+                {mobileFilters.regions.filters.map((filter) =>
+                  renderRegionButton(filter)
+                )}
               </FilterRow>
 
               {/* Colors with 3-button mode selector */}
-              <FilterRow 
-                title={mobileFilters.colors[lang]}
-                clickable={false}
-              >
+              <FilterRow title={mobileFilters.colors[lang]} clickable={false}>
                 {mobileFilters.colors.filters.map((color) => (
                   <ColorButton
                     key={color.id}
                     color={color.id}
                     colorHex={color.hex!}
                     label=""
-                    isActive={isFilterActive("primary_colors", color.id) || isFilterActive("secondary_colors", color.id)}
-                    onClick={() => handleFilterClick(color.id === 'orange' || color.id === 'gold' ? "secondary_colors" : "primary_colors", color.id)}
+                    isActive={
+                      isFilterActive("primary_colors", color.id) ||
+                      isFilterActive("secondary_colors", color.id)
+                    }
+                    onClick={() =>
+                      handleFilterClick(
+                        color.id === "orange" || color.id === "gold"
+                          ? "secondary_colors"
+                          : "primary_colors",
+                        color.id
+                      )
+                    }
                     size="sm"
                   />
                 ))}
@@ -554,7 +589,7 @@ export function TopFiltersMobile() {
               </FilterRow>
 
               {/* Shapes | Celestial */}
-              <FilterRow 
+              <FilterRow
                 title={`${mobileFilters.shapes[lang]} | ${mobileFilters.celestial[lang]}`}
                 clickable={false}
               >
@@ -564,7 +599,9 @@ export function TopFiltersMobile() {
                     icon={filter.icon}
                     label=""
                     isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    onClick={() =>
+                      handleFilterClick(filter.categoryId, filter.id)
+                    }
                     size="sm"
                   />
                 ))}
@@ -575,20 +612,25 @@ export function TopFiltersMobile() {
                     icon={filter.icon}
                     label=""
                     isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    onClick={() =>
+                      handleFilterClick(filter.categoryId, filter.id)
+                    }
                     size="sm"
                   />
                 ))}
               </FilterRow>
 
               {/* Animals | Nature */}
-              <FilterRow 
+              <FilterRow
                 title={`${mobileFilters.animals[lang]} | ${mobileFilters.nature[lang]}`}
                 mainCategory="animals"
                 mainCategory2="flora"
                 clickable={true}
                 onCategoryClick={handleCategoryClick}
-                isActive={isFilterActive('main_category', 'animals') || isFilterActive('main_category', 'flora')}
+                isActive={
+                  isFilterActive("main_category", "animals") ||
+                  isFilterActive("main_category", "flora")
+                }
               >
                 {mobileFilters.animals.filters.map((filter) => (
                   <IconFilterButton
@@ -596,7 +638,9 @@ export function TopFiltersMobile() {
                     icon={filter.icon}
                     label=""
                     isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    onClick={() =>
+                      handleFilterClick(filter.categoryId, filter.id)
+                    }
                     size="sm"
                   />
                 ))}
@@ -607,14 +651,16 @@ export function TopFiltersMobile() {
                     icon={filter.icon}
                     label=""
                     isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    onClick={() =>
+                      handleFilterClick(filter.categoryId, filter.id)
+                    }
                     size="sm"
                   />
                 ))}
               </FilterRow>
 
               {/* Buildings | Religious | Heraldry */}
-              <FilterRow 
+              <FilterRow
                 title={`${mobileFilters.buildings[lang]} | ${mobileFilters.religious[lang]} | ${mobileFilters.heraldry[lang]}`}
                 clickable={false}
               >
@@ -624,7 +670,9 @@ export function TopFiltersMobile() {
                     icon={filter.icon}
                     label=""
                     isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    onClick={() =>
+                      handleFilterClick(filter.categoryId, filter.id)
+                    }
                     size="sm"
                   />
                 ))}
@@ -635,7 +683,9 @@ export function TopFiltersMobile() {
                     icon={filter.icon}
                     label=""
                     isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    onClick={() =>
+                      handleFilterClick(filter.categoryId, filter.id)
+                    }
                     size="sm"
                   />
                 ))}
@@ -646,14 +696,16 @@ export function TopFiltersMobile() {
                     icon={filter.icon}
                     label=""
                     isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    onClick={() =>
+                      handleFilterClick(filter.categoryId, filter.id)
+                    }
                     size="sm"
                   />
                 ))}
               </FilterRow>
 
               {/* Weapons | Humans | Inscriptions | Local */}
-              <FilterRow 
+              <FilterRow
                 title={`${mobileFilters.weapons[lang]} | ${mobileFilters.humans[lang]} | ${mobileFilters.inscriptions[lang]} | ${mobileFilters.localSymbols[lang]}`}
                 clickable={false}
               >
@@ -663,7 +715,9 @@ export function TopFiltersMobile() {
                     icon={filter.icon}
                     label=""
                     isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    onClick={() =>
+                      handleFilterClick(filter.categoryId, filter.id)
+                    }
                     size="sm"
                   />
                 ))}
@@ -674,7 +728,9 @@ export function TopFiltersMobile() {
                     icon={filter.icon}
                     label=""
                     isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    onClick={() =>
+                      handleFilterClick(filter.categoryId, filter.id)
+                    }
                     size="sm"
                   />
                 ))}
@@ -685,7 +741,9 @@ export function TopFiltersMobile() {
                     icon={filter.icon}
                     label=""
                     isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    onClick={() =>
+                      handleFilterClick(filter.categoryId, filter.id)
+                    }
                     size="sm"
                   />
                 ))}
@@ -696,18 +754,25 @@ export function TopFiltersMobile() {
                     icon={filter.icon}
                     label=""
                     isActive={isFilterActive(filter.categoryId, filter.id)}
-                    onClick={() => handleFilterClick(filter.categoryId, filter.id)}
+                    onClick={() =>
+                      handleFilterClick(filter.categoryId, filter.id)
+                    }
                     size="sm"
                   />
                 ))}
               </FilterRow>
 
-              {/* Layout/Disposition */}
-              <FilterRow title={mobileFilters.disposition[lang]} clickable={false}>
-                <div className="flex-1">
-                  <PatternSchemaSelector compact />
+              {/* Layout/Disposition - last row, no bottom border */}
+              <div className="pb-1">
+                <div className="text-[9px] font-medium text-[var(--color-text-secondary)] uppercase tracking-wide mb-0.5">
+                  {mobileFilters.disposition[lang]}
                 </div>
-              </FilterRow>
+                <div className="flex flex-wrap gap-1 items-center">
+                  <div className="flex-1">
+                    <PatternSchemaSelector compact />
+                  </div>
+                </div>
+              </div>
             </div>
           </motion.div>
         )}
@@ -715,10 +780,10 @@ export function TopFiltersMobile() {
 
       {/* Collapsible filter content - Advanced Mode (inline, not sliding panel) */}
       <AnimatePresence>
-        {isMenuExpanded && menuMode === 'advanced' && (
+        {isFiltersPanelOpen && menuMode === "advanced" && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
+            animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
@@ -728,6 +793,127 @@ export function TopFiltersMobile() {
         )}
       </AnimatePresence>
 
+      {/* Separator with Collapse Button when expanded */}
+      {isFiltersPanelOpen && (
+        <div className="relative border-b border-[var(--color-border)]/50">
+          <div
+            className="absolute left-1/2 -translate-x-1/2 -bottom-3"
+            style={{ zIndex: 9999 }}
+          >
+            <button
+              onClick={() => setFiltersPanelOpen(false)}
+              className="w-6 h-6 rounded-full flex items-center justify-center text-white
+                         bg-red-500 shadow-lg border-2 border-[var(--color-bg)]"
+              aria-label="Collapse filters"
+            >
+              <Minus className="w-3.5 h-3.5" strokeWidth={3} />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Toolbar: Count + Show names + Size buttons + Sort + Filter count - ALWAYS VISIBLE */}
+      <div className="relative flex items-center justify-between px-2 py-2 mt-2">
+        {/* Left: Count + Show names toggle - same height as zoom (h-8) */}
+        <div className="flex items-center gap-1.5">
+          {/* Count display - same height as zoom buttons */}
+          <div className="flex items-center h-8 px-2.5 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)]">
+            <span className="text-xs font-bold text-white">
+              {filteredCount}
+            </span>
+            <span className="text-xs font-bold text-[var(--color-text-secondary)]">
+              /{totalCount}
+            </span>
+          </div>
+
+          {/* Show names toggle - same height as zoom buttons */}
+          <button
+            onClick={() => setShowNames(!showNames)}
+            className={`
+              flex items-center gap-1 h-8 px-2.5 rounded-lg transition-all text-xs font-medium
+              ${
+                showNames
+                  ? "bg-primary-500 text-white"
+                  : "bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text-secondary)]"
+              }
+            `}
+            title={
+              language === "fr"
+                ? "Afficher/masquer les noms"
+                : "Show/hide names"
+            }
+          >
+            {showNames ? (
+              <EyeOff className="w-4 h-4" />
+            ) : (
+              <Eye className="w-4 h-4" />
+            )}
+            <span>{language === "fr" ? "Noms" : "Names"}</span>
+          </button>
+        </div>
+
+        {/* Center: Size buttons - centered on medium (2nd button), h-8 */}
+        <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center h-8 gap-0.5 px-1 bg-[var(--color-surface)] rounded-lg border border-[var(--color-border)]">
+          <button
+            onClick={() => setZoomLevel("small")}
+            className={`p-1 rounded transition-colors ${
+              zoomLevel === "small"
+                ? "bg-primary-500/20 text-primary-500"
+                : "text-[var(--color-text-secondary)]"
+            }`}
+            title={language === "fr" ? "Petit" : "Small"}
+          >
+            <Grid3X3 className="w-5 h-5" />
+          </button>
+          <button
+            onClick={() => setZoomLevel("medium")}
+            className={`p-1 rounded transition-colors ${
+              zoomLevel === "medium"
+                ? "bg-primary-500/20 text-primary-500"
+                : "text-[var(--color-text-secondary)]"
+            }`}
+            title={language === "fr" ? "Moyen" : "Medium"}
+          >
+            <Grid2X2 className="w-5 h-5" />
+          </button>
+          <button
+            onClick={() => setZoomLevel("large")}
+            className={`p-1 rounded transition-colors ${
+              zoomLevel === "large"
+                ? "bg-primary-500/20 text-primary-500"
+                : "text-[var(--color-text-secondary)]"
+            }`}
+            title={language === "fr" ? "Grand" : "Large"}
+          >
+            <Square className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Right: Sort label + Sort button + Filter count - same height */}
+        <div className="flex items-center gap-1">
+          <span className="text-[10px] font-medium text-[var(--color-text-secondary)]">
+            {language === "fr" ? "Trier" : "Sort"}
+          </span>
+          <SortSelectorCompact />
+          {activeFilters.length > 0 && (
+            <>
+              <div className="flex items-center justify-center h-8 px-2 rounded-lg bg-primary-500 text-white">
+                <span className="text-xs font-bold">
+                  {activeFilters.length}
+                </span>
+              </div>
+              <button
+                onClick={clearFilters}
+                className="flex items-center justify-center h-8 w-8 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] hover:bg-red-500/10 text-red-500"
+                aria-label="Clear filters"
+              >
+                <RotateCcw className="w-4 h-4" />
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+
       {/* Active Filters Tags */}
       <AnimatePresence>
         {activeFilters.length > 0 && (
@@ -735,7 +921,7 @@ export function TopFiltersMobile() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden border-t border-[var(--color-border)]"
+            className="overflow-hidden border-t border-[var(--color-border)] mt-1"
           >
             <div className="px-2 py-1 flex flex-wrap gap-1">
               {activeFilters.slice(0, 5).map((filter) => (
@@ -761,7 +947,6 @@ export function TopFiltersMobile() {
           </motion.div>
         )}
       </AnimatePresence>
-
     </div>
   );
 }
@@ -772,7 +957,7 @@ interface TextFilterButtonProps {
   isActive: boolean;
   isDisabled?: boolean;
   onClick: () => void;
-  size?: 'sm' | 'md';
+  size?: "sm" | "md";
 }
 
 function TextFilterButton({
@@ -780,7 +965,7 @@ function TextFilterButton({
   isActive,
   isDisabled = false,
   onClick,
-  size = 'md',
+  size = "md",
 }: TextFilterButtonProps) {
   return (
     <motion.button
@@ -792,12 +977,13 @@ function TextFilterButton({
         flex items-center justify-center rounded-lg transition-all duration-200
         border focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-1
         font-bold
-        ${size === 'sm' ? 'px-2 h-8 text-[10px]' : 'px-3 h-10 text-xs'}
-        ${isActive 
-          ? 'bg-primary-500 border-primary-500 text-white shadow-md' 
-          : !isDisabled 
-            ? 'bg-[var(--color-surface)] border-[var(--color-border)] hover:border-primary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 text-[var(--color-text)]'
-            : 'bg-gray-100 dark:bg-gray-800 border-transparent cursor-not-allowed opacity-40 text-[var(--color-text-secondary)]'
+        ${size === "sm" ? "px-2 h-8 text-[10px]" : "px-3 h-10 text-xs"}
+        ${
+          isActive
+            ? "bg-primary-500 border-primary-500 text-white shadow-md"
+            : !isDisabled
+            ? "bg-[var(--color-surface)] border-[var(--color-border)] hover:border-primary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 text-[var(--color-text)]"
+            : "bg-gray-100 dark:bg-gray-800 border-transparent cursor-not-allowed opacity-40 text-[var(--color-text-secondary)]"
         }
       `}
       aria-pressed={isActive}
@@ -820,7 +1006,15 @@ interface FilterRowProps {
   isActive?: boolean;
 }
 
-function FilterRow({ title, children, clickable = false, mainCategory, mainCategory2, onCategoryClick, isActive }: FilterRowProps) {
+function FilterRow({
+  title,
+  children,
+  clickable = false,
+  mainCategory,
+  mainCategory2,
+  onCategoryClick,
+  isActive,
+}: FilterRowProps) {
   const handleClick = () => {
     if (clickable && mainCategory && onCategoryClick) {
       onCategoryClick(mainCategory);
@@ -833,9 +1027,11 @@ function FilterRow({ title, children, clickable = false, mainCategory, mainCateg
   return (
     <div className="pb-1 border-b border-[var(--color-border)]/30">
       {clickable && mainCategory ? (
-        <button 
+        <button
           onClick={handleClick}
-          className={`text-[9px] font-medium uppercase tracking-wide mb-0.5 block hover:text-primary-500 transition-colors ${isActive ? 'text-primary-500' : 'text-[var(--color-text-secondary)]'}`}
+          className={`text-[9px] font-medium uppercase tracking-wide mb-0.5 block hover:text-primary-500 transition-colors ${
+            isActive ? "text-primary-500" : "text-[var(--color-text-secondary)]"
+          }`}
         >
           {title}
         </button>
@@ -844,26 +1040,21 @@ function FilterRow({ title, children, clickable = false, mainCategory, mainCateg
           {title}
         </div>
       )}
-      <div className="flex flex-wrap gap-1 items-center">
-        {children}
-      </div>
+      <div className="flex flex-wrap gap-1 items-center">{children}</div>
     </div>
   );
 }
 
 // Visual separator between filter groups
 function Separator() {
-  return <div className="w-px h-5 bg-[var(--color-border)] mx-0.5 flex-shrink-0" />;
+  return (
+    <div className="w-px h-5 bg-[var(--color-border)] mx-0.5 flex-shrink-0" />
+  );
 }
 
 // Advanced filters inline (not sliding panel)
 function AdvancedFiltersInline() {
-  const {
-    language,
-    activeFilters,
-    addFilter,
-    removeFilter,
-  } = useAppStore();
+  const { language, activeFilters, addFilter, removeFilter } = useAppStore();
   const { getAvailableFilters } = useFlags(activeFilters, "");
 
   const lang = language === "fr" ? "label_fr" : "label_en";
@@ -917,13 +1108,16 @@ function AdvancedFiltersInline() {
 
       {/* Taxonomy Categories */}
       {taxonomyData.categories.map((category) => {
-        if (["colors", "flag_shape", "continents"].includes(category.id)) return null;
+        if (["colors", "flag_shape", "continents"].includes(category.id))
+          return null;
 
-        const visibleSubcategories = category.subcategories.filter((subcategory) =>
-          subcategory.elements.some((element) =>
-            getAvailableFilters(subcategory.id, element.id) ||
-            isFilterActive(subcategory.id, element.id)
-          )
+        const visibleSubcategories = category.subcategories.filter(
+          (subcategory) =>
+            subcategory.elements.some(
+              (element) =>
+                getAvailableFilters(subcategory.id, element.id) ||
+                isFilterActive(subcategory.id, element.id)
+            )
         );
 
         if (visibleSubcategories.length === 0) return null;
@@ -949,7 +1143,10 @@ function AdvancedFiltersInline() {
                   </p>
                   <div className="flex flex-wrap gap-1.5">
                     {visibleElements.map((element) => {
-                      const isActive = isFilterActive(subcategory.id, element.id);
+                      const isActive = isFilterActive(
+                        subcategory.id,
+                        element.id
+                      );
 
                       return (
                         <FilterButton
@@ -957,7 +1154,9 @@ function AdvancedFiltersInline() {
                           label={element[lang]}
                           isActive={isActive}
                           isDisabled={false}
-                          onClick={() => handleFilterClick(subcategory.id, element.id)}
+                          onClick={() =>
+                            handleFilterClick(subcategory.id, element.id)
+                          }
                         />
                       );
                     })}

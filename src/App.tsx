@@ -4,7 +4,6 @@ import { FlagGrid } from './components/FlagGrid';
 import { FiltersSidebar } from './components/FiltersSidebar';
 import { TopFiltersMobile } from './components/TopFiltersMobile';
 import { CountryInfoPanel } from './components/CountryInfoPanel';
-import { ZoomSelector } from './components/ZoomSelector';
 import { FilterNotification } from './components/FilterNotification';
 
 // Create a client
@@ -35,11 +34,6 @@ function App() {
           {/* Main Area */}
           <main className="flex-1 min-w-0">
             <div className="max-w-[1400px] mx-auto px-4 py-6">
-              {/* Mobile Zoom Selector */}
-              <div className="sm:hidden mb-4 flex justify-center">
-                <ZoomSelector />
-              </div>
-              
               {/* Flag Grid */}
               <FlagGrid />
             </div>
