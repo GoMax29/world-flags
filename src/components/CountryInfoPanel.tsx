@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
@@ -13,6 +13,8 @@ import {
   Quote,
   Flag,
   Shield,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { useAppStore } from "../store/useAppStore";
 import {
@@ -22,11 +24,11 @@ import {
 } from "../hooks/useFetchCountry";
 import { useTranslation } from "../hooks/useTranslation";
 import { getFlagSvgUrl } from "../lib/utils";
-import { getFlagByCountry } from "../hooks/useFlags";
+import { getFlagByCountry, useFlags } from "../hooks/useFlags";
 import { getFlagRatio } from "../data/flagRatios";
 import type { ActiveFilter } from "../types";
 
-// Special coat of arms URLs - ONLY for the 6 countries where API doesn't work
+// Special coat of arms URLs - ONLY for countries where API doesn't work or is wrong
 const SPECIAL_COAT_OF_ARMS_URLS: Record<string, string> = {
   'Afghanistan': 'https://upload.wikimedia.org/wikipedia/commons/e/e3/National_Emblem_of_Afghanistan_001.svg',
   'Spain': 'https://upload.wikimedia.org/wikipedia/commons/5/56/Coat_of_Arms_of_Spain_%28corrections_of_heraldist_requests%29.svg',
@@ -34,6 +36,9 @@ const SPECIAL_COAT_OF_ARMS_URLS: Record<string, string> = {
   'Peru': 'https://upload.wikimedia.org/wikipedia/commons/c/cc/Escudo_nacional_del_Per%C3%BA.svg',
   'Fiji': 'https://upload.wikimedia.org/wikipedia/commons/4/4e/Arms_of_Fiji.svg',
   'Malta': 'https://upload.wikimedia.org/wikipedia/commons/f/f5/George_Cross_of_Malta_737x737.svg',
+  'Chad': 'https://upload.wikimedia.org/wikipedia/commons/c/c1/Coat_of_arms_of_Chad.svg',
+  'Portugal': 'https://upload.wikimedia.org/wikipedia/commons/9/95/Coat_of_arms_of_Portugal_%28lesser%29.svg',
+  'Serbia': 'https://upload.wikimedia.org/wikipedia/commons/0/0f/Coat_of_arms_of_Serbia_small.svg',
 };
 
 // Generate coat of arms URL - use API for most countries, override only for special cases
@@ -59,6 +64,9 @@ export function CountryInfoPanel() {
     language,
     addFilter,
     clearFilters,
+    activeFilters,
+    searchQuery,
+    sortBy,
   } = useAppStore();
   const { t } = useTranslation();
   const {
@@ -67,9 +75,15 @@ export function CountryInfoPanel() {
     error,
   } = useFetchCountry(selectedCountry);
 
+  // Get current filtered flags list for navigation
+  const { flags: filteredFlags } = useFlags(activeFilters, searchQuery, sortBy);
+  
   // Toggle between flag and coat of arms
   const [displayMode, setDisplayMode] = useState<'flag' | 'coatOfArms'>('flag');
   const [coatOfArmsError, setCoatOfArmsError] = useState(false);
+  
+  // Store displayMode in ref to preserve across navigation
+  const displayModeRef = useRef<'flag' | 'coatOfArms'>('flag');
 
   const flagData = selectedCountry ? getFlagByCountry(selectedCountry) : null;
   const flagRatio = selectedCountry
@@ -80,10 +94,41 @@ export function CountryInfoPanel() {
   // Check if country has coat of arms (from API data)
   const hasCoatOfArms = countryInfo?.coatOfArms || selectedCountry === 'Malta';
   
-  // Reset display mode when country changes
+  // Get current index and navigation info
+  const currentIndex = useMemo(() => {
+    if (!selectedCountry) return -1;
+    return filteredFlags.findIndex(([name]) => name === selectedCountry);
+  }, [selectedCountry, filteredFlags]);
+  
+  const hasPrevious = currentIndex > 0;
+  const hasNext = currentIndex >= 0 && currentIndex < filteredFlags.length - 1;
+  
+  // Navigate to previous/next country while preserving displayMode
+  const navigatePrevious = () => {
+    if (hasPrevious) {
+      displayModeRef.current = displayMode;
+      setCoatOfArmsError(false);
+      setSelectedCountry(filteredFlags[currentIndex - 1][0]);
+    }
+  };
+  
+  const navigateNext = () => {
+    if (hasNext) {
+      displayModeRef.current = displayMode;
+      setCoatOfArmsError(false);
+      setSelectedCountry(filteredFlags[currentIndex + 1][0]);
+    }
+  };
+  
+  // Reset display mode when country changes (unless navigating)
   useEffect(() => {
-    setDisplayMode('flag');
-    setCoatOfArmsError(false);
+    if (selectedCountry) {
+      // Use stored mode if navigating, otherwise reset to flag
+      setDisplayMode(displayModeRef.current);
+      setCoatOfArmsError(false);
+      // Reset ref after applying
+      displayModeRef.current = 'flag';
+    }
   }, [selectedCountry]);
 
   // Extract motto from flag data
@@ -211,45 +256,88 @@ export function CountryInfoPanel() {
                     )}
                   </motion.div>
 
-                  {/* Flag/Coat of Arms Toggle Buttons - BELOW the flag */}
-                  {hasCoatOfArms && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.15 }}
-                      className="flex gap-2 mt-4"
+                  {/* Navigation & Toggle Buttons - BELOW the flag */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15 }}
+                    className="flex items-center gap-3 mt-4"
+                  >
+                    {/* Previous Button */}
+                    <button
+                      onClick={navigatePrevious}
+                      disabled={!hasPrevious}
+                      className={`
+                        w-10 h-10 rounded-full flex items-center justify-center transition-all
+                        ${hasPrevious
+                          ? 'bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] hover:border-primary-500 hover:bg-primary-500/10'
+                          : 'bg-[var(--color-surface)]/50 border border-[var(--color-border)]/50 text-[var(--color-text-secondary)]/50 cursor-not-allowed'
+                        }
+                      `}
+                      title={language === 'fr' ? 'Précédent' : 'Previous'}
                     >
-                      <button
-                        onClick={() => setDisplayMode('flag')}
-                        className={`
-                          flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all
-                          ${displayMode === 'flag'
-                            ? 'bg-primary-500 text-white shadow-md'
-                            : 'bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] hover:border-primary-500'
-                          }
-                        `}
-                      >
-                        <Flag className="w-4 h-4" />
-                        {language === 'fr' ? 'Drapeau' : 'Flag'}
-                      </button>
-                      <button
-                        onClick={() => {
-                          setDisplayMode('coatOfArms');
-                          setCoatOfArmsError(false);
-                        }}
-                        className={`
-                          flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all
-                          ${displayMode === 'coatOfArms'
-                            ? 'bg-primary-500 text-white shadow-md'
-                            : 'bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] hover:border-primary-500'
-                          }
-                        `}
-                      >
-                        <Shield className="w-4 h-4" />
-                        {language === 'fr' ? 'Armoiries' : 'Coat of Arms'}
-                      </button>
-                    </motion.div>
-                  )}
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+
+                    {/* Flag/Coat of Arms Toggle Buttons */}
+                    {hasCoatOfArms ? (
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => setDisplayMode('flag')}
+                          className={`
+                            flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all
+                            ${displayMode === 'flag'
+                              ? 'bg-primary-500 text-white shadow-md'
+                              : 'bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] hover:border-primary-500'
+                            }
+                          `}
+                        >
+                          <Flag className="w-4 h-4" />
+                          {language === 'fr' ? 'Drapeau' : 'Flag'}
+                        </button>
+                        <button
+                          onClick={() => {
+                            setDisplayMode('coatOfArms');
+                            setCoatOfArmsError(false);
+                          }}
+                          className={`
+                            flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all
+                            ${displayMode === 'coatOfArms'
+                              ? 'bg-primary-500 text-white shadow-md'
+                              : 'bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] hover:border-primary-500'
+                            }
+                          `}
+                        >
+                          <Shield className="w-4 h-4" />
+                          {language === 'fr' ? 'Armoiries' : 'Coat of Arms'}
+                        </button>
+                      </div>
+                    ) : (
+                      /* Placeholder for spacing when no coat of arms */
+                      <div className="flex gap-2">
+                        <div className="px-4 py-2 rounded-lg font-medium text-sm bg-primary-500/20 text-primary-500 flex items-center gap-2">
+                          <Flag className="w-4 h-4" />
+                          {language === 'fr' ? 'Drapeau' : 'Flag'}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Next Button */}
+                    <button
+                      onClick={navigateNext}
+                      disabled={!hasNext}
+                      className={`
+                        w-10 h-10 rounded-full flex items-center justify-center transition-all
+                        ${hasNext
+                          ? 'bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] hover:border-primary-500 hover:bg-primary-500/10'
+                          : 'bg-[var(--color-surface)]/50 border border-[var(--color-border)]/50 text-[var(--color-text-secondary)]/50 cursor-not-allowed'
+                        }
+                      `}
+                      title={language === 'fr' ? 'Suivant' : 'Next'}
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                  </motion.div>
 
                   {/* Country Name */}
                   <motion.h2

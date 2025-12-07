@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect, memo } from 'react';
 import { motion } from 'framer-motion';
 import { useAppStore } from '../store/useAppStore';
 import { useTranslation } from '../hooks/useTranslation';
@@ -9,11 +10,38 @@ interface FlagCardProps {
   index: number;
 }
 
-export function FlagCard({ countryName, countryCode, index }: FlagCardProps) {
+// Memoized FlagCard to prevent unnecessary re-renders
+export const FlagCard = memo(function FlagCard({ countryName, countryCode, index }: FlagCardProps) {
   const { selectedCountry, setSelectedCountry, showNames } = useAppStore();
   const { t } = useTranslation();
   
+  const [isVisible, setIsVisible] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  
   const isSelected = selectedCountry === countryName;
+  
+  // IntersectionObserver for lazy loading - only load when visible
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      {
+        rootMargin: '100px', // Start loading 100px before entering viewport
+        threshold: 0,
+      }
+    );
+    
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+    
+    return () => observer.disconnect();
+  }, []);
   
   const handleClick = () => {
     setSelectedCountry(isSelected ? null : countryName);
@@ -21,14 +49,15 @@ export function FlagCard({ countryName, countryCode, index }: FlagCardProps) {
   
   return (
     <motion.div
+      ref={cardRef}
       layout
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ 
-        duration: 0.25, 
-        delay: Math.min(index * 0.01, 0.3),
-        layout: { duration: 0.2 }
+        duration: 0.2, 
+        delay: Math.min(index * 0.005, 0.15),
+        layout: { duration: 0.15 }
       }}
       className="relative group w-full"
     >
@@ -49,19 +78,30 @@ export function FlagCard({ countryName, countryCode, index }: FlagCardProps) {
           }
         `}
         style={{ 
-          // Fixed aspect ratio box - all flags fit in the same container
           aspectRatio: '3 / 2'
         }}
         aria-label={t.country(countryName)}
       >
-        {/* Flag Image - centered and contained within the box */}
-        <img
-          src={getFlagSvgUrl(countryCode)}
-          alt={`Flag of ${countryName}`}
-          className="max-w-full max-h-full object-contain"
-          loading="lazy"
-          decoding="async"
-        />
+        {/* Loading Skeleton */}
+        {(!isVisible || !isLoaded) && (
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 
+                          dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 
+                          animate-pulse" />
+        )}
+        
+        {/* Flag Image - only render when visible */}
+        {isVisible && (
+          <img
+            src={getFlagSvgUrl(countryCode)}
+            alt={`Flag of ${countryName}`}
+            className={`max-w-full max-h-full object-contain transition-opacity duration-200 ${
+              isLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+            loading="lazy"
+            decoding="async"
+            onLoad={() => setIsLoaded(true)}
+          />
+        )}
         
         {/* Persistent Name Overlay (when showNames is true) */}
         {showNames && (
@@ -103,4 +143,4 @@ export function FlagCard({ countryName, countryCode, index }: FlagCardProps) {
       </motion.button>
     </motion.div>
   );
-}
+});

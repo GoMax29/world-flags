@@ -263,4 +263,23 @@ JSON structure and comparison logic are adjusted if necessary to fix structural 
 #   - SW version timestamp for cache busting
 #   - updateViaCache: 'none' ensures fresh SW on each check
 
+## FIXED (Session 12):
+# - Added special coat of arms URLs for Chad, Portugal, Serbia:
+#   - Chad: https://upload.wikimedia.org/wikipedia/commons/c/c1/Coat_of_arms_of_Chad.svg
+#   - Portugal: https://upload.wikimedia.org/wikipedia/commons/9/95/Coat_of_arms_of_Portugal_(lesser).svg
+#   - Serbia: https://upload.wikimedia.org/wikipedia/commons/0/0f/Coat_of_arms_of_Serbia_small.svg
+# - Added prev/next navigation arrows in CountryInfoPanel:
+#   - Left/right arrows on each side of Flag/Coat of Arms buttons
+#   - Preserves displayMode (flag/coat) when navigating
+#   - Disabled state when at start/end of list
+#   - Works within current filtered list
+# - Optimized flag image loading:
+#   - IntersectionObserver for true lazy loading (only loads when visible)
+#   - 100px rootMargin for preloading slightly before viewport
+#   - Loading skeleton/placeholder while image loads
+#   - Memoized FlagCard component to prevent unnecessary re-renders
+#   - Reduced animation delays for faster perceived performance
+#   - Flag images cached separately from app files (cache-first for flagcdn.com)
+#   - PWA still updates correctly (network-first for app files)
+
 ## ALL COMPLETED
