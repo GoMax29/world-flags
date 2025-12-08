@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
@@ -29,31 +29,95 @@ import { getFlagByCountry, useFlags } from "../hooks/useFlags";
 import { getFlagRatio } from "../data/flagRatios";
 import type { ActiveFilter } from "../types";
 
+// Image cache for preloading - stores loaded images and their status
+interface ImageCacheEntry {
+  loaded: boolean;
+  error: boolean;
+  timestamp: number;
+}
+const imageCache: Record<string, ImageCacheEntry> = {};
+const CACHE_TTL = 1000 * 60 * 60; // 1 hour
+
+// Preload image with cache
+function preloadImage(url: string): Promise<boolean> {
+  if (!url) return Promise.resolve(false);
+
+  const cached = imageCache[url];
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+    return Promise.resolve(cached.loaded);
+  }
+
+  return new Promise((resolve) => {
+    const img = new window.Image();
+    img.onload = () => {
+      imageCache[url] = { loaded: true, error: false, timestamp: Date.now() };
+      resolve(true);
+    };
+    img.onerror = () => {
+      imageCache[url] = { loaded: false, error: true, timestamp: Date.now() };
+      resolve(false);
+    };
+    img.src = url;
+  });
+}
+
+// Check if image is cached and loaded
+function isImageCached(url: string): boolean {
+  if (!url) return false;
+  const cached = imageCache[url];
+  return !!(
+    cached &&
+    cached.loaded &&
+    Date.now() - cached.timestamp < CACHE_TTL
+  );
+}
+
 // Special coat of arms URLs - ONLY for countries where API doesn't work or is wrong
 const SPECIAL_COAT_OF_ARMS_URLS: Record<string, string> = {
-  'Afghanistan': 'https://upload.wikimedia.org/wikipedia/commons/e/e3/National_Emblem_of_Afghanistan_001.svg',
-  'Spain': 'https://upload.wikimedia.org/wikipedia/commons/5/56/Coat_of_Arms_of_Spain_%28corrections_of_heraldist_requests%29.svg',
-  'Iran': 'https://upload.wikimedia.org/wikipedia/commons/7/7b/Emblem_of_Iran_%28red%29.svg',
-  'Peru': 'https://upload.wikimedia.org/wikipedia/commons/c/cc/Escudo_nacional_del_Per%C3%BA.svg',
-  'Fiji': 'https://upload.wikimedia.org/wikipedia/commons/4/4e/Arms_of_Fiji.svg',
-  'Malta': 'https://upload.wikimedia.org/wikipedia/commons/f/f5/George_Cross_of_Malta_737x737.svg',
-  'Chad': 'https://upload.wikimedia.org/wikipedia/commons/c/c1/Coat_of_arms_of_Chad.svg',
-  'Portugal': 'https://upload.wikimedia.org/wikipedia/commons/9/95/Coat_of_arms_of_Portugal_%28lesser%29.svg',
-  'Serbia': 'https://upload.wikimedia.org/wikipedia/commons/0/0f/Coat_of_arms_of_Serbia_small.svg',
-  'Cabo Verde': 'https://upload.wikimedia.org/wikipedia/commons/c/ce/Coat_of_arms_of_Cape_Verde.svg',
-  'Congo (Democratic Republic)': 'https://upload.wikimedia.org/wikipedia/commons/6/66/Coat_of_arms_of_the_Democratic_Republic_of_the_Congo_%28grey_spear%29.svg',
-  'Eswatini': 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Coat_of_arms_of_Eswatini.svg',
-  'France': 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Coat_of_arms_of_the_French_Republic.svg',
-  'Gabon': 'https://upload.wikimedia.org/wikipedia/commons/7/77/Coat_of_arms_of_Gabon.svg',
-  'Guinea-Bissau': 'https://upload.wikimedia.org/wikipedia/commons/0/06/Emblem_of_Guinea-Bissau.svg',
-  'Hungary': 'https://upload.wikimedia.org/wikipedia/commons/3/34/Coat_of_arms_of_Hungary.svg',
-  'Malaysia': 'https://upload.wikimedia.org/wikipedia/commons/2/26/Coat_of_arms_of_Malaysia.svg',
-  'Timor-Leste': 'https://upload.wikimedia.org/wikipedia/commons/b/bd/Coat_of_arms_of_East_Timor.svg',
-  'Trinidad and Tobago': 'https://upload.wikimedia.org/wikipedia/commons/d/d2/Coat_of_arms_of_Trinidad_and_Tobago_%282025%29.svg',
+  Afghanistan:
+    "https://upload.wikimedia.org/wikipedia/commons/e/e3/National_Emblem_of_Afghanistan_001.svg",
+  Spain:
+    "https://upload.wikimedia.org/wikipedia/commons/8/85/Escudo_de_Espa%C3%B1a_%28mazonado%29.svg",
+  Iran: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Emblem_of_Iran_%28red%29.svg",
+  Peru: "https://upload.wikimedia.org/wikipedia/commons/c/cc/Escudo_nacional_del_Per%C3%BA.svg",
+  Fiji: "https://upload.wikimedia.org/wikipedia/commons/4/4e/Arms_of_Fiji.svg",
+  Malta:
+    "https://upload.wikimedia.org/wikipedia/commons/f/f5/George_Cross_of_Malta_737x737.svg",
+  Chad: "https://upload.wikimedia.org/wikipedia/commons/c/c1/Coat_of_arms_of_Chad.svg",
+  Portugal:
+    "https://upload.wikimedia.org/wikipedia/commons/9/95/Coat_of_arms_of_Portugal_%28lesser%29.svg",
+  Serbia:
+    "https://upload.wikimedia.org/wikipedia/commons/0/0f/Coat_of_arms_of_Serbia_small.svg",
+  "Cabo Verde":
+    "https://upload.wikimedia.org/wikipedia/commons/c/ce/Coat_of_arms_of_Cape_Verde.svg",
+  "Congo (Democratic Republic)":
+    "https://upload.wikimedia.org/wikipedia/commons/6/66/Coat_of_arms_of_the_Democratic_Republic_of_the_Congo_%28grey_spear%29.svg",
+  Eswatini:
+    "https://upload.wikimedia.org/wikipedia/commons/a/a5/Coat_of_arms_of_Eswatini.svg",
+  France:
+    "https://upload.wikimedia.org/wikipedia/commons/f/f7/Coat_of_arms_of_the_French_Republic.svg",
+  Gabon:
+    "https://upload.wikimedia.org/wikipedia/commons/7/77/Coat_of_arms_of_Gabon.svg",
+  "Guinea-Bissau":
+    "https://upload.wikimedia.org/wikipedia/commons/0/06/Emblem_of_Guinea-Bissau.svg",
+  Hungary:
+    "https://upload.wikimedia.org/wikipedia/commons/3/34/Coat_of_arms_of_Hungary.svg",
+  Malaysia:
+    "https://upload.wikimedia.org/wikipedia/commons/2/26/Coat_of_arms_of_Malaysia.svg",
+  "San Marino":
+    "https://upload.wikimedia.org/wikipedia/commons/4/4e/Coat_of_arms_of_San_Marino.svg",
+  "Timor-Leste":
+    "https://upload.wikimedia.org/wikipedia/commons/b/bd/Coat_of_arms_of_East_Timor.svg",
+  "Trinidad and Tobago":
+    "https://upload.wikimedia.org/wikipedia/commons/d/d2/Coat_of_arms_of_Trinidad_and_Tobago_%282025%29.svg",
+  Bolivia:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Escudo_de_Bolivia.svg/960px-Escudo_de_Bolivia.svg.png",
 };
 
-// Countries that need light background for coat of arms (dark emblems)
-const LIGHT_BG_COAT_OF_ARMS = ['India', 'Pakistan'];
+// Countries that need light/grey background for coat of arms (dark emblems)
+const LIGHT_BG_COAT_OF_ARMS = ["India", "Pakistan"];
+// Countries that need dark grey background (dark elements on dark background otherwise)
+const DARK_GREY_BG_COAT_OF_ARMS = ["Gabon"];
 
 // Generate coat of arms URL - use API for most countries, override only for special cases
 function getCoatOfArmsUrl(countryName: string, apiCoatOfArms?: string): string {
@@ -61,20 +125,30 @@ function getCoatOfArmsUrl(countryName: string, apiCoatOfArms?: string): string {
   if (SPECIAL_COAT_OF_ARMS_URLS[countryName]) {
     return SPECIAL_COAT_OF_ARMS_URLS[countryName];
   }
-  
+
   // Use API coat of arms for all other countries
   if (apiCoatOfArms) {
     return apiCoatOfArms;
   }
 
   // Fallback (shouldn't be needed)
-  return '';
+  return "";
 }
 
-// Check if country needs light background for coat of arms
-function needsLightBackground(countryName: string): boolean {
-  return LIGHT_BG_COAT_OF_ARMS.includes(countryName);
+// Check if country needs special background for coat of arms
+function getCoatOfArmsBackground(countryName: string): string {
+  if (LIGHT_BG_COAT_OF_ARMS.includes(countryName)) {
+    return "bg-gray-200";
+  }
+  if (DARK_GREY_BG_COAT_OF_ARMS.includes(countryName)) {
+    return "bg-gray-600";
+  }
+  return "bg-gray-100 dark:bg-gray-800";
 }
+
+// Fixed container dimensions for flag/coat of arms - same for all countries
+const FIXED_CONTAINER_HEIGHT = 280;
+const FIXED_CONTAINER_WIDTH = 450;
 
 export function CountryInfoPanel() {
   const {
@@ -96,58 +170,81 @@ export function CountryInfoPanel() {
 
   // Get current filtered flags list for navigation
   const { flags: filteredFlags } = useFlags(activeFilters, searchQuery, sortBy);
-  
+
   // Toggle between flag and coat of arms
-  const [displayMode, setDisplayMode] = useState<'flag' | 'coatOfArms'>('flag');
+  const [displayMode, setDisplayMode] = useState<"flag" | "coatOfArms">("flag");
   const [coatOfArmsError, setCoatOfArmsError] = useState(false);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
-  
+  const [coatOfArmsLoaded, setCoatOfArmsLoaded] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
+
   // Store displayMode in ref to preserve across navigation
-  const displayModeRef = useRef<'flag' | 'coatOfArms'>('flag');
+  const displayModeRef = useRef<"flag" | "coatOfArms">("flag");
 
   const flagData = selectedCountry ? getFlagByCountry(selectedCountry) : null;
   const flagRatio = selectedCountry
     ? getFlagRatio(selectedCountry)
     : { ratio: 1.5, label: "3:2" };
   const locale = language === "fr" ? "fr-FR" : "en-US";
-  
+
   // Check if country has coat of arms (from API data or special URLs)
-  const hasCoatOfArms = countryInfo?.coatOfArms || (selectedCountry && SPECIAL_COAT_OF_ARMS_URLS[selectedCountry]);
-  
+  const hasCoatOfArms =
+    countryInfo?.coatOfArms ||
+    (selectedCountry && SPECIAL_COAT_OF_ARMS_URLS[selectedCountry]);
+
+  // Get coat of arms URL
+  const coatOfArmsUrl = useMemo(() => {
+    if (!selectedCountry) return "";
+    return getCoatOfArmsUrl(selectedCountry, countryInfo?.coatOfArms);
+  }, [selectedCountry, countryInfo?.coatOfArms]);
+
+  // Preload coat of arms when country changes (even if showing flag first)
+  useEffect(() => {
+    if (coatOfArmsUrl) {
+      setCoatOfArmsLoaded(isImageCached(coatOfArmsUrl));
+      preloadImage(coatOfArmsUrl).then((loaded) => {
+        setCoatOfArmsLoaded(loaded);
+      });
+    }
+  }, [coatOfArmsUrl]);
+
   // Get current index and navigation info
   const currentIndex = useMemo(() => {
     if (!selectedCountry) return -1;
     return filteredFlags.findIndex(([name]) => name === selectedCountry);
   }, [selectedCountry, filteredFlags]);
-  
+
   const hasPrevious = currentIndex > 0;
   const hasNext = currentIndex >= 0 && currentIndex < filteredFlags.length - 1;
-  
+
   // Navigate to previous/next country while preserving displayMode
   const navigatePrevious = () => {
     if (hasPrevious) {
       displayModeRef.current = displayMode;
       setCoatOfArmsError(false);
+      setImageLoading(true);
       setSelectedCountry(filteredFlags[currentIndex - 1][0]);
     }
   };
-  
+
   const navigateNext = () => {
     if (hasNext) {
       displayModeRef.current = displayMode;
       setCoatOfArmsError(false);
+      setImageLoading(true);
       setSelectedCountry(filteredFlags[currentIndex + 1][0]);
     }
   };
-  
+
   // Reset display mode when country changes (unless navigating)
   useEffect(() => {
     if (selectedCountry) {
       // Use stored mode if navigating, otherwise reset to flag
       setDisplayMode(displayModeRef.current);
       setCoatOfArmsError(false);
+      setImageLoading(true);
       // Reset ref after applying
-      displayModeRef.current = 'flag';
+      displayModeRef.current = "flag";
     }
   }, [selectedCountry]);
 
@@ -183,20 +280,23 @@ export function CountryInfoPanel() {
     setSelectedCountry(null);
   };
 
-  // Calculate flag display dimensions - reduced max height for desktop (300px)
-  const maxFlagWidth =
+  // Calculate responsive container width
+  const containerWidth =
     typeof window !== "undefined"
-      ? Math.min(window.innerWidth * 0.85, 600)
-      : 500;
-  const flagHeight = Math.min(maxFlagWidth / flagRatio.ratio, 300);
-  
+      ? Math.min(window.innerWidth * 0.85, FIXED_CONTAINER_WIDTH)
+      : FIXED_CONTAINER_WIDTH;
+
   // Get the image URL based on display mode
-  const getDisplayImageUrl = () => {
-    if (displayMode === 'coatOfArms' && selectedCountry) {
-      // Use our verified URLs first, fall back to API
-      return getCoatOfArmsUrl(selectedCountry, countryInfo?.coatOfArms);
+  const getDisplayImageUrl = useCallback(() => {
+    if (displayMode === "coatOfArms" && selectedCountry) {
+      return coatOfArmsUrl;
     }
-    return flagData ? getFlagSvgUrl(flagData.code) : '';
+    return flagData ? getFlagSvgUrl(flagData.code) : "";
+  }, [displayMode, selectedCountry, coatOfArmsUrl, flagData]);
+
+  // Handle image load
+  const handleImageLoad = () => {
+    setImageLoading(false);
   };
 
   return (
@@ -240,52 +340,65 @@ export function CountryInfoPanel() {
               <div className="max-h-[90vh] overflow-y-auto custom-scrollbar">
                 {/* Flag Section - Large centered flag */}
                 <div className="pt-12 pb-6 px-6 flex flex-col items-center bg-gradient-to-b from-[var(--color-surface)] to-transparent">
-                  {/* Large Flag / Coat of Arms */}
+                  {/* Large Flag / Coat of Arms - FIXED SIZE CONTAINER */}
                   <motion.div
                     key={displayMode} // Force re-render on mode change
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.1 }}
-                    className="relative rounded-xl overflow-hidden shadow-2xl border-2 border-[var(--color-border)]"
+                    className={`relative rounded-xl overflow-hidden shadow-2xl border-2 border-[var(--color-border)] flex items-center justify-center ${
+                      displayMode === "coatOfArms" && selectedCountry
+                        ? getCoatOfArmsBackground(selectedCountry)
+                        : "bg-gray-100 dark:bg-gray-800"
+                    }`}
                     style={{
-                      width: displayMode === 'coatOfArms' ? 'auto' : maxFlagWidth,
-                      height: flagHeight,
-                      maxWidth: maxFlagWidth,
+                      width: containerWidth,
+                      height: FIXED_CONTAINER_HEIGHT,
+                      minHeight: FIXED_CONTAINER_HEIGHT,
                     }}
                   >
+                    {/* Loading placeholder - shows while image loads */}
+                    {imageLoading && (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <Loader2 className="w-8 h-8 text-primary-500 animate-spin" />
+                      </div>
+                    )}
+
                     {flagData && (
                       <img
                         src={getDisplayImageUrl()}
-                        alt={displayMode === 'coatOfArms' 
-                          ? `Coat of Arms of ${selectedCountry}` 
-                          : `Flag of ${selectedCountry}`}
-                        className={`w-full h-full object-contain ${
-                          displayMode === 'coatOfArms' && selectedCountry && needsLightBackground(selectedCountry)
-                            ? 'bg-gray-200'
-                            : 'bg-gray-100 dark:bg-gray-800'
+                        alt="" // Empty alt to prevent text flash
+                        className={`max-w-full max-h-full object-contain transition-opacity duration-200 ${
+                          imageLoading ? "opacity-0" : "opacity-100"
                         }`}
+                        onLoad={handleImageLoad}
                         onError={() => {
-                          if (displayMode === 'coatOfArms') {
+                          setImageLoading(false);
+                          if (displayMode === "coatOfArms") {
                             setCoatOfArmsError(true);
                           }
                         }}
                       />
                     )}
-                    {coatOfArmsError && displayMode === 'coatOfArms' && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800">
-                        <p className="text-[var(--color-text-secondary)] text-sm">
-                          {language === 'fr' ? 'Armoiries non disponibles' : 'Coat of Arms not available'}
-                        </p>
-                      </div>
-                    )}
-                    
+                    {coatOfArmsError &&
+                      displayMode === "coatOfArms" &&
+                      !imageLoading && (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <p className="text-[var(--color-text-secondary)] text-sm">
+                            {language === "fr"
+                              ? "Armoiries non disponibles"
+                              : "Coat of Arms not available"}
+                          </p>
+                        </div>
+                      )}
+
                     {/* Zoom Button */}
                     <button
                       onClick={() => setIsZoomOpen(true)}
                       className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-black/50 hover:bg-black/70 
                                  flex items-center justify-center text-white transition-all
                                  backdrop-blur-sm border border-white/20"
-                      title={language === 'fr' ? 'Agrandir' : 'Zoom'}
+                      title={language === "fr" ? "Agrandir" : "Zoom"}
                     >
                       <Search className="w-4 h-4" />
                     </button>
@@ -304,12 +417,13 @@ export function CountryInfoPanel() {
                       disabled={!hasPrevious}
                       className={`
                         w-10 h-10 rounded-full flex items-center justify-center transition-all
-                        ${hasPrevious
-                          ? 'bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] hover:border-primary-500 hover:bg-primary-500/10'
-                          : 'bg-[var(--color-surface)]/50 border border-[var(--color-border)]/50 text-[var(--color-text-secondary)]/50 cursor-not-allowed'
+                        ${
+                          hasPrevious
+                            ? "bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] hover:border-primary-500 hover:bg-primary-500/10"
+                            : "bg-[var(--color-surface)]/50 border border-[var(--color-border)]/50 text-[var(--color-text-secondary)]/50 cursor-not-allowed"
                         }
                       `}
-                      title={language === 'fr' ? 'Précédent' : 'Previous'}
+                      title={language === "fr" ? "Précédent" : "Previous"}
                     >
                       <ChevronLeft className="w-5 h-5" />
                     </button>
@@ -318,33 +432,39 @@ export function CountryInfoPanel() {
                     {hasCoatOfArms ? (
                       <div className="flex gap-2">
                         <button
-                          onClick={() => setDisplayMode('flag')}
+                          onClick={() => {
+                            setDisplayMode("flag");
+                            setImageLoading(true);
+                          }}
                           className={`
                             flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all
-                            ${displayMode === 'flag'
-                              ? 'bg-primary-500 text-white shadow-md'
-                              : 'bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] hover:border-primary-500'
+                            ${
+                              displayMode === "flag"
+                                ? "bg-primary-500 text-white shadow-md"
+                                : "bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] hover:border-primary-500"
                             }
                           `}
                         >
                           <Flag className="w-4 h-4" />
-                          {language === 'fr' ? 'Drapeau' : 'Flag'}
+                          {language === "fr" ? "Drapeau" : "Flag"}
                         </button>
                         <button
                           onClick={() => {
-                            setDisplayMode('coatOfArms');
+                            setDisplayMode("coatOfArms");
                             setCoatOfArmsError(false);
+                            setImageLoading(!coatOfArmsLoaded);
                           }}
                           className={`
                             flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all
-                            ${displayMode === 'coatOfArms'
-                              ? 'bg-primary-500 text-white shadow-md'
-                              : 'bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] hover:border-primary-500'
+                            ${
+                              displayMode === "coatOfArms"
+                                ? "bg-primary-500 text-white shadow-md"
+                                : "bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] hover:border-primary-500"
                             }
                           `}
                         >
                           <Shield className="w-4 h-4" />
-                          {language === 'fr' ? 'Armoiries' : 'Coat of Arms'}
+                          {language === "fr" ? "Armoiries" : "Coat of Arms"}
                         </button>
                       </div>
                     ) : (
@@ -352,7 +472,7 @@ export function CountryInfoPanel() {
                       <div className="flex gap-2">
                         <div className="px-4 py-2 rounded-lg font-medium text-sm bg-primary-500/20 text-primary-500 flex items-center gap-2">
                           <Flag className="w-4 h-4" />
-                          {language === 'fr' ? 'Drapeau' : 'Flag'}
+                          {language === "fr" ? "Drapeau" : "Flag"}
                         </div>
                       </div>
                     )}
@@ -363,12 +483,13 @@ export function CountryInfoPanel() {
                       disabled={!hasNext}
                       className={`
                         w-10 h-10 rounded-full flex items-center justify-center transition-all
-                        ${hasNext
-                          ? 'bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] hover:border-primary-500 hover:bg-primary-500/10'
-                          : 'bg-[var(--color-surface)]/50 border border-[var(--color-border)]/50 text-[var(--color-text-secondary)]/50 cursor-not-allowed'
+                        ${
+                          hasNext
+                            ? "bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] hover:border-primary-500 hover:bg-primary-500/10"
+                            : "bg-[var(--color-surface)]/50 border border-[var(--color-border)]/50 text-[var(--color-text-secondary)]/50 cursor-not-allowed"
                         }
                       `}
-                      title={language === 'fr' ? 'Suivant' : 'Next'}
+                      title={language === "fr" ? "Suivant" : "Next"}
                     >
                       <ChevronRight className="w-5 h-5" />
                     </button>
@@ -583,17 +704,23 @@ export function CountryInfoPanel() {
               </div>
             </div>
           </motion.div>
-          
+
           {/* Zoom Modal */}
           <AnimatePresence>
             {isZoomOpen && (
               <ZoomModal
                 imageUrl={getDisplayImageUrl()}
-                alt={displayMode === 'coatOfArms' 
-                  ? `Coat of Arms of ${selectedCountry}` 
-                  : `Flag of ${selectedCountry}`}
+                alt={
+                  displayMode === "coatOfArms"
+                    ? `Coat of Arms of ${selectedCountry}`
+                    : `Flag of ${selectedCountry}`
+                }
                 onClose={() => setIsZoomOpen(false)}
-                needsLightBg={displayMode === 'coatOfArms' && selectedCountry ? needsLightBackground(selectedCountry) : false}
+                needsSpecialBg={
+                  displayMode === "coatOfArms" && selectedCountry
+                    ? getCoatOfArmsBackground(selectedCountry)
+                    : ""
+                }
               />
             )}
           </AnimatePresence>
@@ -604,32 +731,43 @@ export function CountryInfoPanel() {
 }
 
 // Zoom Modal Component - Full screen image viewer
+// Desktop: click to close, drag to pan
+// Mobile: touch opens, hold and drag to pan, release closes
 interface ZoomModalProps {
   imageUrl: string;
   alt: string;
   onClose: () => void;
-  needsLightBg: boolean;
+  needsSpecialBg: string;
 }
 
-function ZoomModal({ imageUrl, alt, onClose, needsLightBg }: ZoomModalProps) {
+function ZoomModal({ imageUrl, alt, onClose, needsSpecialBg }: ZoomModalProps) {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const startPosRef = useRef({ x: 0, y: 0 });
   const hasDraggedRef = useRef(false);
-  const touchStartTimeRef = useRef(0);
-  
+  const isTouchDevice = useRef(false);
+
   // Threshold to consider as drag vs tap (in pixels)
   const DRAG_THRESHOLD = 10;
-  
+
+  // Detect touch device
+  useEffect(() => {
+    isTouchDevice.current =
+      "ontouchstart" in window || navigator.maxTouchPoints > 0;
+  }, []);
+
   // Handle mouse drag for PC
   const handleMouseDown = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).closest('button')) return;
+    if ((e.target as HTMLElement).closest("button")) return;
     setIsDragging(true);
     hasDraggedRef.current = false;
-    startPosRef.current = { x: e.clientX - position.x, y: e.clientY - position.y };
+    startPosRef.current = {
+      x: e.clientX - position.x,
+      y: e.clientY - position.y,
+    };
   };
-  
+
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging) return;
     const dx = e.clientX - startPosRef.current.x - position.x;
@@ -642,7 +780,7 @@ function ZoomModal({ imageUrl, alt, onClose, needsLightBg }: ZoomModalProps) {
       y: e.clientY - startPosRef.current.y,
     });
   };
-  
+
   const handleMouseUp = () => {
     setIsDragging(false);
     // On PC: close only if it was a click (not a drag)
@@ -651,61 +789,51 @@ function ZoomModal({ imageUrl, alt, onClose, needsLightBg }: ZoomModalProps) {
     }
     hasDraggedRef.current = false;
   };
-  
-  // Handle touch events for mobile - using proper Touch Events API
-  // Reference: https://developer.mozilla.org/en-US/docs/Web/API/Touch_events
+
+  // Handle touch events for mobile
+  // Behavior: touch anywhere to start panning, release to close
   const handleTouchStart = (e: React.TouchEvent) => {
-    if ((e.target as HTMLElement).closest('button')) return;
-    e.preventDefault(); // Prevent default to avoid scroll/zoom
-    
+    if ((e.target as HTMLElement).closest("button")) return;
+    e.preventDefault();
+
     const touch = e.touches[0];
-    touchStartTimeRef.current = Date.now();
     hasDraggedRef.current = false;
-    startPosRef.current = { 
-      x: touch.clientX - position.x, 
-      y: touch.clientY - position.y 
+    startPosRef.current = {
+      x: touch.clientX - position.x,
+      y: touch.clientY - position.y,
     };
   };
-  
+
   const handleTouchMove = (e: React.TouchEvent) => {
-    e.preventDefault(); // Prevent default scroll behavior
-    
+    e.preventDefault();
+
     const touch = e.touches[0];
     const newX = touch.clientX - startPosRef.current.x;
     const newY = touch.clientY - startPosRef.current.y;
-    
+
     // Check if moved beyond threshold
-    const dx = newX - position.x;
-    const dy = newY - position.y;
-    if (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD) {
+    const dx = Math.abs(newX - position.x);
+    const dy = Math.abs(newY - position.y);
+    if (dx > DRAG_THRESHOLD || dy > DRAG_THRESHOLD) {
       hasDraggedRef.current = true;
     }
-    
+
     setPosition({ x: newX, y: newY });
   };
-  
+
   const handleTouchEnd = (e: React.TouchEvent) => {
     e.preventDefault();
-    
-    // Close only if it was a tap (not a drag)
-    // A tap is: short duration AND no significant movement
-    const touchDuration = Date.now() - touchStartTimeRef.current;
-    const wasTap = touchDuration < 300 && !hasDraggedRef.current;
-    
-    if (wasTap) {
-      onClose();
-    }
-    
-    hasDraggedRef.current = false;
+    // On mobile: ALWAYS close when releasing touch
+    onClose();
   };
-  
+
   return (
     <motion.div
       ref={containerRef}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[60] bg-black/90 flex items-center justify-center cursor-move touch-none"
+      className="fixed inset-0 z-[60] bg-black flex items-center justify-center cursor-move touch-none"
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
@@ -714,24 +842,20 @@ function ZoomModal({ imageUrl, alt, onClose, needsLightBg }: ZoomModalProps) {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Close button */}
+      {/* Close button - only visible on desktop, hidden on mobile */}
       <button
-        onClick={(e) => { e.stopPropagation(); onClose(); }}
-        onTouchEnd={(e) => { e.stopPropagation(); onClose(); }}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
         className="absolute top-4 right-4 z-10 w-12 h-12 rounded-full bg-white/20 
-                   flex items-center justify-center text-white transition-all
-                   backdrop-blur-sm border border-white/30 active:bg-white/30"
+                   hidden sm:flex items-center justify-center text-white transition-all
+                   backdrop-blur-sm border border-white/30 hover:bg-white/30"
         aria-label="Close"
       >
         <X className="w-6 h-6" />
       </button>
-      
-      {/* Instructions */}
-      <div className="absolute bottom-4 left-0 right-0 text-center text-white/60 text-sm pointer-events-none">
-        <span className="hidden sm:inline">Click to close • Drag to pan</span>
-        <span className="sm:hidden">Tap to close • Drag to pan</span>
-      </div>
-      
+
       {/* Image */}
       <motion.img
         src={imageUrl}
@@ -740,10 +864,12 @@ function ZoomModal({ imageUrl, alt, onClose, needsLightBg }: ZoomModalProps) {
         animate={{ scale: 1 }}
         style={{
           transform: `translate(${position.x}px, ${position.y}px)`,
-          maxWidth: '95vw',
-          maxHeight: '90vh',
+          maxWidth: "95vw",
+          maxHeight: "95vh",
         }}
-        className={`object-contain select-none pointer-events-none ${needsLightBg ? 'bg-gray-200 rounded-lg p-4' : ''}`}
+        className={`object-contain select-none pointer-events-none ${
+          needsSpecialBg ? `${needsSpecialBg} rounded-lg p-4` : ""
+        }`}
         draggable={false}
       />
     </motion.div>

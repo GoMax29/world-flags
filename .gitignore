@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Test files for coat of arms API
+public/test_blason_api.html
+coat-api/
+coat-api/cache/
